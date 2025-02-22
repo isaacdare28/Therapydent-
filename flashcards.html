@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flashcards</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2.2em;
+            margin-bottom: 20px;
+        }
+
+        /* Flashcard List Styles */
+        .flashcard-list {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .flashcard-list li {
+            margin: 10px 0;
+        }
+
+        .flashcard-list a {
+            text-decoration: none;
+            color: #007bff;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .flashcard-list a:hover {
+            color: #0056b3;
+        }
+
+        /* Flashcard Viewer Styles */
+        .flashcard {
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            padding: 25px;
+            overflow: hidden;
+            display: none;
+            text-align: center;
+        }
+
+        .flashcard.active {
+            display: block;
+        }
+
+        .flashcard h3 {
+            margin-top: 0;
+            font-size: 1.8em;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .flashcard iframe {
+            width: 100%;
+            height: 500px; /* Adjusted height for larger screens */
+            border: none;
+            border-radius: 8px;
+        }
+
+        /* Back Button */
+        .back-button {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-button button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                margin: 20px;
+                padding: 15px;
+            }
+
+            .flashcard iframe {
+                height: 400px; /* Adjusted height for smaller screens */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Flashcard List Page -->
+        <div id="flashcardListPage">
+            <h1>Flashcard List</h1>
+            <p><strong>Instructions:</strong> Click on a flashcard name to proceed. You will be redirected to an ad first. After viewing the ad, click the back button to view the selected flashcard.</p>
+
+            <!-- Flashcard List -->
+            <ul class="flashcard-list">
+                <li><a href="#" onclick="handleFlashcardClick(0)">Tooth Morphology</a></li>
+                <li><a href="#" onclick="handleFlashcardClick(1)">Head and Neck Anatomy</a></li>
+                <li><a href="#" onclick="handleFlashcardClick(2)">Radiology</a></li>
+                <li><a href="#" onclick="handleFlashcardClick(3)">Surgical and Oral Instrument</a></li>
+                <li><a href="#" onclick="handleFlashcardClick(4)">Infection Control</a></li>
+                <li><a href="#" onclick="handleFlashcardClick(5)">Pharmacology</a></li>
+                <li><a href="#" onclick="handleFlashcardClick(6)">Dental Terminology</a></li>
+                <li><a href="#" onclick="handleFlashcardClick(7)">Definitions</a></li>
+            </ul>
+        </div>
+
+        <!-- Flashcard Viewer Page -->
+        <div id="flashcardViewerPage" style="display: none;">
+            <h1>Flashcard Viewer</h1>
+
+            <!-- Flashcards -->
+            <div class="flashcard" id="flashcard1">
+                <h3>Tooth Morphology</h3>
+                <iframe src="https://www.studystack.com/iflashcardnew-658812" scrolling="no" style="overflow:hidden;"></iframe>
+            </div>
+
+            <div class="flashcard" id="flashcard2">
+                <h3>Head and Neck Anatomy</h3>
+                <iframe src="https://www.studystack.com/iflashcardnew-357351" scrolling="no" style="overflow:hidden;"></iframe>
+            </div>
+
+            <div class="flashcard" id="flashcard3">
+                <h3>Radiology</h3>
+                <iframe src="https://www.studystack.com/iflashcardnew-773941" scrolling="no" style="overflow:hidden;"></iframe>
+            </div>
+
+            <div class="flashcard" id="flashcard4">
+                <h3>Surgical and Oral Instrument</h3>
+                <iframe src="https://www.studystack.com/iflashcardnew-287419" scrolling="no" style="overflow:hidden;"></iframe>
+            </div>
+
+            <div class="flashcard" id="flashcard5">
+                <h3>Infection Control</h3>
+                <iframe src="https://www.studystack.com/iflashcardnew-657919" scrolling="no" style="overflow:hidden;"></iframe>
+            </div>
+
+            <div class="flashcard" id="flashcard6">
+                <h3>Pharmacology</h3>
+                <iframe src="https://www.studystack.com/iflashcardnew-658728" scrolling="no" style="overflow:hidden;"></iframe>
+            </div>
+
+            <div class="flashcard" id="flashcard7">
+                <h3>Dental Terminology</h3>
+                <iframe src="https://www.studystack.com/iflashcardnew-1611656" scrolling="no" style="overflow:hidden;"></iframe>
+            </div>
+
+            <div class="flashcard" id="flashcard8">
+                <h3>Definitions</h3>
+                <iframe src="https://www.studystack.com/iflashcardnew-966042" scrolling="no" style="overflow:hidden;"></iframe>
+            </div>
+
+            <!-- Back Button -->
+            <div class="back-button">
+                <button onclick="goBackToList()">Back to List</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ad links for all flashcards
+        const adLinks = [
+            "https://phunaivaizu.com/4/7667810", // Ad for Flashcard 1
+            "https://gogussoch.net/4/7667811",  // Ad for Flashcard 2
+            "https://gakrarsabamt.net/4/7667754", // Ad for Flashcard 3
+            "https://awhiptera.net/4/7667716",   // Ad for Flashcard 4
+            "https://phunaivaizu.com/4/7667810",           // Ad for Flashcard 5
+            "https://phunaivaizu.com/4/7667810",           // Ad for Flashcard 6
+            "https://phunaivaizu.com/4/7667810",           // Ad for Flashcard 7
+            "https://phunaivaizu.com/4/7667810"            // Ad for Flashcard 8
+        ];
+
+        // Handle flashcard list item click
+        function handleFlashcardClick(index) {
+            // Store the selected flashcard index in localStorage
+            localStorage.setItem('currentFlashcardIndex', index);
+
+            // Redirect to the corresponding ad link
+            window.open(adLinks[index], '_blank');
+
+            // Switch to the flashcard viewer page
+            document.getElementById('flashcardListPage').style.display = 'none';
+            document.getElementById('flashcardViewerPage').style.display = 'block';
+
+            // Show the selected flashcard
+            showFlashcard(index);
+        }
+
+        // Show the selected flashcard
+        function showFlashcard(index) {
+            const flashcards = document.querySelectorAll('.flashcard');
+            flashcards.forEach((flashcard, i) => {
+                flashcard.classList.toggle('active', i === index);
+            });
+        }
+
+        // Go back to the flashcard list
+        function goBackToList() {
+            document.getElementById('flashcardListPage').style.display = 'block';
+            document.getElementById('flashcardViewerPage').style.display = 'none';
+        }
+
+        // On page load, check if a flashcard should be shown
+        window.onload = () => {
+            const currentFlashcardIndex = parseInt(localStorage.getItem('currentFlashcardIndex')) || 0;
+            if (window.location.hash === "#viewer") {
+                document.getElementById('flashcardListPage').style.display = 'none';
+                document.getElementById('flashcardViewerPage').style.display = 'block';
+                showFlashcard(currentFlashcardIndex);
+            }
+        };
+    </script>
+</body>
+
+</html>
