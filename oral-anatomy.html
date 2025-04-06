@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oral Anatomy and Physiology</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #f72585;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --bone: #f8edeb;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
+            display: flex;
+            width: 2500%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 4%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: rgba(67, 97, 238, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-btn:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+        
+        .anatomy-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .tooth-diagram {
+            max-width: 300px;
+            margin: 20px auto;
+            display: block;
+        }
+        
+        .bone-color {
+            background-color: var(--bone);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+                width: 95%;
+                height: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .tooth-diagram {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <div class="slides">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3050/3050155.png" alt="Anatomy Icon" class="anatomy-icon">
+                    <h1>Oral Anatomy and Physiology</h1>
+                    <p>Comprehensive Study of the Oral Cavity Structures and Functions</p>
+                    <div class="slide-number">1</div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Course Objectives -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Course Objectives</h1>
+                    <p>By the end of this module, you will understand:</p>
+                    <ul>
+                        <li>Major structures of the oral cavity</li>
+                        <li>Tooth morphology and classification</li>
+                        <li>Periodontal structures</li>
+                        <li>Salivary gland anatomy</li>
+                        <li>Temporomandibular joint function</li>
+                        <li>Oral physiological processes</li>
+                        <li>Vascular and nerve supply</li>
+                        <li>Clinical correlations</li>
+                    </ul>
+                    <div class="slide-number">2</div>
+                </div>
+            </div>
+            
+            <!-- Slide 3: Oral Cavity Overview -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Oral Cavity Overview</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Divisions</h2>
+                            <ul>
+                                <li><span class="highlight">Vestibule</span>: Space between lips/cheeks and teeth</li>
+                                <li><span class="highlight">Oral cavity proper</span>: Area behind teeth</li>
+                            </ul>
+                            <h2>Boundaries</h2>
+                            <ul>
+                                <li>Anterior: Lips</li>
+                                <li>Posterior: Oropharynx</li>
+                                <li>Superior: Hard/soft palate</li>
+                                <li>Inferior: Tongue/floor of mouth</li>
+                                <li>Lateral: Cheeks</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Blausen_0863_OralCavity.png/800px-Blausen_0863_OralCavity.png" alt="Oral Cavity Diagram" class="tooth-diagram">
+                        </div>
+                    </div>
+                    <div class="slide-number">3</div>
+                </div>
+            </div>
+            
+            <!-- Slide 4: Tooth Classification -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Tooth Classification</h1>
+                    <div class="two-column">
+                        <div class="column bone-color">
+                            <h2>Primary Dentition</h2>
+                            <ul>
+                                <li>20 teeth total (10 per arch)</li>
+                                <li>8 incisors (4 maxillary, 4 mandibular)</li>
+                                <li>4 canines (2 per arch)</li>
+                                <li>8 molars (4 per arch)</li>
+                                <li>Erupts 6-30 months</li>
+                                <li>Also called "deciduous" teeth</li>
+                            </ul>
+                        </div>
+                        <div class="column bone-color">
+                            <h2>Permanent Dentition</h2>
+                            <ul>
+                                <li>32 teeth total (16 per arch)</li>
+                                <li>8 incisors (4 per arch)</li>
+                                <li>4 canines (2 per arch)</li>
+                                <li>8 premolars (4 per arch)</li>
+                                <li>12 molars (6 per arch)</li>
+                                <li>Erupts 6-21 years</li>
+                                <li>Third molars = "wisdom teeth"</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">4</div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Tooth Morphology -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Tooth Morphology</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Crown Components</h2>
+                            <ul>
+                                <li><span class="highlight">Cusp</span>: Elevated projection (molars have 4-5)</li>
+                                <li><span class="highlight">Ridge</span>: Linear elevation (marginal, triangular)</li>
+                                <li><span class="highlight">Fossa</span>: Depression (central, triangular)</li>
+                                <li><span class="highlight">Groove</span>: Shallow line (developmental, supplemental)</li>
+                                <li><span class="highlight">Pit</span>: Point depression (occlusal, lingual)</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/ToothSection.svg/800px-ToothSection.svg.png" alt="Tooth Anatomy" class="tooth-diagram">
+                            <p><span class="highlight">Root apex</span>: Terminal end of root</p>
+                            <p><span class="highlight">Pulp chamber</span>: Coronal portion of pulp cavity</p>
+                        </div>
+                    </div>
+                    <div class="slide-number">5</div>
+                </div>
+            </div>
+            
+            <!-- Slide 6: Tooth Surfaces -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Tooth Surfaces</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Anterior Teeth</h2>
+                            <ul>
+                                <li><span class="highlight">Labial</span>: Lip side (facial surface)</li>
+                                <li><span class="highlight">Lingual</span>: Tongue side</li>
+                                <li><span class="highlight">Mesial</span>: Toward midline</li>
+                                <li><span class="highlight">Distal</span>: Away from midline</li>
+                                <li><span class="highlight">Incisal</span>: Biting edge</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Posterior Teeth</h2>
+                            <ul>
+                                <li><span class="highlight">Buccal</span>: Cheek side (facial surface)</li>
+                                <li><span class="highlight">Lingual</span>: Tongue side</li>
+                                <li><span class="highlight">Occlusal</span>: Chewing surface</li>
+                                <li><span class="highlight">Mesial/Distal</span>: As above</li>
+                                <li><span class="highlight">Proximal</span>: Contact surfaces between teeth</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">6</div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Tooth Numbering Systems -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Tooth Numbering Systems</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Universal System</h2>
+                            <p><strong>Permanent</strong>: 1-32 (upper right 3rd molar to lower right 3rd molar)</p>
+                            <p><strong>Primary</strong>: A-T (upper right 2nd molar to lower right 2nd molar)</p>
+                            
+                            <h2>Palmer Notation</h2>
+                            <p>Quadrant symbols (┘└ ┐┌) with tooth numbers</p>
+                            <p>Permanent: 1-8 per quadrant</p>
+                            <p>Primary: A-E per quadrant</p>
+                        </div>
+                        <div class="column">
+                            <h2>FDI System</h2>
+                            <p>Two-digit system (quadrant + tooth)</p>
+                            <p>First digit (quadrant):</p>
+                            <ul>
+                                <li>1-4: Permanent teeth</li>
+                                <li>5-8: Primary teeth</li>
+                            </ul>
+                            <p>Second digit: Tooth number (1-8 or A-E)</p>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/FDI_tooth_numbering_system.svg/800px-FDI_tooth_numbering_system.svg.png" alt="FDI System" class="tooth-diagram" style="max-width: 200px;">
+                        </div>
+                    </div>
+                    <div class="slide-number">7</div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Periodontal Structures -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Periodontal Structures</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Components</h2>
+                            <ul>
+                                <li><span class="highlight">Gingiva</span>: Gum tissue (mucosa covering alveolar bone)</li>
+                                <li><span class="highlight">Periodontal ligament</span>: Fibrous tissue connecting tooth to bone (0.2mm width)</li>
+                                <li><span class="highlight">Cementum</span>: Calcified tissue covering root (softer than enamel)</li>
+                                <li><span class="highlight">Alveolar bone</span>: Tooth socket (cortical and cancellous)</li>
+                            </ul>
+                            <h2>Functions</h2>
+                            <ul>
+                                <li>Support teeth</li>
+                                <li>Absorb chewing forces</li>
+                                <li>Provide sensory feedback</li>
+                                <li>Nutritive function</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Periodontium_diagram.svg/800px-Periodontium_diagram.svg.png" alt="Periodontal Structures" class="tooth-diagram">
+                            <p><span class="highlight">Biologic width</span>: 2.04mm average (connective tissue + epithelial attachment)</p>
+                        </div>
+                    </div>
+                    <div class="slide-number">8</div>
+                </div>
+            </div>
+            
+            <!-- Slide 9: Gingival Anatomy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Gingival Anatomy</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Clinical Features</h2>
+                            <ul>
+                                <li><span class="highlight">Marginal Gingiva</span>: Unattached collar around tooth (0.5-2mm wide)</li>
+                                <li><span class="highlight">Attached Gingiva</span>: Firmly bound to underlying bone (1-9mm wide)</li>
+                                <li><span class="highlight">Interdental Papilla</span>: Gingiva between teeth (pyramidal or col-shaped)</li>
+                                <li><span class="highlight">Free gingival groove</span>: Demarcates free from attached gingiva</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Microscopic Features</h2>
+                            <ul>
+                                <li><span class="highlight">Oral epithelium</span>: Parakeratinized stratified squamous</li>
+                                <li><span class="highlight">Sulcular epithelium</span>: Nonkeratinized</li>
+                                <li><span class="highlight">Junctional epithelium</span>: Forms attachment to tooth</li>
+                                <li><span class="highlight">Gingival fibers</span>: Dentogingival, circular, transseptal etc.</li>
+                            </ul>
+                            <p><span class="highlight">Stippling</span>: Due to connective tissue projections</p>
+                        </div>
+                    </div>
+                    <div class="slide-number">9</div>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Tongue Anatomy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Tongue Anatomy</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Gross Anatomy</h2>
+                            <ul>
+                                <li><span class="highlight">Dorsum</span>: Upper surface (anterior 2/3 and posterior 1/3)</li>
+                                <li><span class="highlight">Ventral</span>: Undersurface (thin mucosa)</li>
+                                <li><span class="highlight">Lateral borders</span>: Sides</li>
+                                <li><span class="highlight">Median sulcus</span>: Midline groove</li>
+                                <li><span class="highlight">Foramen cecum</span>: Remnant of thyroglossal duct</li>
+                                <li><span class="highlight">Lingual tonsils</span>: Posterior lymphoid tissue</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Papillae Types</h2>
+                            <ul>
+                                <li><span class="highlight">Filiform</span>: Most numerous, conical shape (mechanical)</li>
+                                <li><span class="highlight">Fungiform</span>: Mushroom-shaped, contain taste buds</li>
+                                <li><span class="highlight">Circumvallate</span>: 8-12 large papillae at posterior, contain taste buds</li>
+                                <li><span class="highlight">Foliate</span>: Lateral folds, contain taste buds</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Blausen_0865_TongueAnatomy.png/800px-Blausen_0865_TongueAnatomy.png" alt="Tongue Anatomy" class="tooth-diagram">
+                        </div>
+                    </div>
+                    <div class="slide-number">10</div>
+                </div>
+            </div>
+            
+            <!-- Slide 11: Salivary Glands -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Salivary Glands</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Major Glands</h2>
+                            <ul>
+                                <li><span class="highlight">Parotid</span>: Largest (25g), serous secretion, Stensen's duct</li>
+                                <li><span class="highlight">Submandibular</span>: Mixed secretion (70% total saliva), Wharton's duct</li>
+                                <li><span class="highlight">Sublingual</span>: Smallest (3g), mucous secretion, ducts of Rivinus</li>
+                            </ul>
+                            <h2>Minor Glands</h2>
+                            <ul>
+                                <li>Labial, buccal, palatal, lingual</li>
+                                <li>500-1000 glands throughout oral mucosa</li>
+                                <li>Produce 10% total saliva</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Saliva Composition</h2>
+                            <ul>
+                                <li>99.5% water</li>
+                                <li>0.5% solids (electrolytes, proteins, enzymes)</li>
+                                <li>pH 6.0-7.0 (resting), 7.4-8.0 (stimulated)</li>
+                                <li>Daily secretion: 500-1500ml</li>
+                            </ul>
+                            <h2>Functions</h2>
+                            <ul>
+                                <li>Lubrication (mucins)</li>
+                                <li>Digestion (amylase, lipase)</li>
+                                <li>Antimicrobial (lysozyme, lactoferrin)</li>
+                                <li>Buffering (bicarbonate)</li>
+                                <li>Taste (solubilizes food)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">11</div>
+                </div>
+            </div>
+            
+            <!-- Slide 12: Temporomandibular Joint -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Temporomandibular Joint (TMJ)</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Anatomy</h2>
+                            <ul>
+                                <li><span class="highlight">Articular surfaces</span>: Mandibular condyle and articular fossa</li>
+                                <li><span class="highlight">Articular disc</span>: Fibrocartilage dividing joint into upper/lower compartments</li>
+                                <li><span class="highlight">Capsule</span>: Fibrous tissue enclosing joint</li>
+                                <li><span class="highlight">Ligaments</span>: Lateral, stylomandibular, sphenomandibular</li>
+                            </ul>
+                            <h2>Movements</h2>
+                            <ul>
+                                <li><span class="highlight">Hinge</span>: Lower compartment (first 20mm opening)</li>
+                                <li><span class="highlight">Gliding</span>: Upper compartment (beyond 20mm)</li>
+                                <li>Protrusion/retrusion</li>
+                                <li>Lateral excursions</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Gray304.png/800px-Gray304.png" alt="TMJ Anatomy" class="tooth-diagram">
+                            <h2>Clinical Notes</h2>
+                            <ul>
+                                <li>Most used joint in body</li>
+                                <li>Only bilateral joint that must move simultaneously</li>
+                                <li>Disc displacement common pathology</li>
+                                <li>Bruxism can cause TMJ dysfunction</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">12</div>
+                </div>
+            </div>
+            
+            <!-- Slide 13: Muscles of Mastication -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Muscles of Mastication</h1>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Muscle</th>
+                                <th>Origin</th>
+                                <th>Insertion</th>
+                                <th>Action</th>
+                                <th>Innervation</th>
+                            </tr>
+                            <tr>
+                                <td>Masseter</td>
+                                <td>Zygomatic arch</td>
+                                <td>Mandibular angle/ramus</td>
+                                <td>Elevates mandible</td>
+                                <td>Mandibular nerve (V3)</td>
+                            </tr>
+                            <tr>
+                                <td>Temporalis</td>
+                                <td>Temporal fossa</td>
+                                <td>Coronoid process</td>
+                                <td>Elevates/retracts</td>
+                                <td>Mandibular nerve (V3)</td>
+                            </tr>
+                            <tr>
+                                <td>Medial Pterygoid</td>
+                                <td>Pterygoid fossa</td>
+                                <td>Mandibular angle</td>
+                                <td>Elevates/protrudes</td>
+                                <td>Mandibular nerve (V3)</td>
+                            </tr>
+                            <tr>
+                                <td>Lateral Pterygoid</td>
+                                <td>Sphenoid bone</td>
+                                <td>Condyle/articular disc</td>
+                                <td>Protrudes/lateral</td>
+                                <td>Mandibular nerve (V3)</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="two-column" style="margin-top: 20px;">
+                        <div class="column">
+                            <h2>Accessory Muscles</h2>
+                            <ul>
+                                <li>Suprahyoids (digastric, mylohyoid, geniohyoid)</li>
+                                <li>Infrahyoids (sternohyoid, omohyoid)</li>
+                                <li>Buccinator (facial nerve VII)</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Clinical Correlation</h2>
+                            <ul>
+                                <li>Trismus: Muscle spasm limiting opening</li>
+                                <li>Bruxism: Excessive muscle activity</li>
+                                <li>Myofascial pain: Trigger points</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">13</div>
+                </div>
+            </div>
+            
+            <!-- Slide 14: Vascular Supply -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Vascular Supply to Oral Cavity</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Arterial Supply</h2>
+                            <ul>
+                                <li><span class="highlight">Maxillary artery</span> (external carotid branch):
+                                    <ul>
+                                        <li>Inferior alveolar artery</li>
+                                        <li>Buccal artery</li>
+                                        <li>Posterior superior alveolar</li>
+                                        <li>Infraorbital artery</li>
+                                        <li>Greater palatine artery</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Lingual artery</span> (tongue supply)</li>
+                                <li><span class="highlight">Facial artery</span> (submental, inferior labial)</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Venous Drainage</h2>
+                            <ul>
+                                <li>Pterygoid venous plexus → maxillary vein</li>
+                                <li>Lingual vein → internal jugular</li>
+                                <li>Facial vein → common facial vein</li>
+                            </ul>
+                            <h2>Clinical Significance</h2>
+                            <ul>
+                                <li>Bleeding during extractions</li>
+                                <li>Spread of infection via veins</li>
+                                <li>Anesthesia considerations</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Gray506.svg/800px-Gray506.svg.png" alt="Maxillary Artery" class="tooth-diagram" style="max-width: 200px;">
+                        </div>
+                    </div>
+                    <div class="slide-number">14</div>
+                </div>
+            </div>
+            
+            <!-- Slide 15: Nerve Innervation -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Nerve Innervation of Oral Cavity</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Trigeminal Nerve (V)</h2>
+                            <ul>
+                                <li><span class="highlight">V1 Ophthalmic</span>: Sensory to upper face</li>
+                                <li><span class="highlight">V2 Maxillary</span>:
+                                    <ul>
+                                        <li>PSA, MSA, ASA (teeth)</li>
+                                        <li>Greater palatine (hard palate)</li>
+                                        <li>Nasopalatine (anterior palate)</li>
+                                        <li>Infraorbital (maxillary anterior)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Trigeminal (continued)</h2>
+                            <ul>
+                                <li><span class="highlight">V3 Mandibular</span>:
+                                    <ul>
+                                        <li>Inferior alveolar (mandibular teeth)</li>
+                                        <li>Lingual (tongue anterior 2/3)</li>
+                                        <li>Buccal (cheek mucosa)</li>
+                                        <li>Mental (chin/lower lip)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Motor branches</span>: Muscles of mastication</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="two-column" style="margin-top: 20px;">
+                        <div class="column">
+                            <h2>Other Nerves</h2>
+                            <ul>
+                                <li><span class="highlight">Facial (VII)</span>: Taste anterior 2/3 tongue</li>
+                                <li><span class="highlight">Glossopharyngeal (IX)</span>: Posterior 1/3 tongue</li>
+                                <li><span class="highlight">Hypoglossal (XII)</span>: Tongue muscles</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Autonomic Innervation</h2>
+                            <ul>
+                                <li><span class="highlight">Parasympathetic</span>: Salivation (VII, IX)</li>
+                                <li><span class="highlight">Sympathetic</span>: Vasoconstriction</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">15</div>
+                </div>
+            </div>
+            
+            <!-- Slide 16: Lymphatic Drainage -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Lymphatic Drainage</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Primary Nodes</h2>
+                            <ul>
+                                <li><span class="highlight">Submental</span>: Chin, lower lip, tongue tip</li>
+                                <li><span class="highlight">Submandibular</span>: Most oral structures</li>
+                                <li><span class="highlight">Jugulodigastric</span>: Tongue base, tonsils</li>
+                                <li><span class="highlight">Retropharyngeal</span>: Posterior pharynx</li>
+                            </ul>
+                            <h2>Drainage Pathways</h2>
+                            <ul>
+                                <li>All eventually drain to deep cervical nodes</li>
+                                <li>Left: Thoracic duct</li>
+                                <li>Right: Right lymphatic duct</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Illu_lymphatic_system_head.jpg/800px-Illu_lymphatic_system_head.jpg" alt="Lymph Nodes" class="tooth-diagram">
+                            <h2>Clinical Significance</h2>
+                            <ul>
+                                <li>Metastasis from oral cancers</li>
+                                <li>Infection spread</li>
+                                <li>Diagnostic palpation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">16</div>
+                </div>
+            </div>
+            
+            <!-- Slide 17: Tooth Development -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Tooth Development (Odontogenesis)</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Stages</h2>
+                            <ol>
+                                <li><span class="highlight">Bud stage</span>: Dental lamina proliferation (week 6-8)</li>
+                                <li><span class="highlight">Cap stage</span>: Enamel organ formation (week 9-10)</li>
+                                <li><span class="highlight">Bell stage</span>: Morphodifferentiation (week 11-12)</li>
+                                <li><span class="highlight">Apposition</span>: Matrix deposition (week 18+)</li>
+                                <li><span class="highlight">Maturation</span>: Mineralization</li>
+                            </ol>
+                            <h2>Tissues</h2>
+                            <ul>
+                                <li><span class="highlight">Enamel organ</span>: Forms enamel</li>
+                                <li><span class="highlight">Dental papilla</span>: Forms dentin/pulp</li>
+                                <li><span class="highlight">Dental sac</span>: Forms cementum/PDL/alveolar bone</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Gray1000.png/800px-Gray1000.png" alt="Tooth Development" class="tooth-diagram">
+                            <h2>Eruption Sequence</h2>
+                            <ul>
+                                <li>Primary: 6-30 months</li>
+                                <li>Permanent: 6-12 years (except 3rd molars)</li>
+                                <li>Root completion 2-3 years post-eruption</li>
+                            </ul>
+                            <h2>Clinical Correlation</h2>
+                            <ul>
+                                <li>Developmental anomalies</li>
+                                <li>Impacted teeth</li>
+                                <li>Supernumerary teeth</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">17</div>
+                </div>
+            </div>
+            
+            <!-- Slide 18: Occlusion Concepts -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Occlusion Concepts</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Key Terms</h2>
+                            <ul>
+                                <li><span class="highlight">Occlusion</span>: Contact between teeth</li>
+                                <li><span class="highlight">Centric occlusion</span>: Maximum intercuspation</li>
+                                <li><span class="highlight">Centric relation</span>: Condyles in most superior position</li>
+                                <li><span class="highlight">Overjet</span>: Horizontal overlap (2-4mm normal)</li>
+                                <li><span class="highlight">Overbite</span>: Vertical overlap (10-20% normal)</li>
+                                <li><span class="highlight">Curve of Spee</span>: Anteroposterior curve</li>
+                                <li><span class="highlight">Curve of Wilson</span>: Mediolateral curve</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Angle's Classification</h2>
+                            <ul>
+                                <li><span class="highlight">Class I</span>: Normal molar relationship</li>
+                                <li><span class="highlight">Class II</span>: Mandibular deficiency (Division 1/2)</li>
+                                <li><span class="highlight">Class III</span>: Mandibular excess</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Angle%27s_Classification_of_Occlusion.svg/800px-Angle%27s_Classification_of_Occlusion.svg.png" alt="Angle's Classification" class="tooth-diagram" style="max-width: 250px;">
+                            <h2>Malocclusion Effects</h2>
+                            <ul>
+                                <li>TMJ disorders</li>
+                                <li>Periodontal problems</li>
+                                <li>Chewing difficulties</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">18</div>
+                </div>
+            </div>
+            
+            <!-- Slide 19: Oral Mucosa -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Oral Mucosa Types</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Masticatory Mucosa</h2>
+                            <ul>
+                                <li>Gingiva and hard palate</li>
+                                <li>Keratinized stratified squamous</li>
+                                <li>Firmly attached to bone</li>
+                                <li>Resistant to abrasion</li>
+                            </ul>
+                            <h2>Lining Mucosa</h2>
+                            <ul>
+                                <li>Cheeks, lips, floor of mouth</li>
+                                <li>Non-keratinized</li>
+                                <li>Loosely attached</li>
+                                <li>More flexible</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Specialized Mucosa</h2>
+                            <ul>
+                                <li>Dorsal tongue surface</li>
+                                <li>Contains papillae</li>
+                                <li>Combination of keratinized and non-keratinized</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Oral_epithelium_diagram.svg/800px-Oral_epithelium_diagram.svg.png" alt="Oral Mucosa" class="tooth-diagram">
+                            <h2>Clinical Correlation</h2>
+                            <ul>
+                                <li>Leukoplakia/erythroplakia</li>
+                                <li>Ulcerations</li>
+                                <li>Burning mouth syndrome</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">19</div>
+                </div>
+            </div>
+            
+            <!-- Slide 20: Taste Physiology -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Taste Physiology</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Basic Tastes</h2>
+                            <ul>
+                                <li><span class="highlight">Sweet</span>: Sugars (tip of tongue)</li>
+                                <li><span class="highlight">Salty</span>: Sodium ions (lateral tongue)</li>
+                                <li><span class="highlight">Sour</span>: Acids (lateral tongue)</li>
+                                <li><span class="highlight">Bitter</span>: Alkaloids (posterior tongue)</li>
+                                <li><span class="highlight">Umami</span>: Glutamate (distributed)</li>
+                            </ul>
+                            <h2>Taste Buds</h2>
+                            <ul>
+                                <li>~10,000 in adults</li>
+                                <li>Contain taste receptor cells</li>
+                                <li>Renew every 10-14 days</li>
+                                <li>Located in papillae (except filiform)</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Neural Pathways</h2>
+                            <ul>
+                                <li>Anterior 2/3: Chorda tympani (VII)</li>
+                                <li>Posterior 1/3: Glossopharyngeal (IX)</li>
+                                <li>Epiglottis: Vagus (X)</li>
+                                <li>To solitary nucleus → thalamus → cortex</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Taste_bud.svg/800px-Taste_bud.svg.png" alt="Taste Bud" class="tooth-diagram" style="max-width: 200px;">
+                            <h2>Clinical Aspects</h2>
+                            <ul>
+                                <li>Ageusia (loss of taste)</li>
+                                <li>Dysgeusia (altered taste)</li>
+                                <li>Side effects of medications</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">20</div>
+                </div>
+            </div>
+            
+            <!-- Slide 21: Salivary Physiology -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Salivary Physiology</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Secretion Mechanisms</h2>
+                            <ul>
+                                <li><span class="highlight">Parasympathetic</span>: Watery saliva (acetylcholine)</li>
+                                <li><span class="highlight">Sympathetic</span>: Viscous saliva (norepinephrine)</li>
+                                <li>Unconditioned reflex: Direct stimulation</li>
+                                <li>Conditioned reflex: Anticipatory</li>
+                            </ul>
+                            <h2>Composition</h2>
+                            <ul>
+                                <li><span class="highlight">Inorganic</span>: Na+, K+, Cl-, HCO3-, Ca2+</li>
+                                <li><span class="highlight">Organic</span>: Amylase, mucins, lysozyme, IgA</li>
+                                <li>pH 6.0-7.0 (resting), 7.4-8.0 (stimulated)</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Functions</h2>
+                            <ul>
+                                <li><span class="highlight">Lubrication</span>: Mucins (0.5-1g/dL)</li>
+                                <li><span class="highlight">Digestion</span>: α-amylase (starch), lingual lipase</li>
+                                <li><span class="highlight">Protection</span>: Antimicrobial proteins</li>
+                                <li><span class="highlight">Buffering</span>: Bicarbonate (pH regulation)</li>
+                                <li><span class="highlight">Remineralization</span>: Calcium/phosphate ions</li>
+                            </ul>
+                            <h2>Clinical Conditions</h2>
+                            <ul>
+                                <li>Xerostomia (dry mouth)</li>
+                                <li>Sialolithiasis (stones)</li>
+                                <li>Sialadenitis (infection)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">21</div>
+                </div>
+            </div>
+            
+            <!-- Slide 22: Aging Changes -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Aging Changes in Oral Cavity</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Teeth</h2>
+                            <ul>
+                                <li>Attrition (wear of occlusal surfaces)</li>
+                                <li>Dentin sclerosis and transparency</li>
+                                <li>Pulp chamber reduction</li>
+                                <li>Root caries susceptibility</li>
+                            </ul>
+                            <h2>Periodontium</h2>
+                            <ul>
+                                <li>Gingival recession</li>
+                                <li>Alveolar bone loss</li>
+                                <li>Periodontal ligament thinning</li>
+                                <li>Cementum thickening</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Soft Tissues</h2>
+                            <ul>
+                                <li>Mucosal thinning (epithelial atrophy)</li>
+                                <li>Decreased salivary flow</li>
+                                <li>Taste bud reduction (50% by age 60)</li>
+                                <li>Decreased tongue papillae</li>
+                            </ul>
+                            <h2>Functional Changes</h2>
+                            <ul>
+                                <li>Reduced masticatory efficiency</li>
+                                <li>Swallowing difficulties</li>
+                                <li>Delayed wound healing</li>
+                                <li>Increased oral infections</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">22</div>
+                </div>
+            </div>
+            
+            <!-- Slide 23: Clinical Correlations -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Clinical Correlations</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Common Conditions</h2>
+                            <ul>
+                                <li><span class="highlight">Dental caries</span>: Bacterial demineralization</li>
+                                <li><span class="highlight">Periodontitis</span>: Inflammatory bone loss</li>
+                                <li><span class="highlight">Oral cancer</span>: Squamous cell carcinoma</li>
+                                <li><span class="highlight">Candidiasis</span>: Fungal infection</li>
+                                <li><span class="highlight">Aphthous ulcers</span>: Recurrent painful lesions</li>
+                            </ul>
+                            <h2>Diagnostic Tools</h2>
+                            <ul>
+                                <li>Radiographs (bitewing, periapical)</li>
+                                <li>Probing depths (periodontal exam)</li>
+                                <li>Salivary tests</li>
+                                <li>Biopsy (suspicious lesions)</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Treatment Considerations</h2>
+                            <ul>
+                                <li>Restorative materials (amalgam, composite)</li>
+                                <li>Local anesthesia techniques</li>
+                                <li>Periodontal therapy (scaling/root planing)</li>
+                                <li>Prosthetic options (implants, dentures)</li>
+                            </ul>
+                            <h2>Preventive Strategies</h2>
+                            <ul>
+                                <li>Fluoride applications</li>
+                                <li>Sealants</li>
+                                <li>Oral hygiene instruction</li>
+                                <li>Regular recall visits</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">23</div>
+                </div>
+            </div>
+            
+            <!-- Slide 24: Case Studies -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Clinical Case Studies</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Case 1: Toothache</h2>
+                            <p><strong>Presentation</strong>: 32-year-old with right mandibular pain</p>
+                            <ul>
+                                <li>Pain to cold and biting</li>
+                                <li>No visible caries</li>
+                                <li>Localized to tooth #30</li>
+                            </ul>
+                            <p><strong>Diagnosis</strong>: Cracked tooth syndrome</p>
+                            <p><strong>Treatment</strong>: Crown placement</p>
+                            
+                            <h2>Case 2: Bleeding Gums</h2>
+                            <p><strong>Presentation</strong>: 45-year-old with bleeding when brushing</p>
+                            <ul>
+                                <li>Generalized redness</li>
+                                <li>4-5mm pockets</li>
+                                <li>Calculus present</li>
+                            </ul>
+                            <p><strong>Diagnosis</strong>: Chronic periodontitis</p>
+                        </div>
+                        <div class="column">
+                            <p><strong>Treatment</strong>: Scaling/root planing + oral hygiene instruction</p>
+                            
+                            <h2>Case 3: Dry Mouth</h2>
+                            <p><strong>Presentation</strong>: 60-year-old on multiple medications</p>
+                            <ul>
+                                <li>Difficulty swallowing</li>
+                                <li>Burning sensation</li>
+                                <li>Increased caries</li>
+                            </ul>
+                            <p><strong>Diagnosis</strong>: Xerostomia (medication-induced)</p>
+                            <p><strong>Treatment</strong>: Saliva substitutes + fluoride</p>
+                            
+                            <h2>Case 4: Jaw Pain</h2>
+                            <p><strong>Presentation</strong>: 28-year-old with TMJ clicking</p>
+                            <ul>
+                                <li>Pain on awakening</li>
+                                <li>Limited opening</li>
+                                <li>Bruxism history</li>
+                            </ul>
+                            <p><strong>Diagnosis</strong>: TMJ dysfunction</p>
+                            <p><strong>Treatment</strong>: Occlusal splint + muscle relaxants</p>
+                        </div>
+                    </div>
+                    <div class="slide-number">24</div>
+                </div>
+            </div>
+            
+            <!-- Slide 25: Summary -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3050/3050155.png" alt="Anatomy Icon" class="anatomy-icon">
+                    <h1>Key Takeaways</h1>
+                    <ul style="text-align: left;">
+                        <li>Oral cavity contains complex anatomical structures with specialized functions</li>
+                        <li>Teeth have specific morphology adapted for mastication</li>
+                        <li>Periodontium provides support and sensory feedback</li>
+                        <li>Salivary glands maintain oral environment and aid digestion</li>
+                        <li>TMJ is a unique diarthrodial joint with complex movements</li>
+                        <li>Understanding anatomy is crucial for diagnosis and treatment</li>
+                        <li>Aging affects all oral structures and functions</li>
+                        <li>Clinical applications integrate anatomical knowledge with patient care</li>
+                    </ul>
+                    <h2 style="margin-top: 30px;">Questions and Discussion</h2>
+                    <div class="slide-number">25</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="prev-btn">←</button>
+        <button class="control-btn" id="next-btn">→</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelector('.slides');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const totalSlides = 25;
+        let currentSlide = 0;
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 4}%)`;
+            progressBar.style.width = `${(currentSlide + 1) / totalSlides * 100}%`;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
