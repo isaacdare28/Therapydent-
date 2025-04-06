@@ -1,0 +1,1747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Materials Science</title>
+    <style>
+        :root {
+            --primary: #3a86ff;
+            --secondary: #8338ec;
+            --accent: #ff006e;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --composite: #f15bb5;
+            --amalgam: #9b5de5;
+            --ceramic: #00bbf9;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
+            display: flex;
+            width: 2500%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 4%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: rgba(58, 134, 255, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-btn:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+        
+        .material-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .material-image {
+            max-width: 250px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+        }
+        
+        .composite-bg {
+            background-color: rgba(241, 91, 181, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .amalgam-bg {
+            background-color: rgba(155, 93, 229, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .ceramic-bg {
+            background-color: rgba(0, 187, 249, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .property-card {
+            background: white;
+            border-left: 5px solid var(--accent);
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+                width: 95%;
+                height: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .material-image {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <div class="slides">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3050/3050155.png" alt="Materials Icon" class="material-icon">
+                    <h1>Dental Materials Science</h1>
+                    <p>Principles, Properties and Clinical Applications</p>
+                    <div class="slide-number">1</div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Course Objectives -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Course Objectives</h1>
+                    <p>By the end of this module, you will understand:</p>
+                    <ul>
+                        <li>Classification of dental materials</li>
+                        <li>Physical and mechanical properties</li>
+                        <li>Restorative material systems</li>
+                        <li>Impression materials</li>
+                        <li>Cements and liners</li>
+                        <li>Prosthetic materials</li>
+                        <li>Biocompatibility considerations</li>
+                        <li>Recent advancements</li>
+                    </ul>
+                    <div class="slide-number">2</div>
+                </div>
+            </div>
+            
+            <!-- Slide 3: Material Classification -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Material Classification</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>By Use</h2>
+                            <ul>
+                                <li><span class="highlight">Restorative</span>: Amalgam, composite, glass ionomer</li>
+                                <li><span class="highlight">Prosthetic</span>: Alloys, ceramics, polymers</li>
+                                <li><span class="highlight">Auxiliary</span>: Impression, casting, abrasive</li>
+                                <li><span class="highlight">Preventive</span>: Sealants, fluoride varnishes</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>By Structure</h2>
+                            <ul>
+                                <li><span class="highlight">Metals</span>: Amalgam, gold, titanium</li>
+                                <li><span class="highlight">Ceramics</span>: Porcelain, zirconia</li>
+                                <li><span class="highlight">Polymers</span>: Acrylic, composite resin</li>
+                                <li><span class="highlight">Composites</span>: Resin-modified glass ionomer</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Dental_materials.jpg/800px-Dental_materials.jpg" alt="Dental Materials" class="material-image">
+                        </div>
+                    </div>
+                    <div class="slide-number">3</div>
+                </div>
+            </div>
+            
+            <!-- Slide 4: Material Properties -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Key Material Properties</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <div class="property-card">
+                                <h2>Physical Properties</h2>
+                                <ul>
+                                    <li><span class="highlight">Density</span>: Mass per unit volume</li>
+                                    <li><span class="highlight">Thermal expansion</span>: Coefficient (ppm/°C)</li>
+                                    <li><span class="highlight">Color stability</span>: Resistance to staining</li>
+                                    <li><span class="highlight">Solubility</span>: In oral fluids</li>
+                                </ul>
+                            </div>
+                            <div class="property-card">
+                                <h2>Chemical Properties</h2>
+                                <ul>
+                                    <li><span class="highlight">Corrosion resistance</span></li>
+                                    <li><span class="highlight">Setting reaction</span></li>
+                                    <li><span class="highlight">Biocompatibility</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="property-card">
+                                <h2>Mechanical Properties</h2>
+                                <ul>
+                                    <li><span class="highlight">Strength</span>: Compressive, tensile, flexural</li>
+                                    <li><span class="highlight">Hardness</span>: Resistance to indentation</li>
+                                    <li><span class="highlight">Elastic modulus</span>: Stiffness</li>
+                                    <li><span class="highlight">Fracture toughness</span>: Crack resistance</li>
+                                </ul>
+                            </div>
+                            <div class="property-card">
+                                <h2>Biological Properties</h2>
+                                <ul>
+                                    <li><span class="highlight">Cytotoxicity</span></li>
+                                    <li><span class="highlight">Allergenicity</span></li>
+                                    <li><span class="highlight">Cariostatic effects</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="slide-number">4</div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Dental Amalgam -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Amalgam</h1>
+                    <div class="two-column">
+                        <div class="column amalgam-bg">
+                            <h2>Composition</h2>
+                            <ul>
+                                <li>40-50% Mercury (Hg)</li>
+                                <li>50-60% Alloy powder (Ag, Sn, Cu, Zn)</li>
+                                <li>Types: Low-copper (γ2 phase), High-copper (no γ2)</li>
+                            </ul>
+                            <h2>Properties</h2>
+                            <ul>
+                                <li>Compressive strength: 380-550 MPa</li>
+                                <li>Creep resistance: High-copper better</li>
+                                <li>Marginal breakdown: Low-copper worse</li>
+                                <li>Service life: 10-15 years</li>
+                            </ul>
+                        </div>
+                        <div class="column amalgam-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dental_amalgam.jpg/800px-Dental_amalgam.jpg" alt="Dental Amalgam" class="material-image">
+                            <h2>Clinical Considerations</h2>
+                            <ul>
+                                <li>Requires 1.5-2mm cavity depth</li>
+                                <li>Needs mechanical retention</li>
+                                <li>Delayed polishing (24h)</li>
+                                <li>Controversy over mercury safety</li>
+                                <li>Declining use worldwide</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">5</div>
+                </div>
+            </div>
+            
+            <!-- Slide 6: Composite Resins -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Composite Resins</h1>
+                    <div class="two-column">
+                        <div class="column composite-bg">
+                            <h2>Composition</h2>
+                            <ul>
+                                <li><span class="highlight">Resin matrix</span>: Bis-GMA or UDMA</li>
+                                <li><span class="highlight">Fillers</span>: Silica, glass (40-80% by volume)</li>
+                                <li><span class="highlight">Coupling agent</span>: Silane</li>
+                                <li><span class="highlight">Initiators</span>: Camphorquinone (light-cure)</li>
+                            </ul>
+                            <h2>Classification by Filler</h2>
+                            <ul>
+                                <li>Microfilled (0.04μm)</li>
+                                <li>Hybrid (0.4-1μm)</li>
+                                <li>Nanofilled (20-75nm)</li>
+                                <li>Bulk-fill (4-5mm depth cure)</li>
+                            </ul>
+                        </div>
+                        <div class="column composite-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9b/Composite_fillings.jpg/800px-Composite_fillings.jpg" alt="Composite Resins" class="material-image">
+                            <h2>Properties</h2>
+                            <ul>
+                                <li>Flexural strength: 90-180 MPa</li>
+                                <li>Wear resistance: Improved in newer formulations</li>
+                                <li>Polymerization shrinkage: 1.5-5% volume</li>
+                                <li>Thermal expansion: 25-38 ppm/°C</li>
+                            </ul>
+                            <h2>Advantages</h2>
+                            <ul>
+                                <li>Esthetic</li>
+                                <li>Bonding to tooth structure</li>
+                                <li>Conservative preparation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">6</div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Glass Ionomer Cements -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Glass Ionomer Cements (GIC)</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Composition</h2>
+                            <ul>
+                                <li><span class="highlight">Powder</span>: Calcium-alumino-fluorosilicate glass</li>
+                                <li><span class="highlight">Liquid</span>: Polyacrylic acid + tartaric acid</li>
+                                <li><span class="highlight">Reaction</span>: Acid-base setting</li>
+                            </ul>
+                            <h2>Types</h2>
+                            <ul>
+                                <li>Conventional (Type I, II, III)</li>
+                                <li>Resin-modified (light-cure)</li>
+                                <li>High-viscosity (atraumatic restorative)</li>
+                                <li>Metal-reinforced (cermets)</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Glass_ionomer_cement.jpg/800px-Glass_ionomer_cement.jpg" alt="Glass Ionomer" class="material-image">
+                            <h2>Properties</h2>
+                            <ul>
+                                <li>Compressive strength: 90-200 MPa</li>
+                                <li>Fluoride release: Sustained (anti-cariogenic)</li>
+                                <li>Adhesion: Chemical to tooth</li>
+                                <li>Biocompatibility: Excellent</li>
+                            </ul>
+                            <h2>Uses</h2>
+                            <ul>
+                                <li>Class V restorations</li>
+                                <li>Luting cement</li>
+                                <li>Liner/base</li>
+                                <li>Pediatric dentistry</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">7</div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Comparison of Restorative Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Restorative Materials Comparison</h1>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Property</th>
+                                <th>Amalgam</th>
+                                <th>Composite</th>
+                                <th>GIC</th>
+                            </tr>
+                            <tr>
+                                <td>Compressive Strength (MPa)</td>
+                                <td>380-550</td>
+                                <td>250-350</td>
+                                <td>90-200</td>
+                            </tr>
+                            <tr>
+                                <td>Tensile Strength (MPa)</td>
+                                <td>48-69</td>
+                                <td>45-75</td>
+                                <td>10-20</td>
+                            </tr>
+                            <tr>
+                                <td>Wear Resistance</td>
+                                <td>Excellent</td>
+                                <td>Good</td>
+                                <td>Fair</td>
+                            </tr>
+                            <tr>
+                                <td>Esthetics</td>
+                                <td>Poor</td>
+                                <td>Excellent</td>
+                                <td>Fair</td>
+                            </tr>
+                            <tr>
+                                <td>Bonding</td>
+                                <td>Mechanical</td>
+                                <td>Adhesive</td>
+                                <td>Chemical</td>
+                            </tr>
+                            <tr>
+                                <td>Fluoride Release</td>
+                                <td>No</td>
+                                <td>Some types</td>
+                                <td>Yes</td>
+                            </tr>
+                            <tr>
+                                <td>Clinical Longevity</td>
+                                <td>10-15 years</td>
+                                <td>5-10 years</td>
+                                <td>5-8 years</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="slide-number">8</div>
+                </div>
+            </div>
+            
+            <!-- Slide 9: Impression Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Impression Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Elastic Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Polyvinyl siloxane (PVS)</span>:
+                                    <ul>
+                                        <li>Most accurate</li>
+                                        <li>Excellent dimensional stability</li>
+                                        <li>Hydrophobic</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Polyether</span>:
+                                    <ul>
+                                        <li>Rigid after setting</li>
+                                        <li>Hydrophilic</li>
+                                        <li>Shorter working time</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Alginate</span>:
+                                    <ul>
+                                        <li>Inexpensive</li>
+                                        <li>For study models</li>
+                                        <li>Poor dimensional stability</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Rigid Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Zinc oxide eugenol</span>:
+                                    <ul>
+                                        <li>For edentulous impressions</li>
+                                        <li>Good tissue detail</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Impression compound</span>:
+                                    <ul>
+                                        <li>Thermoplastic</li>
+                                        <li>For border molding</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8d/Dental_impression_tray.jpg/800px-Dental_impression_tray.jpg" alt="Impression Materials" class="material-image">
+                            <h2>Digital Impressions</h2>
+                            <ul>
+                                <li>Intraoral scanners</li>
+                                <li>No material needed</li>
+                                <li>Increasingly popular</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">9</div>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Dental Cements -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Cements</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Types by Use</h2>
+                            <ul>
+                                <li><span class="highlight">Luting</span>: Zinc phosphate, glass ionomer, resin</li>
+                                <li><span class="highlight">Temporary</span>: Zinc oxide eugenol (ZOE), noneugenol</li>
+                                <li><span class="highlight">Liners</span>: Calcium hydroxide, glass ionomer</li>
+                                <li><span class="highlight">Bases</span>: Zinc phosphate, polycarboxylate</li>
+                            </ul>
+                            <h2>Properties Comparison</h2>
+                            <ul>
+                                <li><span class="highlight">Strength</span>: Resin > GI > Zinc phosphate</li>
+                                <li><span class="highlight">Solubility</span>: ZOE > GI > Resin</li>
+                                <li><span class="highlight">Adhesion</span>: Resin > GI > Zinc phosphate</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dental_cements.jpg/800px-Dental_cements.jpg" alt="Dental Cements" class="material-image">
+                            <h2>Clinical Selection Factors</h2>
+                            <ul>
+                                <li>Tooth preparation design</li>
+                                <li>Retention needs</li>
+                                <li>Pulpal health</li>
+                                <li>Alloy type being cemented</li>
+                                <li>Esthetic requirements</li>
+                                <li>Fluoride release needs</li>
+                            </ul>
+                            <h2>New Developments</h2>
+                            <ul>
+                                <li>Self-adhesive resin cements</li>
+                                <li>Bioactive cements</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">10</div>
+                </div>
+            </div>
+            
+            <!-- Slide 11: Dental Ceramics -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Ceramics</h1>
+                    <div class="two-column">
+                        <div class="column ceramic-bg">
+                            <h2>Types</h2>
+                            <ul>
+                                <li><span class="highlight">Feldspathic porcelain</span>:
+                                    <ul>
+                                        <li>For veneers, inlays</li>
+                                        <li>Highly esthetic</li>
+                                        <li>Low strength</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Lithium disilicate</span>:
+                                    <ul>
+                                        <li>(e.g., IPS e.max)</li>
+                                        <li>350-400 MPa strength</li>
+                                        <li>For crowns, veneers</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Zirconia</span>:
+                                    <ul>
+                                        <li>900-1200 MPa strength</li>
+                                        <li>For crowns, bridges, implants</li>
+                                        <li>Less translucent</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column ceramic-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Dental_ceramics.jpg/800px-Dental_ceramics.jpg" alt="Dental Ceramics" class="material-image">
+                            <h2>Fabrication Methods</h2>
+                            <ul>
+                                <li><span class="highlight">Sintering</span>: Traditional powder buildup</li>
+                                <li><span class="highlight">CAD/CAM</span>: Milling from blocks</li>
+                                <li><span class="highlight">Heat pressing</span>: Lost-wax technique</li>
+                                <li><span class="highlight">3D printing</span>: Emerging technology</li>
+                            </ul>
+                            <h2>Clinical Considerations</h2>
+                            <ul>
+                                <li>Tooth preparation design critical</li>
+                                <li>Need for bonding vs. cementation</li>
+                                <li>Wear of opposing dentition</li>
+                                <li>Chipping risk with zirconia</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">11</div>
+                </div>
+            </div>
+            
+            <!-- Slide 12: Dental Alloys -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Alloys</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Noble Metal Alloys</h2>
+                            <ul>
+                                <li><span class="highlight">High noble</span> (Au > 40%):
+                                    <ul>
+                                        <li>Type I-IV gold alloys</li>
+                                        <li>Excellent corrosion resistance</li>
+                                        <li>High cost</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Palladium-based</span>:
+                                    <ul>
+                                        <li>Less expensive than gold</li>
+                                        <li>Good properties</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Base Metal Alloys</h2>
+                            <ul>
+                                <li><span class="highlight">Cobalt-chrome</span>:
+                                    <ul>
+                                        <li>For removable partial dentures</li>
+                                        <li>High strength</li>
+                                        <li>Difficult to adjust</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Nickel-chrome</span>:
+                                    <ul>
+                                        <li>For crowns, bridges</li>
+                                        <li>Nickel allergy concerns</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dental_alloys.jpg/800px-Dental_alloys.jpg" alt="Dental Alloys" class="material-image">
+                            <h2>Titanium</h2>
+                            <ul>
+                                <li>Excellent biocompatibility</li>
+                                <li>Low density</li>
+                                <li>Difficult to cast</li>
+                                <li>Used for implants</li>
+                            </ul>
+                            <h2>Properties Comparison</h2>
+                            <ul>
+                                <li><span class="highlight">Strength</span>: Co-Cr > Ni-Cr > Gold</li>
+                                <li><span class="highlight">Corrosion resistance</span>: Gold > Pd > Ti > Co-Cr</li>
+                                <li><span class="highlight">Castability</span>: Gold > Pd > Ni-Cr > Co-Cr</li>
+                                <li><span class="highlight">Cost</span>: Gold > Pd > Ni-Cr > Co-Cr</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">12</div>
+                </div>
+            </div>
+            
+            <!-- Slide 13: Polymers in Dentistry -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Polymers in Dentistry</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Types</h2>
+                            <ul>
+                                <li><span class="highlight">Acrylic resins</span>:
+                                    <ul>
+                                        <li>PMMA (polymethyl methacrylate)</li>
+                                        <li>For dentures, temporary crowns</li>
+                                        <li>Heat-cured or auto-polymerized</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Elastomers</span>:
+                                    <ul>
+                                        <li>For impression materials</li>
+                                        <li>Polyethers, polysulfides</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Composite resins</span>:
+                                    <ul>
+                                        <li>Bis-GMA based</li>
+                                        <li>For restorations</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Denture.jpg/800px-Denture.jpg" alt="Dental Polymers" class="material-image">
+                            <h2>Properties</h2>
+                            <ul>
+                                <li><span class="highlight">Advantages</span>:
+                                    <ul>
+                                        <li>Easy to fabricate</li>
+                                        <li>Low cost</li>
+                                        <li>Esthetic</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Limitations</span>:
+                                    <ul>
+                                        <li>Polymerization shrinkage</li>
+                                        <li>Water sorption</li>
+                                        <li>Wear</li>
+                                        <li>Thermal expansion</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>New Developments</h2>
+                            <ul>
+                                <li>High-impact resins</li>
+                                <li>Injectable resins</li>
+                                <li>3D printable resins</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">13</div>
+                </div>
+            </div>
+            
+            <!-- Slide 14: Biocompatibility -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Biocompatibility of Dental Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Potential Issues</h2>
+                            <ul>
+                                <li><span class="highlight">Cytotoxicity</span>:
+                                    <ul>
+                                        <li>From monomers, metals, byproducts</li>
+                                        <li>May affect pulp, gingiva</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Allergic reactions</span>:
+                                    <ul>
+                                        <li>Nickel (10% population sensitive)</li>
+                                        <li>Latex, acrylates</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Carcinogenicity</span>:
+                                    <ul>
+                                        <li>Formaldehyde release</li>
+                                        <li>Beryllium (in some alloys)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Allergic_contact_dermatitis.jpg/800px-Allergic_contact_dermatitis.jpg" alt="Biocompatibility" class="material-image">
+                            <h2>Testing Methods</h2>
+                            <ul>
+                                <li><span class="highlight">In vitro</span>:
+                                    <ul>
+                                        <li>Cell culture tests</li>
+                                        <li>Agar diffusion</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">In vivo</span>:
+                                    <ul>
+                                        <li>Animal tests</li>
+                                        <li>Usage tests</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Clinical trials</span></li>
+                            </ul>
+                            <h2>Regulations</h2>
+                            <ul>
+                                <li>ISO 10993 standards</li>
+                                <li>FDA classification (I, II, III)</li>
+                                <li>EU Medical Device Regulation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">14</div>
+                </div>
+            </div>
+            
+            <!-- Slide 15: Adhesive Systems -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Adhesive Systems</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Enamel Bonding</h2>
+                            <ul>
+                                <li><span class="highlight">Etch-and-rinse</span>:
+                                    <ul>
+                                        <li>37% phosphoric acid</li>
+                                        <li>Creates microporosities</li>
+                                        <li>Bond strength 20-30 MPa</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Dentin Bonding</h2>
+                            <ul>
+                                <li><span class="highlight">Total-etch</span> (4th gen):
+                                    <ul>
+                                        <li>Separate etch, prime, bond</li>
+                                        <li>Gold standard</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Self-etch</span> (6th-8th gen):
+                                    <ul>
+                                        <li>Acidic monomers</li>
+                                        <li>Less technique sensitive</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Universal adhesives</span>:
+                                    <ul>
+                                        <li>Can be used in any mode</li>
+                                        <li>Simplified procedures</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dental_adhesive.jpg/800px-Dental_adhesive.jpg" alt="Adhesive Systems" class="material-image">
+                            <h2>Hybrid Layer</h2>
+                            <ul>
+                                <li>Resin-infiltrated dentin</li>
+                                <li>5-10μm thick</li>
+                                <li>Critical for bond strength</li>
+                            </ul>
+                            <h2>Factors Affecting Bonding</h2>
+                            <ul>
+                                <li>Smear layer management</li>
+                                <li>Dentin moisture</li>
+                                <li>Matrix metalloproteinases (MMPs)</li>
+                                <li>Bond degradation over time</li>
+                            </ul>
+                            <h2>New Developments</h2>
+                            <ul>
+                                <li>MMP inhibitors</li>
+                                <li>Bioactive adhesives</li>
+                                <li>Self-healing bonds</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">15</div>
+                </div>
+            </div>
+            
+            <!-- Slide 16: CAD/CAM Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>CAD/CAM Dental Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Milling Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Zirconia</span>:
+                                    <ul>
+                                        <li>Y-TZP (yttria-stabilized)</li>
+                                        <li>High strength (900-1200 MPa)</li>
+                                        <li>Multilayer options for esthetics</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Lithium disilicate</span>:
+                                    <ul>
+                                        <li>IPS e.max CAD</li>
+                                        <li>350-400 MPa after crystallization</li>
+                                        <li>Excellent esthetics</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Hybrid ceramics</span>:
+                                    <ul>
+                                        <li>Resin-ceramic composites</li>
+                                        <li>Easier milling</li>
+                                        <li>Lower modulus</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/CAD-CAM_dental_restoration.jpg/800px-CAD-CAM_dental_restoration.jpg" alt="CAD/CAM" class="material-image">
+                            <h2>3D Printing Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Resins</span>:
+                                    <ul>
+                                        <li>For models, surgical guides</li>
+                                        <li>Interim restorations</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Metals</span>:
+                                    <ul>
+                                        <li>Co-Cr alloys</li>
+                                        <li>Titanium</li>
+                                        <li>For frameworks, implants</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Advantages</h2>
+                            <ul>
+                                <li>Single-visit dentistry</li>
+                                <li>Digital workflow</li>
+                                <li>Improved fit</li>
+                                <li>Material efficiency</li>
+                            </ul>
+                            <h2>Limitations</h2>
+                            <ul>
+                                <li>High equipment cost</li>
+                                <li>Learning curve</li>
+                                <li>Material limitations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">16</div>
+                </div>
+            </div>
+            
+            <!-- Slide 17: Endodontic Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Endodontic Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Root Canal Sealers</h2>
+                            <ul>
+                                <li><span class="highlight">Zinc oxide eugenol</span>:
+                                    <ul>
+                                        <li>Classic material</li>
+                                        <li>Antimicrobial</li>
+                                        <li>May stain tooth</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Calcium hydroxide</span>:
+                                    <ul>
+                                        <li>Biocompatible</li>
+                                        <li>Promotes healing</li>
+                                        <li>Weak antibacterial</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Epoxy resin</span>:
+                                    <ul>
+                                        <li>(e.g., AH Plus)</li>
+                                        <li>Excellent adhesion</li>
+                                        <li>Dimensional stability</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Bioceramic</span>:
+                                    <ul>
+                                        <li>MTA-based</li>
+                                        <li>Excellent sealing</li>
+                                        <li>Promotes regeneration</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Endodontic_materials.jpg/800px-Endodontic_materials.jpg" alt="Endodontic Materials" class="material-image">
+                            <h2>Obturation Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Gutta-percha</span>:
+                                    <ul>
+                                        <li>Standard material</li>
+                                        <li>Thermoplastic</li>
+                                        <li>Used with sealer</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Resin</span>:
+                                    <ul>
+                                        <li>e.g., Resilon</li>
+                                        <li>Bonds to sealers</li>
+                                        <li>Similar handling to GP</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Other Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Intracanal medicaments</span>:
+                                    <ul>
+                                        <li>Calcium hydroxide paste</li>
+                                        <li>Chlorhexidine</li>
+                                        <li>Corticosteroid-antibiotic</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Perforation repair</span>:
+                                    <ul>
+                                        <li>MTA</li>
+                                        <li>Bioceramics</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">17</div>
+                </div>
+            </div>
+            
+            <!-- Slide 18: Orthodontic Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Orthodontic Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Fixed Appliances</h2>
+                            <ul>
+                                <li><span class="highlight">Brackets</span>:
+                                    <ul>
+                                        <li>Metal (stainless steel)</li>
+                                        <li>Ceramic (polycrystalline, monocrystalline)</li>
+                                        <li>Self-ligating</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Archwires</span>:
+                                    <ul>
+                                        <li>Stainless steel</li>
+                                        <li>Nickel-titanium (superelastic)</li>
+                                        <li>Beta-titanium (TMA)</li>
+                                        <li>Copper-nickel-titanium</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Bands</span>:
+                                    <ul>
+                                        <li>Stainless steel</li>
+                                        <li>With buccal tubes</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Orthodontic_brackets.jpg/800px-Orthodontic_brackets.jpg" alt="Orthodontic Materials" class="material-image">
+                            <h2>Adhesives</h2>
+                            <ul>
+                                <li><span class="highlight">Composite resin</span>:
+                                    <ul>
+                                        <li>Light-cured</li>
+                                        <li>With primer</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">RMGI</span>:
+                                    <ul>
+                                        <li>For high caries risk</li>
+                                        <li>Fluoride release</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Clear Aligners</h2>
+                            <ul>
+                                <li><span class="highlight">Polyurethane</span>:
+                                    <ul>
+                                        <li>Thermoformed</li>
+                                        <li>Worn 20-22h/day</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Attachment materials</span>:
+                                    <ul>
+                                        <li>Composite</li>
+                                        <li>For better control</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>New Developments</h2>
+                            <ul>
+                                <li>Smart wires (temperature responsive)</li>
+                                <li>3D printed aligners</li>
+                                <li>Bioactive adhesives</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">18</div>
+                </div>
+            </div>
+            
+            <!-- Slide 19: Preventive Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Preventive Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Pit and Fissure Sealants</h2>
+                            <ul>
+                                <li><span class="highlight">Resin-based</span>:
+                                    <ul>
+                                        <li>Bis-GMA or UDMA</li>
+                                        <li>Require etching</li>
+                                        <li>Light-cured</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Glass ionomer</span>:
+                                    <ul>
+                                        <li>Fluoride release</li>
+                                        <li>Less technique sensitive</li>
+                                        <li>Lower retention</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Fluoride Releasing Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Varnishes</span>:
+                                    <ul>
+                                        <li>5% NaF (22,600 ppm F)</li>
+                                        <li>Applied 2-4x/year</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Gels/foams</span>:
+                                    <ul>
+                                        <li>APF (1.23% F)</li>
+                                        <li>For office application</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Restorative materials</span>:
+                                    <ul>
+                                        <li>GI, RMGI, some composites</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dental_sealant.jpg/800px-Dental_sealant.jpg" alt="Preventive Materials" class="material-image">
+                            <h2>Desensitizing Agents</h2>
+                            <ul>
+                                <li><span class="highlight">Potassium nitrate</span>:
+                                    <ul>
+                                        <li>In toothpastes</li>
+                                        <li>Blocks nerve transmission</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Oxalates</span>:
+                                    <ul>
+                                        <li>Precipitates in tubules</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Glutaraldehyde/HEMA</span>:
+                                    <ul>
+                                        <li>Seals tubules</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Antimicrobials</h2>
+                            <ul>
+                                <li><span class="highlight">Chlorhexidine</span>:
+                                    <ul>
+                                        <li>0.12% rinse</li>
+                                        <li>For gingivitis</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Xylitol</span>:
+                                    <ul>
+                                        <li>In chewing gums</li>
+                                        <li>Reduces S. mutans</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">19</div>
+                </div>
+            </div>
+            
+            <!-- Slide 20: Implant Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Implant Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Implant Body</h2>
+                            <ul>
+                                <li><span class="highlight">Titanium (CP or alloy)</span>:
+                                    <ul>
+                                        <li>Grade 4 (CP) or Grade 5 (Ti-6Al-4V)</li>
+                                        <li>Osseointegration capability</li>
+                                        <li>Surface treatments (SLA, anodized)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Zirconia</span>:
+                                    <ul>
+                                        <li>Metal-free alternative</li>
+                                        <li>Less research than titanium</li>
+                                        <li>Esthetic advantage</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Abutment Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Titanium</span>:
+                                    <ul>
+                                        <li>Standard material</li>
+                                        <li>Strong, biocompatible</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Zirconia</span>:
+                                    <ul>
+                                        <li>For esthetic zone</li>
+                                        <li>Less gray show-through</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Gold</span>:
+                                    <ul>
+                                        <li>For screw-retained</li>
+                                        <li>High precision</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Dental_implant.jpg/800px-Dental_implant.jpg" alt="Dental Implants" class="material-image">
+                            <h2>Prosthetic Components</h2>
+                            <ul>
+                                <li><span class="highlight">Screw materials</span>:
+                                    <ul>
+                                        <li>Titanium alloy</li>
+                                        <li>Gold alloy</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Cement vs screw-retained</span>:
+                                    <ul>
+                                        <li>Material selection differs</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Surface Modifications</h2>
+                            <ul>
+                                <li><span class="highlight">Macro</span>:
+                                    <ul>
+                                        <li>Thread design</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Micro</span>:
+                                    <ul>
+                                        <li>Acid-etching</li>
+                                        <li>SLA (sandblasted, acid-etched)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Nano</span>:
+                                    <ul>
+                                        <li>Nanotubes</li>
+                                        <li>Bioactive coatings</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>New Developments</h2>
+                            <ul>
+                                <li>Peek implants</li>
+                                <li>Bioactive surfaces</li>
+                                <li>3D printed custom implants</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">20</div>
+                </div>
+            </div>
+            
+            <!-- Slide 21: Temporary Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Temporary Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Direct Temporization</h2>
+                            <ul>
+                                <li><span class="highlight">Acrylic resins</span>:
+                                    <ul>
+                                        <li>PMMA (powder/liquid)</li>
+                                        <li>Bis-acryl (auto-mix)</li>
+                                        <li>Light-cure</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Composite resins</span>:
+                                    <ul>
+                                        <li>For longer-term temps</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Indirect Temporization</h2>
+                            <ul>
+                                <li><span class="highlight">Provisional crowns/bridges</span>:
+                                    <ul>
+                                        <li>Lab-fabricated</li>
+                                        <li>Higher quality</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Cements for Temps</h2>
+                            <ul>
+                                <li><span class="highlight">ZOE</span>:
+                                    <ul>
+                                        <li>Eugenol-containing</li>
+                                        <li>Non-eugenol</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Resin temporary cements</span></li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Temporary_crown.jpg/800px-Temporary_crown.jpg" alt="Temporary Materials" class="material-image">
+                            <h2>Clinical Requirements</h2>
+                            <ul>
+                                <li>Easy to fabricate</li>
+                                <li>Adequate strength</li>
+                                <li>Good marginal fit</li>
+                                <li>Easy to remove</li>
+                                <li>Biocompatible</li>
+                                <li>Esthetic</li>
+                            </ul>
+                            <h2>New Developments</h2>
+                            <ul>
+                                <li>3D printed provisionals</li>
+                                <li>Prefabricated shells</li>
+                                <li>CAD/CAM milled temps</li>
+                            </ul>
+                            <h2>Common Problems</h2>
+                            <ul>
+                                <li>Fracture</li>
+                                <li>Debonding</li>
+                                <li>Poor occlusion</li>
+                                <li>Gingival irritation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">21</div>
+                </div>
+            </div>
+            
+            <!-- Slide 22: Material Selection -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Clinical Material Selection</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Factors to Consider</h2>
+                            <ul>
+                                <li><span class="highlight">Tooth location</span>:
+                                    <ul>
+                                        <li>Anterior vs posterior</li>
+                                        <li>Load-bearing needs</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Extent of destruction</span>:
+                                    <ul>
+                                        <li>Small vs large restorations</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Patient factors</span>:
+                                    <ul>
+                                        <li>Age</li>
+                                        <li>Caries risk</li>
+                                        <li>Bruxism</li>
+                                        <li>Esthetic demands</li>
+                                        <li>Cost considerations</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Operator factors</span>:
+                                    <ul>
+                                        <li>Skill level</li>
+                                        <li>Equipment available</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dental_restoration_decision_tree.jpg/800px-Dental_restoration_decision_tree.jpg" alt="Material Selection" class="material-image">
+                            <h2>Common Clinical Scenarios</h2>
+                            <ul>
+                                <li><span class="highlight">Class I/II caries</span>:
+                                    <ul>
+                                        <li>Composite</li>
+                                        <li>Amalgam (declining)</li>
+                                        <li>High-viscosity GIC (atraumatic)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Class III/IV</span>:
+                                    <ul>
+                                        <li>Composite</li>
+                                        <li>Porcelain veneer/crown</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Full coverage</span>:
+                                    <ul>
+                                        <li>Metal-ceramic</li>
+                                        <li>All-ceramic</li>
+                                        <li>Zirconia</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Pediatric</span>:
+                                    <ul>
+                                        <li>Stainless steel crowns</li>
+                                        <li>GIC</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">22</div>
+                </div>
+            </div>
+            
+            <!-- Slide 23: Failure Analysis -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Material Failure Analysis</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Common Failure Modes</h2>
+                            <ul>
+                                <li><span class="highlight">Fracture</span>:
+                                    <ul>
+                                        <li>Bulk fracture</li>
+                                        <li>Crack propagation</li>
+                                        <li>Fatigue failure</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Debonding</span>:
+                                    <ul>
+                                        <li>Adhesive failure</li>
+                                        <li>Cohesive failure</li>
+                                        <li>Mixed failure</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Wear</span>:
+                                    <ul>
+                                        <li>Abrasive wear</li>
+                                        <li>Attrition</li>
+                                        <li>Erosion</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Discoloration</span>:
+                                    <ul>
+                                        <li>Surface staining</li>
+                                        <li>Intrinsic color change</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Failed_dental_restoration.jpg/800px-Failed_dental_restoration.jpg" alt="Failed Restoration" class="material-image">
+                            <h2>Contributing Factors</h2>
+                            <ul>
+                                <li><span class="highlight">Material factors</span>:
+                                    <ul>
+                                        <li>Inadequate properties</li>
+                                        <li>Poor formulation</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Technical factors</span>:
+                                    <ul>
+                                        <li>Improper manipulation</li>
+                                        <li>Contamination</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Design factors</span>:
+                                    <ul>
+                                        <li>Inadequate thickness</li>
+                                        <li>Sharp angles</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Patient factors</span>:
+                                    <ul>
+                                        <li>Bruxism</li>
+                                        <li>Poor oral hygiene</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Prevention Strategies</h2>
+                            <ul>
+                                <li>Proper material selection</li>
+                                <li>Good technique</li>
+                                <li>Patient education</li>
+                                <li>Regular maintenance</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">23</div>
+                </div>
+            </div>
+            
+            <!-- Slide 24: Emerging Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Emerging Dental Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Bioactive Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Bioactive glasses</span>:
+                                    <ul>
+                                        <li>Stimulate remineralization</li>
+                                        <li>Antibacterial</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Calcium phosphate cements</span>:
+                                    <ul>
+                                        <li>For bone regeneration</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">MTA derivatives</span>:
+                                    <ul>
+                                        <li>Faster setting</li>
+                                        <li>Improved handling</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Smart Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Shape memory alloys</span>:
+                                    <ul>
+                                        <li>For orthodontics</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">pH-responsive materials</span>:
+                                    <ul>
+                                        <li>Release therapeutic agents</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Self-healing materials</span>:
+                                    <ul>
+                                        <li>Microcapsule technology</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Bioactive_materials.jpg/800px-Bioactive_materials.jpg" alt="Emerging Materials" class="material-image">
+                            <h2>Nanotechnology</h2>
+                            <ul>
+                                <li><span class="highlight">Nanocomposites</span>:
+                                    <ul>
+                                        <li>Improved strength</li>
+                                        <li>Better polishability</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Nano-hydroxyapatite</span>:
+                                    <ul>
+                                        <li>For remineralization</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Antimicrobial nanoparticles</span>:
+                                    <ul>
+                                        <li>Silver, zinc oxide</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Digital Materials</h2>
+                            <ul>
+                                <li><span class="highlight">3D printable resins</span>:
+                                    <ul>
+                                        <li>For models, surgical guides</li>
+                                        <li>Interim restorations</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">CAD/CAM materials</span>:
+                                    <ul>
+                                        <li>Improved ceramics</li>
+                                        <li>Hybrid materials</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Tissue Engineering</h2>
+                            <ul>
+                                <li>Scaffold materials</li>
+                                <li>Growth factor delivery</li>
+                                <li>Stem cell applications</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">24</div>
+                </div>
+            </div>
+            
+            <!-- Slide 25: Summary -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3050/3050155.png" alt="Materials Icon" class="material-icon">
+                    <h1>Key Takeaways</h1>
+                    <ul style="text-align: left;">
+                        <li>Dental materials must balance mechanical, biological, and aesthetic properties</li>
+                        <li>Material selection depends on clinical situation and patient factors</li>
+                        <li>Understanding properties helps predict clinical performance</li>
+                        <li>New materials continuously emerging with improved characteristics</li>
+                        <li>Proper manipulation is crucial for optimal performance</li>
+                        <li>Biocompatibility is essential for all intraoral materials</li>
+                        <li>Digital technologies are transforming material fabrication</li>
+                        <li>Future materials will be more bioactive and intelligent</li>
+                    </ul>
+                    <h2 style="margin-top: 30px;">Questions and Discussion</h2>
+                    <div class="slide-number">25</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="prev-btn">←</button>
+        <button class="control-btn" id="next-btn">→</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelector('.slides');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const totalSlides = 25;
+        let currentSlide = 0;
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 4}%)`;
+            progressBar.style.width = `${(currentSlide + 1) / totalSlides * 100}%`;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
