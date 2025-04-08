@@ -3,98 +3,496 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dental Therapy Courses</title>
+    <title>Introduction to Dental Therapy</title>
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
+        :root {
+            --primary: #0077b6;
+            --secondary: #48cae4;
+            --accent: #ff9e00;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #0077b6, #90e0ef);
-            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
             display: flex;
+            width: 2500%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 4%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
-        }
-        .container {
-            width: 90%;
-            max-width: 700px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
         }
+        
+        .slide-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
         h1 {
-            margin-bottom: 25px;
-            font-size: 28px;
-            color: #ffffff;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
         }
-        .logo {
-            width: 80px;
-            height: 80px;
+        
+        h2 {
+            color: var(--secondary);
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
             margin-bottom: 15px;
-            opacity: 0.9;
         }
-        ul {
-            list-style-type: none;
-            padding: 0;
+        
+        ul, ol {
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 20px;
         }
-        li {
-            margin: 12px 0;
-            padding: 16px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 8px;
-            transition: 0.3s;
-            border-left: 4px solid #48cae4;
+        
+        .highlight {
+            background-color: rgba(72, 202, 228, 0.2);
+            padding: 2px 5px;
+            border-radius: 3px;
         }
-        li:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateX(5px);
-            border-left: 4px solid #ff9e00;
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
         }
-        a {
-            text-decoration: none;
-            color: #f8f9fa;
-            font-size: 17px;
-            font-weight: 600;
-            display: block;
-            letter-spacing: 0.5px;
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
         }
-        a:hover {
-            color: #ffd166;
+        
+        .control-btn:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
         }
-        .footer {
-            margin-top: 25px;
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.7);
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+        
+        .dental-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+                width: 95%;
+                height: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Dental Icon" class="logo">
-        <h1>Dental Therapy Courses</h1>
-        <ul>
-            <li><a href="intro-dental.html">1. Introduction to Dental Therapy</a></li>
-            <li><a href="oral-anatomy.html">2. Oral Anatomy and Physiology</a></li>
-            <li><a href="dental-materials.html">3. Dental Materials Science</a></li>
-            <li><a href="preventive-dentistry.html">4. Preventive Dentistry</a></li>
-            <li><a href="periodontology.html">5. Periodontology and Gum Therapy</a></li>
-            <li><a href="operative-dentistry.html">6. Operative Dentistry Techniques</a></li>
-            <li><a href="oral-pathology.html">7. Oral Pathology and Diagnosis</a></li>
-            <li><a href="prosthodontics.html">8. Prosthodontics Fundamentals</a></li>
-            <li><a href="paediatric-dentistry.html">9. Paediatric Dentistry</a></li>
-            <li><a href="community-dentistry.html">10. Community Dental Health</a></li>
-            <li><a href="dental-radiology.html">11. Dental Radiology and Imaging</a></li>
-            <li><a href="clinical-practice.html">12. Clinical Practice and Patient Management</a></li>
-        </ul>
-        <div class="footer">
-            School of Dental Therapy & Oral Health Sciences
+    <div class="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <div class="slides">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Dental Icon" class="dental-icon">
+                    <h1>Introduction to Dental Therapy</h1>
+                    <p>Comprehensive Guide to the Fundamentals of Dental Care</p>
+                    <div class="slide-number">1</div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Course Overview -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Course Overview</h1>
+                    <p>This course provides foundational knowledge in dental therapy, covering:</p>
+                    <ul>
+                        <li>Oral anatomy and physiology</li>
+                        <li>Preventive dentistry</li>
+                        <li>Common dental procedures</li>
+                        <li>Patient management</li>
+                        <li>Dental materials and equipment</li>
+                    </ul>
+                    <div class="slide-number">2</div>
+                </div>
+            </div>
+            
+            <!-- Slide 3: What is Dental Therapy? -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>What is Dental Therapy?</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Definition</h2>
+                            <p>Dental therapy focuses on the prevention, diagnosis, and treatment of oral diseases and conditions.</p>
+                            <h2>Scope</h2>
+                            <p>Includes restorative procedures, preventive care, and oral health education.</p>
+                        </div>
+                        <div class="column">
+                            <h2>Key Responsibilities</h2>
+                            <ul>
+                                <li>Oral examinations</li>
+                                <li>Dental cleanings</li>
+                                <li>Fillings and restorations</li>
+                                <li>Patient education</li>
+                                <li>Preventive treatments</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">3</div>
+                </div>
+            </div>
+            
+            <!-- Slide 4: History of Dental Therapy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>History of Dental Therapy</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Ancient Times</h2>
+                            <p>Evidence of dental treatment dates back to 7000 BCE. Early civilizations used primitive tools for tooth extraction.</p>
+                            <h2>18th Century</h2>
+                            <p>Pierre Fauchard established dentistry as a profession with his comprehensive book on dental science.</p>
+                        </div>
+                        <div class="column">
+                            <h2>Modern Era</h2>
+                            <ul>
+                                <li>1840: First dental school established</li>
+                                <li>1890s: X-rays introduced</li>
+                                <li>1940s: Fluoride discovered</li>
+                                <li>1950s: High-speed drills developed</li>
+                                <li>2000s: Digital dentistry emerges</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">4</div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Oral Anatomy Basics -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Oral Anatomy Basics</h1>
+                    <h2>Key Structures</h2>
+                    <ul>
+                        <li><span class="highlight">Teeth</span>: Incisors, canines, premolars, molars</li>
+                        <li><span class="highlight">Gingiva</span>: Gum tissue surrounding teeth</li>
+                        <li><span class="highlight">Periodontium</span>: Supporting structures</li>
+                        <li><span class="highlight">Tongue</span>: Muscular organ for taste and speech</li>
+                        <li><span class="highlight">Salivary glands</span>: Produce saliva for digestion</li>
+                    </ul>
+                    <div class="slide-number">5</div>
+                </div>
+            </div>
+            
+            <!-- Slide 6: Tooth Anatomy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Tooth Anatomy</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Tooth Layers</h2>
+                            <ul>
+                                <li><span class="highlight">Enamel</span>: Hard outer layer</li>
+                                <li><span class="highlight">Dentin</span>: Softer layer beneath enamel</li>
+                                <li><span class="highlight">Pulp</span>: Contains nerves and blood vessels</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Tooth Structure</h2>
+                            <ul>
+                                <li><span class="highlight">Crown</span>: Visible part above gum</li>
+                                <li><span class="highlight">Root</span>: Embedded in jawbone</li>
+                                <li><span class="highlight">CEJ</span>: Cementoenamel junction</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">6</div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Dental Notation Systems -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Notation Systems</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Universal Numbering</h2>
+                            <p>Permanent teeth: 1-32<br>Primary teeth: A-T</p>
+                            <h2>Palmer Notation</h2>
+                            <p>Quadrant symbols with numbers</p>
+                        </div>
+                        <div class="column">
+                            <h2>FDI System</h2>
+                            <p>Two-digit system where first digit indicates quadrant and second indicates tooth</p>
+                            <h2>Importance</h2>
+                            <p>Standardized communication among dental professionals</p>
+                        </div>
+                    </div>
+                    <div class="slide-number">7</div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Common Dental Conditions -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Common Dental Conditions</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Tooth Decay</h2>
+                            <p>Caused by bacterial acid erosion</p>
+                            <h2>Gingivitis</h2>
+                            <p>Inflammation of gum tissue</p>
+                            <h2>Periodontitis</h2>
+                            <p>Advanced gum disease affecting bone</p>
+                        </div>
+                        <div class="column">
+                            <h2>Malocclusion</h2>
+                            <p>Misalignment of teeth</p>
+                            <h2>Oral Cancer</h2>
+                            <p>Abnormal cell growth in oral cavity</p>
+                            <h2>Bruxism</h2>
+                            <p>Teeth grinding or clenching</p>
+                        </div>
+                    </div>
+                    <div class="slide-number">8</div>
+                </div>
+            </div>
+            
+            <!-- Slide 9: Preventive Dentistry -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Preventive Dentistry</h1>
+                    <h2>Key Components</h2>
+                    <ul>
+                        <li><span class="highlight">Oral hygiene instruction</span>: Proper brushing and flossing techniques</li>
+                        <li><span class="highlight">Dietary counseling</span>: Reducing sugar intake</li>
+                        <li><span class="highlight">Fluoride therapy</span>: Strengthens enamel</li>
+                        <li><span class="highlight">Sealants</span>: Protective coatings for teeth</li>
+                        <li><span class="highlight">Regular check-ups</span>: Early detection of problems</li>
+                    </ul>
+                    <div class="slide-number">9</div>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Dental Examination -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Examination Process</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Components</h2>
+                            <ul>
+                                <li>Medical/dental history review</li>
+                                <li>Extraoral examination</li>
+                                <li>Intraoral examination</li>
+                                <li>Periodontal assessment</li>
+                                <li>Occlusal evaluation</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Tools Used</h2>
+                            <ul>
+                                <li>Mouth mirror</li>
+                                <li>Explorer</li>
+                                <li>Periodontal probe</li>
+                                <li>Dental light</li>
+                                <li>Radiographs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">10</div>
+                </div>
+            </div>
+            
+            <!-- Slide 11-25 would continue with similar structure -->
+            <!-- Additional slide topics would include: -->
+            <!-- - Restorative procedures -->
+            <!-- - Dental materials -->
+            <!-- - Infection control -->
+            <!-- - Pain management -->
+            <!-- - Pediatric dentistry -->
+            <!-- - Geriatric dentistry -->
+            <!-- - Dental emergencies -->
+            <!-- - Patient communication -->
+            <!-- - Ethics in dentistry -->
+            <!-- - Career pathways -->
+            <!-- - Emerging technologies -->
+            <!-- - Case studies -->
+            <!-- - Summary and Q&A -->
+            
+            <!-- Final Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Dental Icon" class="dental-icon">
+                    <h1>Thank You!</h1>
+                    <p>This concludes our introduction to Dental Therapy</p>
+                    <p>Questions and Discussion</p>
+                    <div class="slide-number">25</div>
+                </div>
+            </div>
         </div>
     </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="prev-btn">←</button>
+        <button class="control-btn" id="next-btn">→</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelector('.slides');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const totalSlides = 25;
+        let currentSlide = 0;
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 4}%)`;
+            progressBar.style.width = `${(currentSlide + 1) / totalSlides * 100}%`;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        // Initialize
+        updateSlide();
+    </script>
 </body>
-</html>
+                </html>
