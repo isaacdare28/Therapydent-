@@ -1,0 +1,1813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preventive Dentistry</title>
+    <style>
+        :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --fluoride: #83c5be;
+            --sealant: #ffddd2;
+            --diet: #ffb4a2;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
+            display: flex;
+            width: 2500%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 4%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: rgba(42, 157, 143, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-btn:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+        
+        .prevention-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .prevention-image {
+            max-width: 250px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+        }
+        
+        .fluoride-bg {
+            background-color: var(--fluoride);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .sealant-bg {
+            background-color: var(--sealant);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .diet-bg {
+            background-color: var(--diet);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .card {
+            background: white;
+            border-left: 5px solid var(--accent);
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+                width: 95%;
+                height: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .prevention-image {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <div class="slides">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Preventive Dentistry Icon" class="prevention-icon">
+                    <h1>Preventive Dentistry</h1>
+                    <p>Strategies for Maintaining Optimal Oral Health</p>
+                    <div class="slide-number">1</div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Course Objectives -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Course Objectives</h1>
+                    <p>By the end of this module, you will understand:</p>
+                    <ul>
+                        <li>Principles of caries prevention</li>
+                        <li>Fluoride mechanisms and applications</li>
+                        <li>Pit and fissure sealants</li>
+                        <li>Dietary counseling strategies</li>
+                        <li>Plaque control techniques</li>
+                        <li>Risk assessment tools</li>
+                        <li>Preventive approaches for special needs</li>
+                        <li>Community prevention programs</li>
+                    </ul>
+                    <div class="slide-number">2</div>
+                </div>
+            </div>
+            
+            <!-- Slide 3: Caries Prevention Pyramid -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Caries Prevention Pyramid</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Primary Prevention</h2>
+                            <ul>
+                                <li><span class="highlight">Health promotion</span>:
+                                    <ul>
+                                        <li>Oral hygiene instruction</li>
+                                        <li>Dietary counseling</li>
+                                        <li>Fluoride exposure</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Specific protection</span>:
+                                    <ul>
+                                        <li>Sealants</li>
+                                        <li>Antimicrobials</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Secondary Prevention</h2>
+                            <ul>
+                                <li>Early diagnosis (bitewings, DIAGNOdent)</li>
+                                <li>Prompt treatment (incipient lesions)</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Tertiary Prevention</h2>
+                            <ul>
+                                <li>Restorative treatment</li>
+                                <li>Rehabilitation</li>
+                                <li>Recall maintenance</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Prevention_pyramid.svg/800px-Prevention_pyramid.svg.png" alt="Prevention Pyramid" class="prevention-image">
+                            <p><span class="highlight">Goal</span>: Focus on primary prevention to avoid disease initiation</p>
+                        </div>
+                    </div>
+                    <div class="slide-number">3</div>
+                </div>
+            </div>
+            
+            <!-- Slide 4: Fluoride Therapy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Fluoride Therapy</h1>
+                    <div class="two-column">
+                        <div class="column fluoride-bg">
+                            <h2>Mechanisms of Action</h2>
+                            <ul>
+                                <li><span class="highlight">Enhances remineralization</span>:
+                                    <ul>
+                                        <li>Forms fluorapatite</li>
+                                        <li>More acid-resistant</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Inhibits demineralization</span></li>
+                                <li><span class="highlight">Antibacterial effects</span>:
+                                    <ul>
+                                        <li>Inhibits bacterial enzymes</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Systemic Fluoride</h2>
+                            <ul>
+                                <li>Water fluoridation (0.7 ppm optimal)</li>
+                                <li>Dietary supplements (tablets/drops)</li>
+                                <li>Fluoridated salt/milk</li>
+                            </ul>
+                        </div>
+                        <div class="column fluoride-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Fluoridation_effects.svg/800px-Fluoridation_effects.svg.png" alt="Fluoride Effects" class="prevention-image">
+                            <h2>Topical Fluoride</h2>
+                            <ul>
+                                <li><span class="highlight">Professional</span>:
+                                    <ul>
+                                        <li>2% NaF (9040 ppm F)</li>
+                                        <li>1.23% APF (12,300 ppm F)</li>
+                                        <li>5% NaF varnish (22,600 ppm F)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Home use</span>:
+                                    <ul>
+                                        <li>Toothpaste (1000-1500 ppm F)</li>
+                                        <li>Mouthrinses (230-900 ppm F)</li>
+                                        <li>Gels (5000 ppm F)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">4</div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Fluoride Application Protocols -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Fluoride Application Protocols</h1>
+                    <div class="table-container">
+                        <table>
+                            <tr>
+                                <th>Risk Level</th>
+                                <th>Age 0-6</th>
+                                <th>Age 6-18</th>
+                                <th>Age 18+</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Low</strong></td>
+                                <td>Brush with fluoride toothpaste</td>
+                                <td>Brush with fluoride toothpaste</td>
+                                <td>Brush with fluoride toothpaste</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Moderate</strong></td>
+                                <td>F varnish 2x/year</td>
+                                <td>F varnish 2x/year or gel 2x/year</td>
+                                <td>F varnish/gel 1-2x/year</td>
+                            </tr>
+                            <tr>
+                                <td><strong>High</strong></td>
+                                <td>F varnish 4x/year</td>
+                                <td>F varnish 4x/year + gel 2x/year</td>
+                                <td>F varnish 4x/year + prescription F</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="two-column" style="margin-top: 20px;">
+                        <div class="column">
+                            <h2>Varnish Technique</h2>
+                            <ol>
+                                <li>Clean and dry teeth</li>
+                                <li>Apply thin layer to all surfaces</li>
+                                <li>Patient avoids eating/drinking 30 min</li>
+                                <li>No brushing for 4-6 hours</li>
+                            </ol>
+                        </div>
+                        <div class="column">
+                            <h2>Safety Considerations</h2>
+                            <ul>
+                                <li>Acute toxic dose: 5mg F/kg</li>
+                                <li>Chronic overexposure: Fluorosis</li>
+                                <li>Storage out of children's reach</li>
+                                <li>Supervise children <6 years</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">5</div>
+                </div>
+            </div>
+            
+            <!-- Slide 6: Pit and Fissure Sealants -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Pit and Fissure Sealants</h1>
+                    <div class="two-column">
+                        <div class="column sealant-bg">
+                            <h2>Indications</h2>
+                            <ul>
+                                <li>Deep pits/fissures</li>
+                                <li>Recently erupted teeth</li>
+                                <li>High caries risk patients</li>
+                                <li>Incipient lesions</li>
+                            </ul>
+                            <h2>Materials</h2>
+                            <ul>
+                                <li><span class="highlight">Resin-based</span>:
+                                    <ul>
+                                        <li>Filled or unfilled</li>
+                                        <li>Require etching</li>
+                                        <li>Light-cured</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Glass ionomer</span>:
+                                    <ul>
+                                        <li>Fluoride release</li>
+                                        <li>Lower retention</li>
+                                        <li>Good for difficult isolation</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column sealant-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Sealant_application.jpg/800px-Sealant_application.jpg" alt="Sealant Application" class="prevention-image">
+                            <h2>Application Steps</h2>
+                            <ol>
+                                <li>Clean tooth surface</li>
+                                <li>Isolate (rubber dam preferred)</li>
+                                <li>Etch for 15-30 sec</li>
+                                <li>Rinse and dry</li>
+                                <li>Apply bonding agent (if needed)</li>
+                                <li>Place sealant material</li>
+                                <li>Light cure</li>
+                                <li>Check occlusion</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="slide-number">6</div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Sealant Effectiveness -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Sealant Effectiveness</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Clinical Evidence</h2>
+                            <ul>
+                                <li>78% reduction in occlusal caries at 2 years</li>
+                                <li>60% reduction at 4 years</li>
+                                <li>Sealed teeth have 50% lower risk of restoration</li>
+                                <li>Effectiveness maintained if intact</li>
+                            </ul>
+                            <h2>Retention Factors</h2>
+                            <ul>
+                                <li>Operator skill</li>
+                                <li>Moisture control</li>
+                                <li>Tooth eruption stage</li>
+                                <li>Material selection</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Sealant_retention.jpg/800px-Sealant_retention.jpg" alt="Sealant Retention" class="prevention-image">
+                            <h2>Maintenance</h2>
+                            <ul>
+                                <li>Inspect at recall visits</li>
+                                <li>Reapply if partially lost</li>
+                                <li>Monitor for caries under sealant</li>
+                            </ul>
+                            <h2>Contraindications</h2>
+                            <ul>
+                                <li>Visible caries</li>
+                                <li>Well-coalesced pits/fissures</li>
+                                <li>Non-carious tooth</li>
+                                <li>Allergy to components</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">7</div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Dietary Counseling -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dietary Counseling</h1>
+                    <div class="two-column">
+                        <div class="column diet-bg">
+                            <h2>Cariogenic Factors</h2>
+                            <ul>
+                                <li><span class="highlight">Frequency</span>:
+                                    <ul>
+                                        <li>More harmful than amount</li>
+                                        <li>Critical pH 5.5</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Retentiveness</span>:
+                                    <ul>
+                                        <li>Sticky foods more harmful</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Sugar types</span>:
+                                    <ul>
+                                        <li>Sucrose most cariogenic</li>
+                                        <li>Lactose least cariogenic</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Protective Factors</h2>
+                            <ul>
+                                <li>Cheese (raises pH)</li>
+                                <li>Xylitol (non-fermentable)</li>
+                                <li>Fibrous foods (cleansing)</li>
+                                <li>Water (rinsing)</li>
+                            </ul>
+                        </div>
+                        <div class="column diet-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Stephan_curve.svg/800px-Stephan_curve.svg.png" alt="Stephan Curve" class="prevention-image">
+                            <h2>Counseling Strategies</h2>
+                            <ul>
+                                <li>3-day diet diary analysis</li>
+                                <li>Identify "danger times"</li>
+                                <li>Suggest alternatives:
+                                    <ul>
+                                        <li>Fresh fruits instead of dried</li>
+                                        <li>Water instead of soda</li>
+                                        <li>Xylitol gum after meals</li>
+                                    </ul>
+                                </li>
+                                <li>Limit between-meal snacks</li>
+                                <li>Use straws for acidic drinks</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">8</div>
+                </div>
+            </div>
+            
+            <!-- Slide 9: Oral Hygiene Instruction -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Oral Hygiene Instruction</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Toothbrushing</h2>
+                            <ul>
+                                <li><span class="highlight">Bass technique</span>:
+                                    <ul>
+                                        <li>45° angle to gingiva</li>
+                                        <li>Short vibratory strokes</li>
+                                        <li>Focus on sulcus</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Modified Stillman</span>:
+                                    <ul>
+                                        <li>For recession</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Frequency</span>:
+                                    <ul>
+                                        <li>2x/day minimum</li>
+                                        <li>After meals ideal</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Toothbrush Selection</h2>
+                            <ul>
+                                <li>Soft bristles</li>
+                                <li>Small head</li>
+                                <li>Replace every 3 months</li>
+                                <li>Powered brushes may be more effective</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Bass_brushing_technique.svg/800px-Bass_brushing_technique.svg.png" alt="Bass Technique" class="prevention-image">
+                            <h2>Toothpaste</h2>
+                            <ul>
+                                <li>Fluoride-containing</li>
+                                <li>1000-1500 ppm F for adults</li>
+                                <li>Smear for <3 years</li>
+                                <li>Pea-sized for 3-6 years</li>
+                            </ul>
+                            <h2>Special Considerations</h2>
+                            <ul>
+                                <li>Orthodontic patients</li>
+                                <li>Prosthesis wearers</li>
+                                <li>Xerostomia</li>
+                                <li>Dexterity challenges</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">9</div>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Interdental Cleaning -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Interdental Cleaning</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Flossing</h2>
+                            <ul>
+                                <li><span class="highlight">Technique</span>:
+                                    <ul>
+                                        <li>C-shape against tooth</li>
+                                        <li>Gently below gingiva</li>
+                                        <li>Clean both proximal surfaces</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Types</span>:
+                                    <ul>
+                                        <li>Waxed/unwaxed</li>
+                                        <li>PTFE (Glide)</li>
+                                        <li>Superfloss (for bridges)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Interdental Brushes</h2>
+                            <ul>
+                                <li>For open embrasures</li>
+                                <li>Size appropriately</li>
+                                <li>Gentle insertion</li>
+                                <li>Replace when worn</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Flossing_technique.jpg/800px-Flossing_technique.jpg" alt="Flossing Technique" class="prevention-image">
+                            <h2>Other Aids</h2>
+                            <ul>
+                                <li><span class="highlight">Wooden sticks</span>:
+                                    <ul>
+                                        <li>Stimulate gingiva</li>
+                                        <li>Remove plaque</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Water flossers</span>:
+                                    <ul>
+                                        <li>Good for ortho, implants</li>
+                                        <li>Doesn't replace flossing</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Tongue cleaners</span>:
+                                    <ul>
+                                        <li>Reduce halitosis</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Patient Education</h2>
+                            <ul>
+                                <li>Demonstrate on models</li>
+                                <li>Have patient return demo</li>
+                                <li>Provide written instructions</li>
+                                <li>Motivate with disclosing solution</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">10</div>
+                </div>
+            </div>
+            
+            <!-- Slide 11: Caries Risk Assessment -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Caries Risk Assessment</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>High Risk Factors</h2>
+                            <ul>
+                                <li><span class="highlight">Biological</span>:
+                                    <ul>
+                                        <li>Active caries</li>
+                                        <li>High S. mutans levels</li>
+                                        <li>Low saliva flow</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Behavioral</span>:
+                                    <ul>
+                                        <li>Frequent snacking</li>
+                                        <li>Poor oral hygiene</li>
+                                        <li>No fluoride exposure</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Environmental</span>:
+                                    <ul>
+                                        <li>Low socioeconomic status</li>
+                                        <li>Limited dental access</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Caries_risk_assessment_form.jpg/800px-Caries_risk_assessment_form.jpg" alt="Risk Assessment" class="prevention-image">
+                            <h2>Assessment Tools</h2>
+                            <ul>
+                                <li><span class="highlight">CAMBRA</span>:
+                                    <ul>
+                                        <li>Caries Management by Risk Assessment</li>
+                                        <li>Comprehensive questionnaire</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">CAT</span>:
+                                    <ul>
+                                        <li>Caries Assessment Tool</li>
+                                        <li>Simplified version</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">ADA Caries Risk Forms</span></li>
+                            </ul>
+                            <h2>Clinical Indicators</h2>
+                            <ul>
+                                <li>White spot lesions</li>
+                                <li>Restoration history</li>
+                                <li>Plaque accumulation</li>
+                                <li>Bleeding on probing</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">11</div>
+                </div>
+            </div>
+            
+            <!-- Slide 12: Saliva and Caries -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Saliva and Caries Prevention</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Protective Functions</h2>
+                            <ul>
+                                <li><span class="highlight">Cleansing</span>:
+                                    <ul>
+                                        <li>Removes food debris</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Buffering</span>:
+                                    <ul>
+                                        <li>Bicarbonate system</li>
+                                        <li>Neutralizes acids</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Remineralization</span>:
+                                    <ul>
+                                        <li>Calcium/phosphate ions</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Antimicrobial</span>:
+                                    <ul>
+                                        <li>Lysozyme, lactoferrin</li>
+                                        <li>Secretory IgA</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Salivary_glands.svg/800px-Salivary_glands.svg.png" alt="Salivary Glands" class="prevention-image">
+                            <h2>Xerostomia Management</h2>
+                            <ul>
+                                <li><span class="highlight">Stimulate flow</span>:
+                                    <ul>
+                                        <li>Sugar-free gum</li>
+                                        <li>Pilocarpine (Rx)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Saliva substitutes</span>:
+                                    <ul>
+                                        <li>Carboxymethylcellulose</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Preventive care</span>:
+                                    <ul>
+                                        <li>High-fluoride products</li>
+                                        <li>Frequent recalls</li>
+                                        <li>Avoid alcohol rinses</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Testing Salivary Flow</h2>
+                            <ul>
+                                <li>Unstimulated: <0.1 ml/min = low</li>
+                                <li>Stimulated: <0.7 ml/min = low</li>
+                                <li>Spit into cup for 5 minutes</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">12</div>
+                </div>
+            </div>
+            
+            <!-- Slide 13: Antimicrobials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Antimicrobial Approaches</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Chlorhexidine</h2>
+                            <ul>
+                                <li><span class="highlight">Properties</span>:
+                                    <ul>
+                                        <li>Gold standard antimicrobial</li>
+                                        <li>Substantivity (12h retention)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Forms</span>:
+                                    <ul>
+                                        <li>0.12% rinse (30 sec 2x/day)</li>
+                                        <li>Gel</li>
+                                        <li>Varnish</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Side effects</span>:
+                                    <ul>
+                                        <li>Staining</li>
+                                        <li>Taste alteration</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Essential Oils</h2>
+                            <ul>
+                                <li>Listerine (thymol, eucalyptol)</li>
+                                <li>30 sec rinse 2x/day</li>
+                                <li>Less effective than CHX</li>
+                                <li>Better taste</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Chlorhexidine_mouthwash.jpg/800px-Chlorhexidine_mouthwash.jpg" alt="Antimicrobials" class="prevention-image">
+                            <h2>Xylitol</h2>
+                            <ul>
+                                <li><span class="highlight">Mechanism</span>:
+                                    <ul>
+                                        <li>Non-fermentable sweetener</li>
+                                        <li>Disrupts S. mutans metabolism</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Forms</span>:
+                                    <ul>
+                                        <li>Gum (6-10g/day)</li>
+                                        <li>Mints</li>
+                                        <li>Toothpaste</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Dosage</span>:
+                                    <ul>
+                                        <li>5-10g/day in 3-5 exposures</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Probiotics</h2>
+                            <ul>
+                                <li>Lactobacillus strains</li>
+                                <li>Bifidobacterium</li>
+                                <li>Early evidence promising</li>
+                                <li>Not yet standard practice</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">13</div>
+                </div>
+            </div>
+            
+            <!-- Slide 14: Remineralization Agents -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Remineralization Agents</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Calcium Phosphate Technologies</h2>
+                            <ul>
+                                <li><span class="highlight">CPP-ACP</span> (Recaldent):
+                                    <ul>
+                                        <li>Casein phosphopeptide-amorphous calcium phosphate</li>
+                                        <li>Available in gum, toothpaste, cream</li>
+                                        <li>30-50% remineralization improvement</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">TCP</span> (Tri-Calcium Phosphate):
+                                    <ul>
+                                        <li>In some fluoride toothpastes</li>
+                                        <li>Enhances fluoride uptake</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">HAp</span> (Hydroxyapatite):
+                                    <ul>
+                                        <li>Biomimetic</li>
+                                        <li>Nano-HAp more effective</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Remineralization_process.svg/800px-Remineralization_process.svg.png" alt="Remineralization" class="prevention-image">
+                            <h2>Other Agents</h2>
+                            <ul>
+                                <li><span class="highlight">Arginine</span>:
+                                    <ul>
+                                        <li>Alkalinizing effect</li>
+                                        <li>In some toothpastes</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Stannous Fluoride</span>:
+                                    <ul>
+                                        <li>Antimicrobial + remineralization</li>
+                                        <li>May cause staining</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Bioactive Glasses</span>:
+                                    <ul>
+                                        <li>Release Ca, P, F ions</li>
+                                        <li>Form hydroxycarbonate apatite</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Clinical Application</h2>
+                            <ul>
+                                <li>Early white spot lesions</li>
+                                <li>Orthodontic patients</li>
+                                <li>Xerostomia</li>
+                                <li>High caries risk</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">14</div>
+                </div>
+            </div>
+            
+            <!-- Slide 15: Pediatric Prevention -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Pediatric Preventive Dentistry</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Early Childhood Caries (ECC)</h2>
+                            <ul>
+                                <li><span class="highlight">Definition</span>:
+                                    <ul>
+                                        <li>≥1 cavitated/non-cavitated lesion</li>
+                                        <li>Age <6 years</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Risk factors</span>:
+                                    <ul>
+                                        <li>Nighttime bottle feeding</li>
+                                        <li>Frequent sugary snacks</li>
+                                        <li>Maternal caries</li>
+                                        <li>Low socioeconomic status</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Prevention</span>:
+                                    <ul>
+                                        <li>First dental visit by age 1</li>
+                                        <li>Wean from bottle by 12-14 months</li>
+                                        <li>Brush with fluoride toothpaste</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Early_childhood_caries.jpg/800px-Early_childhood_caries.jpg" alt="ECC" class="prevention-image">
+                            <h2>Preventive Strategies</h2>
+                            <ul>
+                                <li><span class="highlight">Fluoride varnish</span>:
+                                    <ul>
+                                        <li>2-4x/year based on risk</li>
+                                        <li>From tooth eruption</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Sealants</span>:
+                                    <ul>
+                                        <li>Primary molars if deep fissures</li>
+                                        <li>Permanent molars ASAP</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Diet counseling</span>:
+                                    <ul>
+                                        <li>Limit juice to 4-6 oz/day</li>
+                                        <li>No bottle in bed</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Anticipatory guidance</span>:
+                                    <ul>
+                                        <li>Teething</li>
+                                        <li>Thumb sucking</li>
+                                        <li>Injury prevention</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">15</div>
+                </div>
+            </div>
+            
+            <!-- Slide 16: Geriatric Prevention -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Geriatric Preventive Dentistry</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Age-Related Challenges</h2>
+                            <ul>
+                                <li><span class="highlight">Root caries</span>:
+                                    <ul>
+                                        <li>From gingival recession</li>
+                                        <li>Higher in xerostomia</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Periodontal disease</span>:
+                                    <ul>
+                                        <li>Chronic inflammation</li>
+                                        <li>Attachment loss</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Dexterity issues</span>:
+                                    <ul>
+                                        <li>Arthritis</li>
+                                        <li>Parkinson's</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Medication effects</span>:
+                                    <ul>
+                                        <li>Xerostomia</li>
+                                        <li>Gingival hyperplasia</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Geriatric_dental_care.jpg/800px-Geriatric_dental_care.jpg" alt="Geriatric Care" class="prevention-image">
+                            <h2>Preventive Approaches</h2>
+                            <ul>
+                                <li><span class="highlight">High-fluoride products</span>:
+                                    <ul>
+                                        <li>5000 ppm F toothpaste</li>
+                                        <li>Daily fluoride rinse</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Adaptive aids</span>:
+                                    <ul>
+                                        <li>Electric toothbrushes</li>
+                                        <li>Floss holders</li>
+                                        <li>Three-sided brushes</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Caregiver training</span>:
+                                    <ul>
+                                        <li>For dependent elderly</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Frequent recalls</span>:
+                                    <ul>
+                                        <li>3-4 month intervals</li>
+                                        <li>Professional fluoride</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">16</div>
+                </div>
+            </div>
+            
+            <!-- Slide 17: Orthodontic Prevention -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Orthodontic Preventive Care</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Challenges</h2>
+                            <ul>
+                                <li><span class="highlight">Plaque retention</span>:
+                                    <ul>
+                                        <li>Around brackets/wires</li>
+                                        <li>Under bands</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Demineralization</span>:
+                                    <ul>
+                                        <li>White spot lesions</li>
+                                        <li>50% prevalence</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Gingivitis</span>:
+                                    <ul>
+                                        <li>From poor hygiene</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Pre-Treatment</h2>
+                            <ul>
+                                <li>Caries risk assessment</li>
+                                <li>Seal all susceptible teeth</li>
+                                <li>Restore active lesions</li>
+                                <li>Oral hygiene instruction</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Orthodontic_white_spot_lesions.jpg/800px-Orthodontic_white_spot_lesions.jpg" alt="Orthodontic White Spots" class="prevention-image">
+                            <h2>During Treatment</h2>
+                            <ul>
+                                <li><span class="highlight">Specialized brushes</span>:
+                                    <ul>
+                                        <li>Interproximal</li>
+                                        <li>End-tuft</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Fluoride</span>:
+                                    <ul>
+                                        <li>5000 ppm F toothpaste</li>
+                                        <li>Weekly fluoride rinse</li>
+                                        <li>Varnish at adjustments</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Antimicrobials</span>:
+                                    <ul>
+                                        <li>CHX rinse 1x/day</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Diet</span>:
+                                    <ul>
+                                        <li>Avoid sticky/sugary foods</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">17</div>
+                </div>
+            </div>
+            
+            <!-- Slide 18: Special Needs Prevention -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Special Needs Preventive Care</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Challenges</h2>
+                            <ul>
+                                <li><span class="highlight">Physical limitations</span>:
+                                    <ul>
+                                        <li>Dexterity issues</li>
+                                        <li>Wheelchair transfers</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Cognitive impairments</span>:
+                                    <ul>
+                                        <li>Understanding instructions</li>
+                                        <li>Cooperation</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Medical conditions</span>:
+                                    <ul>
+                                        <li>Medication effects</li>
+                                        <li>Seizure risks</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Preventive Strategies</h2>
+                            <ul>
+                                <li><span class="highlight">Adaptive aids</span>:
+                                    <ul>
+                                        <li>Electric toothbrushes</li>
+                                        <li>Floss holders</li>
+                                        <li>Toothbrush grips</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Caregiver training</span>:
+                                    <ul>
+                                        <li>Positioning techniques</li>
+                                        <li>Daily care protocols</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Special_needs_dental_care.jpg/800px-Special_needs_dental_care.jpg" alt="Special Needs Care" class="prevention-image">
+                            <h2>Clinical Approaches</h2>
+                            <ul>
+                                <li><span class="highlight">Behavior guidance</span>:
+                                    <ul>
+                                        <li>Tell-show-do</li>
+                                        <li>Positive reinforcement</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Preventive treatments</span>:
+                                    <ul>
+                                        <li>High-frequency fluoride</li>
+                                        <li>Sealants</li>
+                                        <li>Antimicrobial rinses</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Sedation options</span>:
+                                    <ul>
+                                        <li>Nitrous oxide</li>
+                                        <li>Oral sedation</li>
+                                        <li>General anesthesia</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Common Conditions</h2>
+                            <ul>
+                                <li>Cerebral palsy</li>
+                                <li>Down syndrome</li>
+                                <li>Autism spectrum</li>
+                                <li>Developmental delays</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">18</div>
+                </div>
+            </div>
+            
+            <!-- Slide 19: Periodontal Prevention -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Periodontal Disease Prevention</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Plaque Control</h2>
+                            <ul>
+                                <li><span class="highlight">Bass technique</span>:
+                                    <ul>
+                                        <li>Focus on sulcular cleaning</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Interdental aids</span>:
+                                    <ul>
+                                        <li>Floss</li>
+                                        <li>Interdental brushes</li>
+                                        <li>Rubber tips</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Powered brushes</span>:
+                                    <ul>
+                                        <li>More effective for many</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Chemical Agents</h2>
+                            <ul>
+                                <li><span class="highlight">CHX</span>:
+                                    <ul>
+                                        <li>Gold standard antimicrobial</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Essential oils</span>:
+                                    <ul>
+                                        <li>Listerine</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Stannous fluoride</span>:
+                                    <ul>
+                                        <li>Antiplaque effects</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Periodontal_probing.jpg/800px-Periodontal_probing.jpg" alt="Periodontal Probing" class="prevention-image">
+                            <h2>Professional Care</h2>
+                            <ul>
+                                <li><span class="highlight">Recall frequency</span>:
+                                    <ul>
+                                        <li>3-4 months for periodontitis</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Scaling/root planing</span>:
+                                    <ul>
+                                        <li>Removes calculus</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Local antimicrobials</span>:
+                                    <ul>
+                                        <li>Periochip</li>
+                                        <li>Arestin</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Risk Factors</h2>
+                            <ul>
+                                <li>Smoking</li>
+                                <li>Diabetes</li>
+                                <li>Genetics</li>
+                                <li>Stress</li>
+                                <li>Medications</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">19</div>
+                </div>
+            </div>
+            
+            <!-- Slide 20: Oral Cancer Prevention -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Oral Cancer Prevention</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Risk Factors</h2>
+                            <ul>
+                                <li><span class="highlight">Tobacco</span>:
+                                    <ul>
+                                        <li>Smoking (7x risk)</li>
+                                        <li>Smokeless tobacco (4x risk)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Alcohol</span>:
+                                    <ul>
+                                        <li>Synergistic with tobacco</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">HPV</span>:
+                                    <ul>
+                                        <li>HPV-16 (oropharyngeal)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Other</span>:
+                                    <ul>
+                                        <li>Sun exposure (lip)</li>
+                                        <li>Poor diet</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Prevention Strategies</h2>
+                            <ul>
+                                <li>Tobacco cessation counseling</li>
+                                <li>Alcohol moderation</li>
+                                <li>HPV vaccination</li>
+                                <li>Sun protection</li>
+                                <li>Antioxidant-rich diet</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Oral_cancer_screening.jpg/800px-Oral_cancer_screening.jpg" alt="Oral Cancer Screening" class="prevention-image">
+                            <h2>Screening Protocol</h2>
+                            <ol>
+                                <li>Extraoral exam (nodes)</li>
+                                <li>Intraoral soft tissue exam:
+                                    <ul>
+                                        <li>Lips</li>
+                                        <li>Buccal mucosa</li>
+                                        <li>Tongue</li>
+                                        <li>Floor of mouth</li>
+                                        <li>Palate</li>
+                                    </ul>
+                                </li>
+                                <li>Palpate suspicious areas</li>
+                                <li>Document findings</li>
+                            </ol>
+                            <h2>Warning Signs</h2>
+                            <ul>
+                                <li>Non-healing ulcer (>2 weeks)</li>
+                                <li>White/red patches</li>
+                                <li>Lump or thickening</li>
+                                <li>Difficulty swallowing</li>
+                                <li>Persistent sore throat</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">20</div>
+                </div>
+            </div>
+            
+            <!-- Slide 21: Sports Dentistry -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Sports Dentistry Prevention</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Mouthguards</h2>
+                            <ul>
+                                <li><span class="highlight">Types</span>:
+                                    <ul>
+                                        <li>Stock (least protective)</li>
+                                        <li>Boil-and-bite</li>
+                                        <li>Custom (best fit)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Materials</span>:
+                                    <ul>
+                                        <li>EVA copolymer</li>
+                                        <li>3-5mm thickness ideal</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Benefits</span>:
+                                    <ul>
+                                        <li>Prevents tooth fractures</li>
+                                        <li>Reduces concussion risk</li>
+                                        <li>Protects soft tissues</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Indications</h2>
+                            <ul>
+                                <li>Contact sports (football, hockey)</li>
+                                <li>Collision risk (basketball, soccer)</li>
+                                <li>Any athlete concerned about injury</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Custom_mouthguard.jpg/800px-Custom_mouthguard.jpg" alt="Mouthguard" class="prevention-image">
+                            <h2>Fabrication</h2>
+                            <ol>
+                                <li>Take alginate impressions</li>
+                                <li>Pour stone models</li>
+                                <li>Heat EVA sheet (160°C)</li>
+                                <li>Vacuum form over model</li>
+                                <li>Trim to 2mm beyond gingiva</li>
+                                <li>Smooth edges</li>
+                            </ol>
+                            <h2>Other Considerations</h2>
+                            <ul>
+                                <li><span class="highlight">Fluoride</span>:
+                                    <ul>
+                                        <li>For swimmers (pool water pH)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Hydration</span>:
+                                    <ul>
+                                        <li>Avoid sports drinks</li>
+                                        <li>Water preferred</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Emergency plan</span>:
+                                    <ul>
+                                        <li>Tooth avulsion protocol</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">21</div>
+                </div>
+            </div>
+            
+            <!-- Slide 22: Community Programs -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Community Prevention Programs</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Water Fluoridation</h2>
+                            <ul>
+                                <li><span class="highlight">Benefits</span>:
+                                    <ul>
+                                        <li>20-40% caries reduction</li>
+                                        <li>Cost-effective ($0.50/person/year)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Safety</span>:
+                                    <ul>
+                                        <li>0.7 ppm optimal</li>
+                                        <li>Monitored by EPA</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Controversies</span>:
+                                    <ul>
+                                        <li>Opposition groups</li>
+                                        <li>Legal challenges</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>School-Based Programs</h2>
+                            <ul>
+                                <li><span class="highlight">Sealant programs</span>:
+                                    <ul>
+                                        <li>Target high-risk schools</li>
+                                        <li>78% caries reduction</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Fluoride rinse</span>:
+                                    <ul>
+                                        <li>Weekly 0.2% NaF</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Education</span>:
+                                    <ul>
+                                        <li>Classroom presentations</li>
+                                        <li>Poster contests</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/School_sealant_program.jpg/800px-School_sealant_program.jpg" alt="School Program" class="prevention-image">
+                            <h2>Public Health Initiatives</h2>
+                            <ul>
+                                <li><span class="highlight">WIC programs</span>:
+                                    <ul>
+                                        <li>Nutrition counseling</li>
+                                        <li>Oral health education</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Head Start</span>:
+                                    <ul>
+                                        <li>Dental screenings</li>
+                                        <li>Referral systems</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Teledentistry</span>:
+                                    <ul>
+                                        <li>Rural access</li>
+                                        <li>School-linked</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Global Prevention</h2>
+                            <ul>
+                                <li>WHO oral health goals</li>
+                                <li>Salt fluoridation (alternative to water)</li>
+                                <li>Milk fluoridation programs</li>
+                                <li>ATLAS initiative (global caries prevention)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">22</div>
+                </div>
+            </div>
+            
+            <!-- Slide 23: Behavioral Change -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Behavioral Change Strategies</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Motivational Interviewing</h2>
+                            <ul>
+                                <li><span class="highlight">Principles</span>:
+                                    <ul>
+                                        <li>Express empathy</li>
+                                        <li>Develop discrepancy</li>
+                                        <li>Roll with resistance</li>
+                                        <li>Support self-efficacy</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Techniques</span>:
+                                    <ul>
+                                        <li>Open-ended questions</li>
+                                        <li>Affirmations</li>
+                                        <li>Reflective listening</li>
+                                        <li>Summarizing</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Stages of Change</h2>
+                            <ol>
+                                <li>Precontemplation</li>
+                                <li>Contemplation</li>
+                                <li>Preparation</li>
+                                <li>Action</li>
+                                <li>Maintenance</li>
+                            </ol>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Motivational_interviewing.jpg/800px-Motivational_interviewing.jpg" alt="Motivational Interviewing" class="prevention-image">
+                            <h2>Patient Education Tools</h2>
+                            <ul>
+                                <li><span class="highlight">Disclosing solutions</span>:
+                                    <ul>
+                                        <li>Visualize plaque</li>
+                                        <li>Motivate brushing</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Models/diagrams</span>:
+                                    <ul>
+                                        <li>Show disease progression</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Digital apps</span>:
+                                    <ul>
+                                        <li>Brushing timers</li>
+                                        <li>Reminder systems</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Positive Reinforcement</h2>
+                            <ul>
+                                <li>Praise improvements</li>
+                                <li>Set achievable goals</li>
+                                <li>Use reward systems (especially children)</li>
+                                <li>Involve family members</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">23</div>
+                </div>
+            </div>
+            
+            <!-- Slide 24: Emerging Technologies -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Emerging Preventive Technologies</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Detection Advances</h2>
+                            <ul>
+                                <li><span class="highlight">Digital imaging</span>:
+                                    <ul>
+                                        <li>DIAGNOdent (laser fluorescence)</li>
+                                        <li>Near-infrared imaging</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">AI diagnostics</span>:
+                                    <ul>
+                                        <li>Caries detection software</li>
+                                        <li>Radiograph analysis</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Salivary biomarkers</span>:
+                                    <ul>
+                                        <li>Caries risk prediction</li>
+                                        <li>Periodontal disease markers</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Prevention Innovations</h2>
+                            <ul>
+                                <li><span class="highlight">Smart toothbrushes</span>:
+                                    <ul>
+                                        <li>Real-time feedback</li>
+                                        <li>Data tracking</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Probiotic therapies</li>
+                                <li><span class="highlight">Antimicrobial peptides</li>
+                                <li><span class="highlight">Gene therapy</span>:
+                                    <ul>
+                                        <li>Modify bacterial virulence</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/DIAGNOdent_device.jpg/800px-DIAGNOdent_device.jpg" alt="DIAGNOdent" class="prevention-image">
+                            <h2>Material Advances</h2>
+                            <ul>
+                                <li><span class="highlight">Nano-fluoride</span>:
+                                    <ul>
+                                        <li>Enhanced bioavailability</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Bioactive composites</span>:
+                                    <ul>
+                                        <li>Remineralizing restorations</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Self-healing materials</span>:
+                                    <ul>
+                                        <li>Microcapsule technology</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Digital Tools</h2>
+                            <ul>
+                                <li><span class="highlight">Teledentistry</span>:
+                                    <ul>
+                                        <li>Remote monitoring</li>
+                                        <li>Preventive counseling</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">AR/VR education</span>:
+                                    <ul>
+                                        <li>Interactive learning</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Wearable sensors</span>:
+                                    <ul>
+                                        <li>pH monitoring</li>
+                                        <li>Brushing verification</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">24</div>
+                </div>
+            </div>
+            
+            <!-- Slide 25: Summary -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Preventive Dentistry Icon" class="prevention-icon">
+                    <h1>Key Takeaways</h1>
+                    <ul style="text-align: left;">
+                        <li>Prevention is more effective and less costly than treatment</li>
+                        <li>Fluoride remains the cornerstone of caries prevention</li>
+                        <li>Sealants provide excellent protection for pits/fissures</li>
+                        <li>Diet modification is crucial for caries control</li>
+                        <li>Proper oral hygiene techniques must be taught</li>
+                        <li>Risk assessment guides personalized prevention</li>
+                        <li>Special populations require tailored approaches</li>
+                        <li>Emerging technologies will transform prevention</li>
+                    </ul>
+                    <h2 style="margin-top: 30px;">Questions and Discussion</h2>
+                    <div class="slide-number">25</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="prev-btn">←</button>
+        <button class="control-btn" id="next-btn">→</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelector('.slides');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const totalSlides = 25;
+        let currentSlide = 0;
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 4}%)`;
+            progressBar.style.width = `${(currentSlide + 1) / totalSlides * 100}%`;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
