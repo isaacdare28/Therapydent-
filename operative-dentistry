@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operative Dentistry Techniques</title>
+    <style>
+        :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --preparation: #83c5be;
+            --restoration: #ffddd2;
+            --materials: #ffb4a2;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
+            display: flex;
+            width: 2500%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 4%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: rgba(42, 157, 143, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-btn:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+        
+        .operative-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .operative-image {
+            max-width: 250px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+        }
+        
+        .preparation-bg {
+            background-color: var(--preparation);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .restoration-bg {
+            background-color: var(--restoration);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .materials-bg {
+            background-color: var(--materials);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .card {
+            background: white;
+            border-left: 5px solid var(--accent);
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+                width: 95%;
+                height: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .operative-image {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <div class="slides">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Operative Dentistry Icon" class="operative-icon">
+                    <h1>Operative Dentistry Techniques</h1>
+                    <p>Principles and Procedures for Tooth Restoration</p>
+                    <div class="slide-number">1</div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Course Objectives -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Course Objectives</h1>
+                    <p>By the end of this module, you will understand:</p>
+                    <ul>
+                        <li>Cavity classification systems</li>
+                        <li>Tooth preparation principles</li>
+                        <li>Restorative material selection</li>
+                        <li>Direct restoration techniques</li>
+                        <li>Matrix systems and wedges</li>
+                        <li>Adhesion protocols</li>
+                        <li>Finishing and polishing</li>
+                        <li>Troubleshooting common issues</li>
+                    </ul>
+                    <div class="slide-number">2</div>
+                </div>
+            </div>
+            
+            <!-- Slide 3: Cavity Classification -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Cavity Classification Systems</h1>
+                    <div class="two-column">
+                        <div class="column preparation-bg">
+                            <h2>Black's Classification</h2>
+                            <ul>
+                                <li><span class="highlight">Class I</span>: Pits/fissures</li>
+                                <li><span class="highlight">Class II</span>: Proximal posterior</li>
+                                <li><span class="highlight">Class III</span>: Proximal anterior (no incisal)</li>
+                                <li><span class="highlight">Class IV</span>: Proximal anterior (incisal)</li>
+                                <li><span class="highlight">Class V</span>: Gingival 1/3 facial/lingual</li>
+                                <li><span class="highlight">Class VI</span>: Cusp tips/incisal edges</li>
+                            </ul>
+                        </div>
+                        <div class="column preparation-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Black%27s_Cavity_Classification.svg/800px-Black%27s_Cavity_Classification.svg.png" alt="Black's Classification" class="operative-image">
+                            <h2>Other Systems</h2>
+                            <ul>
+                                <li><span class="highlight">Mount & Hume</span>:
+                                    <ul>
+                                        <li>Site 1-3 (pit/fissure, contact, cervical)</li>
+                                        <li>Size 1-4 (increasing size)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">ICDAS</span>:
+                                    <ul>
+                                        <li>0-6 scale (intact to distinct cavity)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">3</div>
+                </div>
+            </div>
+            
+            <!-- Slide 4: Preparation Principles -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Tooth Preparation Principles</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Mechanical Considerations</h2>
+                            <ul>
+                                <li><span class="highlight">Outline form</span>:
+                                    <ul>
+                                        <li>Extension for prevention</li>
+                                        <li>Include all defects</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Resistance form</span>:
+                                    <ul>
+                                        <li>Flat floors</li>
+                                        <li>Box shape</li>
+                                        <li>90° cavosurface</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Retention form</span>:
+                                    <ul>
+                                        <li>Undercuts</li>
+                                        <li>Dovetails</li>
+                                        <li>Grooves</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Amalgam_preparation.jpg/800px-Amalgam_preparation.jpg" alt="Tooth Preparation" class="operative-image">
+                            <h2>Biological Considerations</h2>
+                            <ul>
+                                <li><span class="highlight">Conservation</span>:
+                                    <ul>
+                                        <li>Minimize removal</li>
+                                        <li>Preserve cusps</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Pulp protection</span>:
+                                    <ul>
+                                        <li>Liners/bases</li>
+                                        <li>Indirect pulp cap</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Margins</span>:
+                                    <ul>
+                                        <li>Clear of gingiva</li>
+                                        <li>Definable finish</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">4</div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Amalgam Preparations -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Amalgam Preparations</h1>
+                    <div class="two-column">
+                        <div class="column preparation-bg">
+                            <h2>Class I</h2>
+                            <ul>
+                                <li>1.5mm occlusal depth</li>
+                                <li>90° cavosurface</li>
+                                <li>Dovetail if extending</li>
+                                <li>Rounded internal angles</li>
+                            </ul>
+                            <h2>Class II</h2>
+                            <ul>
+                                <li>0.5mm into dentin proximal</li>
+                                <li>Gingival floor 0.5mm into CEJ</li>
+                                <li>Isthmus width ≥1.5mm</li>
+                                <li>Converging walls (2-5°)</li>
+                            </ul>
+                        </div>
+                        <div class="column preparation-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Amalgam_class_II_prep.jpg/800px-Amalgam_class_II_prep.jpg" alt="Amalgam Prep" class="operative-image">
+                            <h2>Modifications</h2>
+                            <ul>
+                                <li><span class="highlight">Slot preparation</span>:
+                                    <ul>
+                                        <li>Minimal proximal extension</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Tunnel prep</span>:
+                                    <ul>
+                                        <li>Access proximal from occlusal</li>
+                                        <li>Preserve marginal ridge</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Bonded amalgam</span>:
+                                    <ul>
+                                        <li>Less mechanical retention</li>
+                                        <li>More conservative</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">5</div>
+                </div>
+            </div>
+            
+            <!-- Slide 6: Composite Preparations -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Composite Preparations</h1>
+                    <div class="two-column">
+                        <div class="column preparation-bg">
+                            <h2>Principles</h2>
+                            <ul>
+                                <li>Bevel enamel margins (45°)</li>
+                                <li>0.5mm into dentin</li>
+                                <li>Round internal angles</li>
+                                <li>No undercuts needed</li>
+                                <li>Conservative extension</li>
+                            </ul>
+                            <h2>Class III</h2>
+                            <ul>
+                                <li>Lingual access when possible</li>
+                                <li>0.5mm clearance from adjacent</li>
+                                <li>Gingival margin on enamel</li>
+                            </ul>
+                        </div>
+                        <div class="column preparation-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Composite_preparation.jpg/800px-Composite_preparation.jpg" alt="Composite Prep" class="operative-image">
+                            <h2>Class IV</h2>
+                            <ul>
+                                <li>Bevel incisal edge (2-3mm)</li>
+                                <li>Chamfer lingual margin</li>
+                                <li>Consider pulpal proximity</li>
+                            </ul>
+                            <h2>Class V</h2>
+                            <ul>
+                                <li>Round outline</li>
+                                <li>No retention grooves</li>
+                                <li>Extend to sound margins</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">6</div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Restorative Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Restorative Materials</h1>
+                    <div class="two-column">
+                        <div class="column materials-bg">
+                            <h2>Amalgam</h2>
+                            <ul>
+                                <li><span class="highlight">Composition</span>:
+                                    <ul>
+                                        <li>50% Hg, 35% Ag, 15% Sn/Cu/Zn</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Advantages</span>:
+                                    <ul>
+                                        <li>Durable</li>
+                                        <li>Self-sealing</li>
+                                        <li>Less technique sensitive</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Disadvantages</span>:
+                                    <ul>
+                                        <li>Non-esthetic</li>
+                                        <li>Requires bulk</li>
+                                        <li>Thermal conductivity</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column materials-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dental_materials.jpg/800px-Dental_materials.jpg" alt="Dental Materials" class="operative-image">
+                            <h2>Composite Resin</h2>
+                            <ul>
+                                <li><span class="highlight">Composition</span>:
+                                    <ul>
+                                        <li>Resin matrix + filler particles</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Advantages</span>:
+                                    <ul>
+                                        <li>Esthetic</li>
+                                        <li>Bonded to tooth</li>
+                                        <li>Conservative prep</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Disadvantages</span>:
+                                    <ul>
+                                        <li>Polymerization shrinkage</li>
+                                        <li>Technique sensitive</li>
+                                        <li>Wear over time</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">7</div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Adhesion Protocols -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Adhesion Protocols</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Etch-and-Rinse (4th Gen)</h2>
+                            <ol>
+                                <li>37% phosphoric acid etch (15 sec)</li>
+                                <li>Rinse thoroughly</li>
+                                <li>Apply primer (hydrophilic)</li>
+                                <li>Apply adhesive (hydrophobic)</li>
+                                <li>Light cure</li>
+                            </ol>
+                            <h2>Self-etch (7th/8th Gen)</h2>
+                            <ol>
+                                <li>Apply self-etch adhesive</li>
+                                <li>Agitate 20 sec</li>
+                                <li>Air thin</li>
+                                <li>Light cure</li>
+                            </ol>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dental_etching.jpg/800px-Dental_etching.jpg" alt="Dental Etching" class="operative-image">
+                            <h2>Factors Affecting Bonding</h2>
+                            <ul>
+                                <li><span class="highlight">Smear layer</span>:
+                                    <ul>
+                                        <li>Remove for etch-and-rinse</li>
+                                        <li>Incorporate for self-etch</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Moisture control</span>:
+                                    <ul>
+                                        <li>Dentinal wetness (etch-and-rinse)</li>
+                                        <li>Dry field (self-etch)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">C-factor</span>:
+                                    <ul>
+                                        <li>Higher = more stress</li>
+                                        <li>Incremental layering</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">8</div>
+                </div>
+            </div>
+            
+            <!-- Slide 9: Matrix Systems -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Matrix Systems</h1>
+                    <div class="two-column">
+                        <div class="column restoration-bg">
+                            <h2>Types</h2>
+                            <ul>
+                                <li><span class="highlight">Tofflemire</span>:
+                                    <ul>
+                                        <li>Universal matrix</li>
+                                        <li>Rigid band</li>
+                                        <li>Buccal/lingual placement</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Sectional matrices</span>:
+                                    <ul>
+                                        <li>Bi-directional rings</li>
+                                        <li>Better contacts</li>
+                                        <li>Less gingival excess</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Custom matrices</span>:
+                                    <ul>
+                                        <li>Celluloid strips</li>
+                                        <li>Class III/V restorations</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column restoration-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Tofflemire_matrix.jpg/800px-Tofflemire_matrix.jpg" alt="Matrix System" class="operative-image">
+                            <h2>Wedges</h2>
+                            <ul>
+                                <li><span class="highlight">Functions</span>:
+                                    <ul>
+                                        <li>Separate teeth</li>
+                                        <li>Seal matrix</li>
+                                        <li>Contour restoration</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Types</span>:
+                                    <ul>
+                                        <li>Wooden (absorb moisture)</li>
+                                        <li>Plastic (transparent)</li>
+                                        <li>Anatomical</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Placement</span>:
+                                    <ul>
+                                        <li>Gingival to contact</li>
+                                        <li>Firm seating</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">9</div>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Amalgam Restoration -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Amalgam Restoration Technique</h1>
+                    <div class="two-column">
+                        <div class="column restoration-bg">
+                            <h2>Condensation</h2>
+                            <ol>
+                                <li>Incremental placement (1-2mm)</li>
+                                <li>Firm pressure with condenser</li>
+                                <li>Overfill preparation</li>
+                            </ol>
+                            <h2>Carving</h2>
+                            <ol>
+                                <li>Remove excess with explorer</li>
+                                <li>Carve anatomical contours</li>
+                                <li>Check occlusion</li>
+                            </ol>
+                            <h2>Finishing</h2>
+                            <ol>
+                                <li>24-hour delay</li>
+                                <li>Brown/green/pink cups</li>
+                                <li>Final polish</li>
+                            </ol>
+                        </div>
+                        <div class="column restoration-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Amalgam_condensation.jpg/800px-Amalgam_condensation.jpg" alt="Amalgam Condensation" class="operative-image">
+                            <h2>Common Errors</h2>
+                            <ul>
+                                <li><span class="highlight">Inadequate condensation</span>:
+                                    <ul>
+                                        <li>Voids</li>
+                                        <li>Weak restoration</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Overcarving</span>:
+                                    <ul>
+                                        <li>Low marginal ridge</li>
+                                        <li>Open contacts</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Premature polishing</span>:
+                                    <ul>
+                                        <li>Marginal breakdown</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">10</div>
+                </div>
+            </div>
+            
+            <!-- Slide 11: Composite Layering -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Composite Layering Techniques</h1>
+                    <div class="two-column">
+                        <div class="column restoration-bg">
+                            <h2>Incremental Placement</h2>
+                            <ul>
+                                <li><span class="highlight">Horizontal</span>:
+                                    <ul>
+                                        <li>Simple cavities</li>
+                                        <li>2mm increments</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Vertical</span>:
+                                    <ul>
+                                        <li>Deep cavities</li>
+                                        <li>Reduces C-factor</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Oblique</span>:
+                                    <ul>
+                                        <li>Class IV restorations</li>
+                                        <li>Better esthetics</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column restoration-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Composite_layering.jpg/800px-Composite_layering.jpg" alt="Composite Layering" class="operative-image">
+                            <h2>Three-Layer Technique</h2>
+                            <ol>
+                                <li><span class="highlight">Dentin replacement</span>:
+                                    <ul>
+                                        <li>Opaque shade</li>
+                                        <li>Placed first</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Body shade</span>:
+                                    <ul>
+                                        <li>Main bulk</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Enamel shade</span>:
+                                    <ul>
+                                        <li>Surface layer</li>
+                                        <li>Translucent</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="slide-number">11</div>
+                </div>
+            </div>
+            
+            <!-- Slide 12: Finishing and Polishing -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Finishing and Polishing</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Objectives</h2>
+                            <ul>
+                                <li>Remove excess material</li>
+                                <li>Establish anatomy</li>
+                                <li>Create smooth surfaces</li>
+                                <li>Minimize plaque retention</li>
+                            </ul>
+                            <h2>Sequence</h2>
+                            <ol>
+                                <li>Gross reduction (flame burs)</li>
+                                <li>Contouring (finishing burs)</li>
+                                <li>Pre-polish (rubber points)</li>
+                                <li>High polish (paste/brush)</li>
+                            </ol>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dental_polishing.jpg/800px-Dental_polishing.jpg" alt="Polishing" class="operative-image">
+                            <h2>Instruments</h2>
+                            <ul>
+                                <li><span class="highlight">Burs</span>:
+                                    <ul>
+                                        <li>12-fluted carbide</li>
+                                        <li>Diamond finishing</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Strips</span>:
+                                    <ul>
+                                        <li>Proximal surfaces</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Rubber points/cups</span>:
+                                    <ul>
+                                        <li>Various grits</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Polishing pastes</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">12</div>
+                </div>
+            </div>
+            
+            <!-- Slide 13: Troubleshooting -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Troubleshooting Common Issues</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Postoperative Sensitivity</h2>
+                            <ul>
+                                <li><span class="highlight">Causes</span>:
+                                    <ul>
+                                        <li>Inadequate bonding</li>
+                                        <li>Over-drying dentin</li>
+                                        <li>High spots</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Solutions</span>:
+                                    <ul>
+                                        <li>Re-bond</li>
+                                        <li>Adjust occlusion</li>
+                                        <li>Desensitizing agents</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Marginal Discrepancies</h2>
+                            <ul>
+                                <li><span class="highlight">Causes</span>:
+                                    <ul>
+                                        <li>Inadequate condensation</li>
+                                        <li>Polymerization shrinkage</li>
+                                        <li>Improper carving</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Solutions</span>:
+                                    <ul>
+                                        <li>Re-restore if significant</li>
+                                        <li>Flowable composite repair</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dental_restoration_issues.jpg/800px-Dental_restoration_issues.jpg" alt="Restoration Issues" class="operative-image">
+                            <h2>Fractured Restorations</h2>
+                            <ul>
+                                <li><span class="highlight">Causes</span>:
+                                    <ul>
+                                        <li>Inadequate thickness</li>
+                                        <li>Occlusal overload</li>
+                                        <li>Material fatigue</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Solutions</span>:
+                                    <ul>
+                                        <li>Full replacement</li>
+                                        <li>Consider stronger material</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Recurrent Caries</h2>
+                            <ul>
+                                <li><span class="highlight">Causes</span>:
+                                    <ul>
+                                        <li>Marginal gaps</li>
+                                        <li>Poor oral hygiene</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Solutions</span>:
+                                    <ul>
+                                        <li>Complete caries removal</li>
+                                        <li>Improved preventive care</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">13</div>
+                </div>
+            </div>
+            
+            <!-- Slide 14: Emerging Technologies -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Emerging Technologies</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Bulk-Fill Composites</h2>
+                            <ul>
+                                <li>4-5mm increments</li>
+                                <li>Reduced polymerization stress</li>
+                                <li>Modified photoinitiators</li>
+                                <li>Flowable and sculptable types</li>
+                            </ul>
+                            <h2>Bioactive Materials</h2>
+                            <ul>
+                                <li>Calcium silicate cements</li>
+                                <li>Glass ionomer hybrids</li>
+                                <li>Remineralizing composites</li>
+                                <li>Antimicrobial properties</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Bulk-fill_composite.jpg/800px-Bulk-fill_composite.jpg" alt="Bulk Fill Composite" class="operative-image">
+                            <h2>Digital Workflows</h2>
+                            <ul>
+                                <li><span class="highlight">CAD/CAM restorations</span>:
+                                    <ul>
+                                        <li>In-office milling</li>
+                                        <li>Same-day dentistry</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">3D printing</span>:
+                                    <ul>
+                                        <li>Temporary restorations</li>
+                                        <li>Models</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Digital impressions</span>:
+                                    <ul>
+                                        <li>Improved accuracy</li>
+                                        <li>Patient comfort</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">14</div>
+                </div>
+            </div>
+            
+            <!-- Slide 15: Summary -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Operative Dentistry Icon" class="operative-icon">
+                    <h1>Key Takeaways</h1>
+                    <ul style="text-align: left;">
+                        <li>Proper preparation is foundation for success</li>
+                        <li>Material selection should match clinical needs</li>
+                        <li>Adhesion protocols vary by system</li>
+                        <li>Matrix systems enable proper contacts</li>
+                        <li>Incremental technique reduces stress</li>
+                        <li>Finishing/polishing improves longevity</li>
+                        <li>New materials expand treatment options</li>
+                    </ul>
+                    <h2 style="margin-top: 30px;">Questions and Discussion</h2>
+                    <div class="slide-number">15</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="prev-btn">←</button>
+        <button class="control-btn" id="next-btn">→</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelector('.slides');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const totalSlides = 15;
+        let currentSlide = 0;
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 4}%)`;
+            progressBar.style.width = `${(currentSlide + 1) / totalSlides * 100}%`;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
