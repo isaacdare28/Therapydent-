@@ -1,0 +1,1101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periodontology & Gum Therapy</title>
+    <style>
+        :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gingivitis: #83c5be;
+            --periodontitis: #ffddd2;
+            --surgery: #ffb4a2;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
+            display: flex;
+            width: 2500%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 4%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: rgba(42, 157, 143, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-btn:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+        
+        .periodontology-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .periodontology-image {
+            max-width: 250px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+        }
+        
+        .gingivitis-bg {
+            background-color: var(--gingivitis);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .periodontitis-bg {
+            background-color: var(--periodontitis);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .surgery-bg {
+            background-color: var(--surgery);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .card {
+            background: white;
+            border-left: 5px solid var(--accent);
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+                width: 95%;
+                height: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .periodontology-image {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <div class="slides">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Periodontology Icon" class="periodontology-icon">
+                    <h1>Periodontology & Gum Therapy</h1>
+                    <p>Comprehensive Management of Periodontal Diseases</p>
+                    <div class="slide-number">1</div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Course Objectives -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Course Objectives</h1>
+                    <p>By the end of this module, you will understand:</p>
+                    <ul>
+                        <li>Periodontal anatomy and histology</li>
+                        <li>Classification of periodontal diseases</li>
+                        <li>Etiology and pathogenesis</li>
+                        <li>Diagnostic procedures</li>
+                        <li>Non-surgical therapy</li>
+                        <li>Surgical interventions</li>
+                        <li>Maintenance therapy</li>
+                        <li>Relationship with systemic health</li>
+                    </ul>
+                    <div class="slide-number">2</div>
+                </div>
+            </div>
+            
+            <!-- Slide 3: Periodontal Anatomy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Periodontal Anatomy</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Gingiva</h2>
+                            <ul>
+                                <li><span class="highlight">Marginal gingiva</span>: Unattached coronal portion</li>
+                                <li><span class="highlight">Attached gingiva</span>: Firmly bound to bone</li>
+                                <li><span class="highlight">Interdental papilla</span>: Fills embrasure space</li>
+                            </ul>
+                            <h2>Periodontal Ligament</h2>
+                            <ul>
+                                <li>Connects tooth to alveolar bone</li>
+                                <li>Contains fibers (Sharpey's fibers)</li>
+                                <li>Provides shock absorption</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Periodontal_structures.svg/800px-Periodontal_structures.svg.png" alt="Periodontal Structures" class="periodontology-image">
+                            <h2>Alveolar Bone</h2>
+                            <ul>
+                                <li>Cortical plates</li>
+                                <li>Trabecular bone</li>
+                                <li>Alveolar process proper</li>
+                            </ul>
+                            <h2>Cementum</h2>
+                            <ul>
+                                <li>Avascular mineralized tissue</li>
+                                <li>Attaches PDL fibers</li>
+                                <li>Continuous deposition</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">3</div>
+                </div>
+            </div>
+            
+            <!-- Slide 4: Classification of Periodontal Diseases -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Classification of Periodontal Diseases (2017 World Workshop)</h1>
+                    <div class="two-column">
+                        <div class="column gingivitis-bg">
+                            <h2>Gingivitis</h2>
+                            <ul>
+                                <li>Plaque-induced</li>
+                                <li>Non-plaque induced</li>
+                                <li>Reversible inflammation</li>
+                                <li>No attachment loss</li>
+                            </ul>
+                            <h2>Periodontitis</h2>
+                            <ul>
+                                <li>Necrotizing periodontal diseases</li>
+                                <li>Periodontitis as manifestation of systemic disease</li>
+                                <li>Periodontitis (stages I-IV)</li>
+                            </ul>
+                        </div>
+                        <div class="column periodontitis-bg">
+                            <h2>Staging</h2>
+                            <ol>
+                                <li><span class="highlight">Stage I</span>: Initial periodontitis</li>
+                                <li><span class="highlight">Stage II</span>: Moderate periodontitis</li>
+                                <li><span class="highlight">Stage III</span>: Severe with potential tooth loss</li>
+                                <li><span class="highlight">Stage IV</span>: Advanced with tooth loss</li>
+                            </ol>
+                            <h2>Grading</h2>
+                            <ul>
+                                <li><span class="highlight">Grade A</span>: Slow progression</li>
+                                <li><span class="highlight">Grade B</span>: Moderate progression</li>
+                                <li><span class="highlight">Grade C</span>: Rapid progression</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Periodontitis_staging.jpg/800px-Periodontitis_staging.jpg" alt="Periodontitis Staging" class="periodontology-image">
+                        </div>
+                    </div>
+                    <div class="slide-number">4</div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Etiology and Pathogenesis -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Etiology and Pathogenesis</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Primary Etiologic Factors</h2>
+                            <ul>
+                                <li><span class="highlight">Dental plaque biofilm</span>:
+                                    <ul>
+                                        <li>Gram-negative anaerobic bacteria</li>
+                                        <li>Porphyromonas gingivalis</li>
+                                        <li>Aggregatibacter actinomycetemcomitans</li>
+                                        <li>Tannerella forsythia</li>
+                                        <li>Treponema denticola</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Calculus</span>:
+                                    <ul>
+                                        <li>Mineralized plaque</li>
+                                        <li>Provides biofilm retention</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Periodontal_pathogenesis.svg/800px-Periodontal_pathogenesis.svg.png" alt="Pathogenesis" class="periodontology-image">
+                            <h2>Host Response</h2>
+                            <ul>
+                                <li>Inflammatory cascade</li>
+                                <li>Cytokine release (IL-1β, TNF-α, PGE2)</li>
+                                <li>Matrix metalloproteinases (MMPs)</li>
+                                <li>Connective tissue destruction</li>
+                                <li>Alveolar bone resorption</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">5</div>
+                </div>
+            </div>
+            
+            <!-- Slide 6: Risk Factors -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Periodontal Risk Factors</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Modifiable Factors</h2>
+                            <ul>
+                                <li><span class="highlight">Smoking</span>:
+                                    <ul>
+                                        <li>Vasoconstriction</li>
+                                        <li>Impaired healing</li>
+                                        <li>Altered microbiota</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Diabetes</span>:
+                                    <ul>
+                                        <li>Increased inflammation</li>
+                                        <li>Impaired neutrophil function</li>
+                                        <li>Advanced glycation end-products</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Stress</span>:
+                                    <ul>
+                                        <li>Cortisol effects</li>
+                                        <li>Behavioral changes</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Non-Modifiable Factors</h2>
+                            <ul>
+                                <li><span class="highlight">Genetics</span>:
+                                    <ul>
+                                        <li>IL-1 gene polymorphisms</li>
+                                        <li>Familial aggregation</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Age</span>:
+                                    <ul>
+                                        <li>Cumulative effects</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Gender</span>:
+                                    <ul>
+                                        <li>Hormonal influences</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Other Factors</h2>
+                            <ul>
+                                <li>Medications (phenytoin, CCBs)</li>
+                                <li>Nutritional deficiencies</li>
+                                <li>Occlusal trauma</li>
+                                <li>Immunosuppression</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">6</div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Clinical Features -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Clinical Features</h1>
+                    <div class="two-column">
+                        <div class="column gingivitis-bg">
+                            <h2>Gingivitis</h2>
+                            <ul>
+                                <li>Erythema</li>
+                                <li>Edema</li>
+                                <li>Bleeding on probing</li>
+                                <li>Increased crevicular fluid</li>
+                                <li>No attachment loss</li>
+                                <li>Reversible with treatment</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Gingivitis.jpg/800px-Gingivitis.jpg" alt="Gingivitis" class="periodontology-image">
+                        </div>
+                        <div class="column periodontitis-bg">
+                            <h2>Periodontitis</h2>
+                            <ul>
+                                <li>Clinical attachment loss</li>
+                                <li>Periodontal pocket formation</li>
+                                <li>Alveolar bone loss</li>
+                                <li>Tooth mobility</li>
+                                <li>Furcation involvement</li>
+                                <li>Gingival recession</li>
+                                <li>Suppuration</li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Chronic_periodontitis.jpg/800px-Chronic_periodontitis.jpg" alt="Periodontitis" class="periodontology-image">
+                        </div>
+                    </div>
+                    <div class="slide-number">7</div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Diagnostic Procedures -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Diagnostic Procedures</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Clinical Examination</h2>
+                            <ul>
+                                <li><span class="highlight">Probing depths</span>:
+                                    <ul>
+                                        <li>6 sites per tooth</li>
+                                        <li>Williams probe</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Clinical attachment level</span>:
+                                    <ul>
+                                        <li>CEJ to base of pocket</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Bleeding on probing</span>:
+                                    <ul>
+                                        <li>30 sec after probing</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Mobility</span>:
+                                    <ul>
+                                        <li>Miller classification</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <h2>Radiographic Assessment</h2>
+                            <ul>
+                                <li><span class="highlight">Horizontal bone loss</span></li>
+                                <li><span class="highlight">Vertical defects</span></li>
+                                <li><span class="highlight">Furcation involvement</span></li>
+                                <li><span class="highlight">Crown-to-root ratio</span></li>
+                            </ul>
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Periodontal_charting.jpg/800px-Periodontal_charting.jpg" alt="Periodontal Charting" class="periodontology-image">
+                            <h2>Advanced Diagnostics</h2>
+                            <ul>
+                                <li>Microbial testing</li>
+                                <li>Genetic testing</li>
+                                <li>Cone-beam CT</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">8</div>
+                </div>
+            </div>
+            
+            <!-- Slide 9: Non-Surgical Therapy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Non-Surgical Therapy</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Scaling and Root Planing</h2>
+                            <ul>
+                                <li><span class="highlight">Goals</span>:
+                                    <ul>
+                                        <li>Remove calculus</li>
+                                        <li>Remove bacterial toxins</li>
+                                        <li>Smooth root surfaces</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Instruments</span>:
+                                    <ul>
+                                        <li>Ultrasonic scalers</li>
+                                        <li>Curettes (Gracey, universal)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Technique</span>:
+                                    <ul>
+                                        <li>Systematic approach</li>
+                                        <li>Light pressure</li>
+                                        <li>Multiple strokes</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Scaling_and_root_planing.jpg/800px-Scaling_and_root_planing.jpg" alt="Scaling and Root Planing" class="periodontology-image">
+                            <h2>Adjunctive Therapies</h2>
+                            <ul>
+                                <li><span class="highlight">Local antimicrobials</span>:
+                                    <ul>
+                                        <li>Chlorhexidine chips</li>
+                                        <li>Doxycycline gel</li>
+                                        <li>Minocycline microspheres</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Systemic antibiotics</span>:
+                                    <ul>
+                                        <li>Amoxicillin + metronidazole</li>
+                                        <li>Doxycycline</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Host modulation</span>:
+                                    <ul>
+                                        <li>Subantimicrobial doxycycline</li>
+                                        <li>NSAIDs</li>
+                                        <li>Bisphosphonates</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">9</div>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Surgical Therapy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Surgical Therapy</h1>
+                    <div class="two-column">
+                        <div class="column surgery-bg">
+                            <h2>Resective Surgery</h2>
+                            <ul>
+                                <li><span class="highlight">Pocket reduction</span>:
+                                    <ul>
+                                        <li>Gingivectomy</li>
+                                        <li>Modified Widman flap</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Osseous surgery</span>:
+                                    <ul>
+                                        <li>Osteoplasty</li>
+                                        <li>Ostectomy</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Furcation treatment</span>:
+                                    <ul>
+                                        <li>Tunnel preparation</li>
+                                        <li>Root resection</li>
+                                        <li>Tooth extraction</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column surgery-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Periodontal_surgery.jpg/800px-Periodontal_surgery.jpg" alt="Periodontal Surgery" class="periodontology-image">
+                            <h2>Regenerative Surgery</h2>
+                            <ul>
+                                <li><span class="highlight">Guided tissue regeneration</span>:
+                                    <ul>
+                                        <li>Barrier membranes</li>
+                                        <li>Resorbable/non-resorbable</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Bone grafts</span>:
+                                    <ul>
+                                        <li>Autografts</li>
+                                        <li>Allografts</li>
+                                        <li>Xenografts</li>
+                                        <li>Alloplasts</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Growth factors</span>:
+                                    <ul>
+                                        <li>Enamel matrix derivatives</li>
+                                        <li>PDGF</li>
+                                        <li>BMP</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">10</div>
+                </div>
+            </div>
+            
+            <!-- Slide 11: Mucogingival Surgery -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Mucogingival Surgery</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Gingival Augmentation</h2>
+                            <ul>
+                                <li><span class="highlight">Free gingival graft</span>:
+                                    <ul>
+                                        <li>Palatal donor site</li>
+                                        <li>Increases keratinized tissue</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Connective tissue graft</span>:
+                                    <ul>
+                                        <li>Subepithelial palatal tissue</li>
+                                        <li>Root coverage procedures</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Root Coverage</h2>
+                            <ul>
+                                <li><span class="highlight">Coronally advanced flap</span></li>
+                                <li><span class="highlight">Lateral sliding flap</span></li>
+                                <li><span class="highlight">Tunnel technique</span></li>
+                                <li><span class="highlight">Pouch procedure</span></li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Connective_tissue_graft.jpg/800px-Connective_tissue_graft.jpg" alt="Connective Tissue Graft" class="periodontology-image">
+                            <h2>Frenectomy</h2>
+                            <ul>
+                                <li>Remove/reposition frenum</li>
+                                <li>Prevent recession</li>
+                                <li>Improve orthodontic results</li>
+                            </ul>
+                            <h2>Vestibular Extension</h2>
+                            <ul>
+                                <li>Increase attached gingiva</li>
+                                <li>Improve prosthesis fit</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">11</div>
+                </div>
+            </div>
+            
+            <!-- Slide 12: Laser Therapy -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Laser Therapy in Periodontics</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Types of Lasers</h2>
+                            <ul>
+                                <li><span class="highlight">Diode</span>:
+                                    <ul>
+                                        <li>Soft tissue procedures</li>
+                                        <li>Bacterial reduction</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Nd:YAG</span>:
+                                    <ul>
+                                        <li>Pocket therapy</li>
+                                        <li>Hemostasis</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Er:YAG</span>:
+                                    <ul>
+                                        <li>Hard and soft tissue</li>
+                                        <li>Calculus removal</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">CO₂</span>:
+                                    <ul>
+                                        <li>Soft tissue surgery</li>
+                                        <li>Vaporization</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dental_laser.jpg/800px-Dental_laser.jpg" alt="Dental Laser" class="periodontology-image">
+                            <h2>Applications</h2>
+                            <ul>
+                                <li><span class="highlight">LANAP</span>:
+                                    <ul>
+                                        <li>Laser-assisted new attachment procedure</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Decontamination</span>:
+                                    <ul>
+                                        <li>Pocket disinfection</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Biostimulation</span>:
+                                    <ul>
+                                        <li>Low-level laser therapy</li>
+                                        <li>Promotes healing</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Advantages</h2>
+                            <ul>
+                                <li>Minimal bleeding</li>
+                                <li>Reduced postoperative pain</li>
+                                <li>Selective calculus ablation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">12</div>
+                </div>
+            </div>
+            
+            <!-- Slide 13: Periodontal Maintenance -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Periodontal Maintenance</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Recall Intervals</h2>
+                            <ul>
+                                <li><span class="highlight">Health/gingivitis</span>:
+                                    <ul>
+                                        <li>6-12 months</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Periodontitis</span>:
+                                    <ul>
+                                        <li>3-4 months</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">High-risk patients</span>:
+                                    <ul>
+                                        <li>2-3 months</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Components</h2>
+                            <ul>
+                                <li>Re-evaluation</li>
+                                <li>Reinforcement of oral hygiene</li>
+                                <li>Scaling/root planing</li>
+                                <li>Polishing</li>
+                                <li>Topical fluoride</li>
+                                <li>Radiographs as needed</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Periodontal_maintenance.jpg/800px-Periodontal_maintenance.jpg" alt="Periodontal Maintenance" class="periodontology-image">
+                            <h2>Monitoring</h2>
+                            <ul>
+                                <li><span class="highlight">Probing depths</span>:
+                                    <ul>
+                                        <li>Compare to baseline</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Bleeding on probing</span>:
+                                    <ul>
+                                        <li>Indicator of inflammation</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Plaque control</span>:
+                                    <ul>
+                                        <li>Plaque indices</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Radiographic changes</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">13</div>
+                </div>
+            </div>
+            
+            <!-- Slide 14: Peri-Implant Diseases -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Peri-Implant Diseases</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Peri-Implant Mucositis</h2>
+                            <ul>
+                                <li>Reversible inflammation</li>
+                                <li>Bleeding on probing</li>
+                                <li>No bone loss</li>
+                                <li>Plaque-induced</li>
+                            </ul>
+                            <h2>Peri-Implantitis</h2>
+                            <ul>
+                                <li>Inflammation + bone loss</li>
+                                <li>Probing depths >5mm</li>
+                                <li>Suppuration</li>
+                                <li>Progressive if untreated</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Peri-implantitis.jpg/800px-Peri-implantitis.jpg" alt="Peri-Implantitis" class="periodontology-image">
+                            <h2>Risk Factors</h2>
+                            <ul>
+                                <li>History of periodontitis</li>
+                                <li>Poor plaque control</li>
+                                <li>Smoking</li>
+                                <li>Diabetes</li>
+                                <li>Excess cement</li>
+                                <li>Occlusal overload</li>
+                            </ul>
+                            <h2>Treatment</h2>
+                            <ul>
+                                <li>Mechanical debridement</li>
+                                <li>Antimicrobial therapy</li>
+                                <li>Surface decontamination</li>
+                                <li>Regenerative/resective surgery</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">14</div>
+                </div>
+            </div>
+            
+            <!-- Slide 15: Periodontal-Systemic Connections -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Periodontal-Systemic Connections</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Cardiovascular Disease</h2>
+                            <ul>
+                                <li>1.5-2x increased risk</li>
+                                <li>Inflammation → atherosclerosis</li>
+                                <li>Bacteremia → endocarditis</li>
+                            </ul>
+                            <h2>Diabetes</h2>
+                            <ul>
+                                <li>Bidirectional relationship</li>
+                                <li>Severity ↑ with poor glycemic control</li>
+                                <li>Treatment improves HbA1c</li>
+                            </ul>
+                            <h2>Adverse Pregnancy Outcomes</h2>
+                            <ul>
+                                <li>Preterm low birth weight</li>
+                                <li>Preeclampsia</li>
+                                <li>Mechanisms:
+                                    <ul>
+                                        <li>Inflammatory mediators</li>
+                                        <li>Bacterial dissemination</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Periodontal_systemic_links.svg/800px-Periodontal_systemic_links.svg.png" alt="Systemic Links" class="periodontology-image">
+                            <h2>Respiratory Diseases</h2>
+                            <ul>
+                                <li>Aspiration of pathogens</li>
+                                <li>COPD exacerbation</li>
+                                <li>Pneumonia</li>
+                            </ul>
+                            <h2>Other Conditions</h2>
+                            <ul>
+                                <li>Rheumatoid arthritis</li>
+                                <li>Chronic kidney disease</li>
+                                <li>Alzheimer's disease</li>
+                                <li>Cancer (oral, pancreatic)</li>
+                            </ul>
+                            <h2>Clinical Implications</h2>
+                            <ul>
+                                <li>Medical history review</li>
+                                <li>Interdisciplinary care</li>
+                                <li>Patient education</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">15</div>
+                </div>
+            </div>
+            
+            <!-- Slide 16: Emerging Therapies -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Emerging Therapies</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Biologic Agents</h2>
+                            <ul>
+                                <li><span class="highlight">Growth factors</span>:
+                                    <ul>
+                                        <li>PDGF</li>
+                                        <li>IGF</li>
+                                        <li>FGF</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Cytokine modulation</span>:
+                                    <ul>
+                                        <li>IL-1 antagonists</li>
+                                        <li>TNF inhibitors</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Stem cell therapy</span>:
+                                    <ul>
+                                        <li>Periodontal ligament stem cells</li>
+                                        <li>Bone marrow mesenchymal cells</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Stem_cell_therapy.jpg/800px-Stem_cell_therapy.jpg" alt="Stem Cell Therapy" class="periodontology-image">
+                            <h2>Novel Materials</h2>
+                            <ul>
+                                <li><span class="highlight">3D scaffolds</span>:
+                                    <ul>
+                                        <li>Guided tissue regeneration</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Smart biomaterials</span>:
+                                    <ul>
+                                        <li>Controlled drug release</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Gene-activated matrices</span></li>
+                            </ul>
+                            <h2>Diagnostic Advances</h2>
+                            <ul>
+                                <li>Salivary biomarkers</li>
+                                <li>Microbial profiling</li>
+                                <li>AI-based risk assessment</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">16</div>
+                </div>
+            </div>
+            
+            <!-- Slide 17: Summary -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Periodontology Icon" class="periodontology-icon">
+                    <h1>Key Takeaways</h1>
+                    <ul style="text-align: left;">
+                        <li>Periodontal health is essential for overall health</li>
+                        <li>Early diagnosis and intervention prevent progression</li>
+                        <li>Treatment should be tailored to disease severity</li>
+                        <li>Non-surgical therapy is foundation of treatment</li>
+                        <li>Surgical options available for advanced cases</li>
+                        <li>Maintenance therapy critical for long-term success</li>
+                        <li>Periodontal disease impacts systemic health</li>
+                        <li>Emerging therapies show great promise</li>
+                    </ul>
+                    <h2 style="margin-top: 30px;">Questions and Discussion</h2>
+                    <div class="slide-number">17</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="prev-btn">←</button>
+        <button class="control-btn" id="next-btn">→</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelector('.slides');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const totalSlides = 17;
+        let currentSlide = 0;
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 4}%)`;
+            progressBar.style.width = `${(currentSlide + 1) / totalSlides * 100}%`;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
