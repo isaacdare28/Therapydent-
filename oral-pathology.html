@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oral Pathology & Diagnosis</title>
+    <style>
+        :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --reactive: #83c5be;
+            --neoplastic: #ffddd2;
+            --infectious: #ffb4a2;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
+            display: flex;
+            width: 2500%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 4%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: rgba(42, 157, 143, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-btn:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+        
+        .pathology-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .pathology-image {
+            max-width: 250px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+        }
+        
+        .reactive-bg {
+            background-color: var(--reactive);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .neoplastic-bg {
+            background-color: var(--neoplastic);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .infectious-bg {
+            background-color: var(--infectious);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .card {
+            background: white;
+            border-left: 5px solid var(--accent);
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+                width: 95%;
+                height: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .pathology-image {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <div class="slides">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Oral Pathology Icon" class="pathology-icon">
+                    <h1>Oral Pathology & Diagnosis</h1>
+                    <p>Identification and Management of Oral Diseases</p>
+                    <div class="slide-number">1</div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Course Objectives -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Course Objectives</h1>
+                    <p>By the end of this module, you will understand:</p>
+                    <ul>
+                        <li>Classification of oral lesions</li>
+                        <li>Diagnostic methodology</li>
+                        <li>Reactive/inflammatory conditions</li>
+                        <li>Infectious diseases</li>
+                        <li>Premalignant lesions</li>
+                        <li>Oral cancer</li>
+                        <li>Salivary gland disorders</li>
+                        <li>Bone pathologies</li>
+                    </ul>
+                    <div class="slide-number">2</div>
+                </div>
+            </div>
+            
+            <!-- Slide 3: Diagnostic Approach -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Diagnostic Methodology</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Clinical Evaluation</h2>
+                            <ul>
+                                <li><span class="highlight">History</span>:
+                                    <ul>
+                                        <li>Duration</li>
+                                        <li>Symptoms</li>
+                                        <li>Medical history</li>
+                                        <li>Risk factors</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Examination</span>:
+                                    <ul>
+                                        <li>Location</li>
+                                        <li>Size</li>
+                                        <li>Color</li>
+                                        <li>Texture</li>
+                                        <li>Border</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Oral_lesion_examination.jpg/800px-Oral_lesion_examination.jpg" alt="Oral Examination" class="pathology-image">
+                            <h2>Diagnostic Tools</h2>
+                            <ul>
+                                <li><span class="highlight">Biopsy</span>:
+                                    <ul>
+                                        <li>Incisional</li>
+                                        <li>Excisional</li>
+                                        <li>Brush biopsy</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Imaging</span>:
+                                    <ul>
+                                        <li>Periapical radiographs</li>
+                                        <li>Panoramic</li>
+                                        <li>CBCT</li>
+                                        <li>MRI/CT</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Lab tests</span>:
+                                    <ul>
+                                        <li>Microbiology</li>
+                                        <li>Hematology</li>
+                                        <li>Serology</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">3</div>
+                </div>
+            </div>
+            
+            <!-- Slide 4: Reactive Lesions -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Reactive/Inflammatory Lesions</h1>
+                    <div class="two-column">
+                        <div class="column reactive-bg">
+                            <h2>Traumatic Fibroma</h2>
+                            <ul>
+                                <li>Most common oral soft tissue lesion</li>
+                                <li>Smooth, pink nodule</li>
+                                <li>Cheek/lip/tongue</li>
+                                <li>Treatment: Excision</li>
+                            </ul>
+                            <h2>Pyogenic Granuloma</h2>
+                            <ul>
+                                <li>Rapidly growing vascular lesion</li>
+                                <li>Bleeds easily</li>
+                                <li>Pregnant women (pregnancy tumor)</li>
+                                <li>Treatment: Excision + remove irritant</li>
+                            </ul>
+                        </div>
+                        <div class="column reactive-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Pyogenic_granuloma.jpg/800px-Pyogenic_granuloma.jpg" alt="Pyogenic Granuloma" class="pathology-image">
+                            <h2>Peripheral Giant Cell Granuloma</h2>
+                            <ul>
+                                <li>Bluish-purple gingival mass</li>
+                                <li>May cause bone erosion</li>
+                                <li>Treatment: Excision + curettage</li>
+                            </ul>
+                            <h2>Lichen Planus</h2>
+                            <ul>
+                                <li>Wickham's striae</li>
+                                <li>Reticular/erosive forms</li>
+                                <li>Treatment: Topical steroids</li>
+                                <li>0.5-2% malignant transformation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">4</div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Infectious Diseases -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Infectious Diseases</h1>
+                    <div class="two-column">
+                        <div class="column infectious-bg">
+                            <h2>Viral</h2>
+                            <ul>
+                                <li><span class="highlight">Herpes Simplex</span>:
+                                    <ul>
+                                        <li>Primary herpetic gingivostomatitis</li>
+                                        <li>Recurrent herpes labialis</li>
+                                        <li>Treatment: Acyclovir/valacyclovir</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">HPV</span>:
+                                    <ul>
+                                        <li>Squamous papilloma</li>
+                                        <li>Verruca vulgaris</li>
+                                        <li>HPV-16/18: Oropharyngeal cancer</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column infectious-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Oral_candidiasis.jpg/800px-Oral_candidiasis.jpg" alt="Oral Candidiasis" class="pathology-image">
+                            <h2>Fungal</h2>
+                            <ul>
+                                <li><span class="highlight">Candidiasis</span>:
+                                    <ul>
+                                        <li>Pseudomembranous (thrush)</li>
+                                        <li>Erythematous</li>
+                                        <li>Angular cheilitis</li>
+                                        <li>Treatment: Nystatin/fluconazole</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Bacterial</h2>
+                            <ul>
+                                <li>Necrotizing ulcerative gingivitis</li>
+                                <li>Actinomycosis (sulfur granules)</li>
+                                <li>Syphilis (chancre, mucous patch)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">5</div>
+                </div>
+            </div>
+            
+            <!-- Slide 6: Premalignant Lesions -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Premalignant Lesions</h1>
+                    <div class="two-column">
+                        <div class="column neoplastic-bg">
+                            <h2>Leukoplakia</h2>
+                            <ul>
+                                <li>White plaque (cannot be scraped off)</li>
+                                <li>3-5% malignant transformation</li>
+                                <li>Risk factors: Tobacco, alcohol</li>
+                                <li>Treatment: Excision + follow-up</li>
+                            </ul>
+                            <h2>Erythroplakia</h2>
+                            <ul>
+                                <li>Red velvety patch</li>
+                                <li>90% show dysplasia/carcinoma</li>
+                                <li>Most dangerous oral premalignancy</li>
+                                <li>Treatment: Immediate biopsy</li>
+                            </ul>
+                        </div>
+                        <div class="column neoplastic-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Oral_leukoplakia.jpg/800px-Oral_leukoplakia.jpg" alt="Leukoplakia" class="pathology-image">
+                            <h2>Oral Submucous Fibrosis</h2>
+                            <ul>
+                                <li>Burning sensation</li>
+                                <li>Blanched mucosa</li>
+                                <li>Trismus</li>
+                                <li>7-13% malignant transformation</li>
+                                <li>Associated with areca nut</li>
+                            </ul>
+                            <h2>Management Principles</h2>
+                            <ul>
+                                <li>Complete excision when possible</li>
+                                <li>3-6 month follow-up</li>
+                                <li>Eliminate risk factors</li>
+                                <li>Chemoprevention (retinoids)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">6</div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Oral Cancer -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Oral Squamous Cell Carcinoma</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Clinical Features</h2>
+                            <ul>
+                                <li>Non-healing ulcer (>2 weeks)</li>
+                                <li>Indurated borders</li>
+                                <li>Erythroleukoplakia</li>
+                                <li>Fixation to underlying tissues</li>
+                                <li>Paresthesia (late sign)</li>
+                            </ul>
+                            <h2>Risk Factors</h2>
+                            <ul>
+                                <li>Tobacco (6x risk)</li>
+                                <li>Alcohol (synergistic)</li>
+                                <li>HPV-16 (oropharyngeal)</li>
+                                <li>Betel quid</li>
+                                <li>Chronic irritation</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Oral_squamous_cell_carcinoma.jpg/800px-Oral_squamous_cell_carcinoma.jpg" alt="Oral Cancer" class="pathology-image">
+                            <h2>Common Sites</h2>
+                            <ol>
+                                <li>Ventral tongue</li>
+                                <li>Floor of mouth</li>
+                                <li>Soft palate</li>
+                                <li>Retromolar trigone</li>
+                            </ol>
+                            <h2>Staging (TNM)</h2>
+                            <ul>
+                                <li>T: Tumor size (1-4)</li>
+                                <li>N: Node involvement</li>
+                                <li>M: Metastasis</li>
+                                <li>5-year survival: 40-60%</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">7</div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Salivary Gland Disorders -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Salivary Gland Disorders</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Non-Neoplastic</h2>
+                            <ul>
+                                <li><span class="highlight">Mucocele</span>:
+                                    <ul>
+                                        <li>Lower lip</li>
+                                        <li>Bluish translucent</li>
+                                        <li>Treatment: Excision</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Ranula</span>:
+                                    <ul>
+                                        <li>Floor of mouth</li>
+                                        <li>Plunging variant</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Sjögren's Syndrome</span>:
+                                    <ul>
+                                        <li>Autoimmune</li>
+                                        <li>Xerostomia + keratoconjunctivitis</li>
+                                        <li>Increased lymphoma risk</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Pleomorphic_adenoma.jpg/800px-Pleomorphic_adenoma.jpg" alt="Pleomorphic Adenoma" class="pathology-image">
+                            <h2>Neoplastic</h2>
+                            <ul>
+                                <li><span class="highlight">Pleomorphic adenoma</span>:
+                                    <ul>
+                                        <li>Most common benign tumor</li>
+                                        <li>Parotid gland</li>
+                                        <li>Mixed histology</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Mucoepidermoid carcinoma</span>:
+                                    <ul>
+                                        <li>Most common malignant</li>
+                                        <li>Low vs high grade</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Adenoid cystic carcinoma</span>:
+                                    <ul>
+                                        <li>Perineural invasion</li>
+                                        <li>Late metastases</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">8</div>
+                </div>
+            </div>
+            
+            <!-- Slide 9: Bone Pathologies -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Bone Pathologies</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Cysts</h2>
+                            <ul>
+                                <li><span class="highlight">Periapical cyst</span>:
+                                    <ul>
+                                        <li>Non-vital tooth</li>
+                                        <li>Treatment: RCT or extraction</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Dentigerous cyst</span>:
+                                    <ul>
+                                        <li>Around crown of unerupted tooth</li>
+                                        <li>Associated with impacted 3rd molars</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Odontogenic keratocyst</span>:
+                                    <ul>
+                                        <li>High recurrence rate</li>
+                                        <li>Part of Gorlin-Goltz syndrome</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Cherubism.jpg/800px-Cherubism.jpg" alt="Cherubism" class="pathology-image">
+                            <h2>Fibro-osseous Lesions</h2>
+                            <ul>
+                                <li><span class="highlight">Fibrous dysplasia</span>:
+                                    <ul>
+                                        <li>Ground-glass appearance</li>
+                                        <li>Monostotic vs polyostotic</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Paget's disease</span>:
+                                    <ul>
+                                        <li>Cotton-wool appearance</li>
+                                        <li>Increased alkaline phosphatase</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Other Conditions</h2>
+                            <ul>
+                                <li>Osteonecrosis (bisphosphonates)</li>
+                                <li>Central giant cell granuloma</li>
+                                <li>Cherubism (familial)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">9</div>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Vesiculobullous Diseases -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Vesiculobullous Diseases</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Pemphigus Vulgaris</h2>
+                            <ul>
+                                <li>Intraepithelial blistering</li>
+                                <li>Nikolsky's sign positive</li>
+                                <li>Oral lesions precede skin</li>
+                                <li>Treatment: Systemic steroids</li>
+                            </ul>
+                            <h2>Mucous Membrane Pemphigoid</h2>
+                            <ul>
+                                <li>Subepithelial blistering</li>
+                                <li>Scarring possible</li>
+                                <li>Desquamative gingivitis</li>
+                                <li>Treatment: Topical/systemic steroids</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Pemphigus_vulgaris.jpg/800px-Pemphigus_vulgaris.jpg" alt="Pemphigus" class="pathology-image">
+                            <h2>Erythema Multiforme</h2>
+                            <ul>
+                                <li>Target lesions</li>
+                                <li>HSV trigger</li>
+                                <li>Blood crusted lips</li>
+                                <li>Treatment: Supportive + antivirals</li>
+                            </ul>
+                            <h2>Diagnostic Tests</h2>
+                            <ul>
+                                <li>Direct immunofluorescence</li>
+                                <li>Indirect immunofluorescence</li>
+                                <li>Histopathology</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">10</div>
+                </div>
+            </div>
+            
+            <!-- Slide 11: White Lesions -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>White Lesions</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Benign</h2>
+                            <ul>
+                                <li><span class="highlight">Linea alba</span>:
+                                    <ul>
+                                        <li>Buccal mucosa along occlusion line</li>
+                                        <li>No treatment needed</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Leukoedema</span>:
+                                    <ul>
+                                        <li>Gray-white diffuse opacity</li>
+                                        <li>Disappears on stretching</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Frictional keratosis</span>:
+                                    <ul>
+                                        <li>From chronic irritation</li>
+                                        <li>Resolves after irritant removal</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Oral_hairy_leukoplakia.jpg/800px-Oral_hairy_leukoplakia.jpg" alt="Hairy Leukoplakia" class="pathology-image">
+                            <h2>Pathological</h2>
+                            <ul>
+                                <li><span class="highlight">Hairy leukoplakia</span>:
+                                    <ul>
+                                        <li>EBV infection</li>
+                                        <li>Lateral tongue</li>
+                                        <li>HIV marker</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Lichen planus</span>:
+                                    <ul>
+                                        <li>Wickham's striae</li>
+                                        <li>Reticular pattern</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Squamous cell carcinoma</span>:
+                                    <ul>
+                                        <li>Non-homogeneous leukoplakia</li>
+                                        <li>High risk features</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">11</div>
+                </div>
+            </div>
+            
+            <!-- Slide 12: Red-Blue Lesions -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Red-Blue Lesions</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Vascular</h2>
+                            <ul>
+                                <li><span class="highlight">Hemangioma</span>:
+                                    <ul>
+                                        <li>Congenital vascular malformation</li>
+                                        <li>Blanches on pressure</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Varicosities</span>:
+                                    <ul>
+                                        <li>Sublingual veins</li>
+                                        <li>Age-related</li>
+                                        <li>No treatment needed</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Inflammatory</h2>
+                            <ul>
+                                <li><span class="highlight">Erythematous candidiasis</span>:
+                                    <ul>
+                                        <li>Denture stomatitis</li>
+                                        <li>Antibiotic-associated</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Oral_hemangioma.jpg/800px-Oral_hemangioma.jpg" alt="Hemangioma" class="pathology-image">
+                            <h2>Neoplastic</h2>
+                            <ul>
+                                <li><span class="highlight">Kaposi's sarcoma</span>:
+                                    <ul>
+                                        <li>HHV-8 associated</li>
+                                        <li>Purplish nodules</li>
+                                        <li>AIDS-defining lesion</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Systemic</h2>
+                            <ul>
+                                <li><span class="highlight">Petechiae/purpura</span>:
+                                    <ul>
+                                        <li>Thrombocytopenia</li>
+                                        <li>Coagulopathies</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">12</div>
+                </div>
+            </div>
+            
+            <!-- Slide 13: Pigmented Lesions -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Pigmented Lesions</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Exogenous</h2>
+                            <ul>
+                                <li><span class="highlight">Amalgam tattoo</span>:
+                                    <ul>
+                                        <li>Most common pigmentation</li>
+                                        <li>Radiopaque particles</li>
+                                        <li>No treatment needed</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Smoker's melanosis</span>:
+                                    <ul>
+                                        <li>Anterior gingiva</li>
+                                        <li>Reversible after quitting</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Endogenous</h2>
+                            <ul>
+                                <li><span class="highlight">Melanotic macule</span>:
+                                    <ul>
+                                        <li>Lower lip/gingiva</li>
+                                        <li>Uniform pigmentation</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Oral_melanoma.jpg/800px-Oral_melanoma.jpg" alt="Oral Melanoma" class="pathology-image">
+                            <h2>Neoplastic</h2>
+                            <ul>
+                                <li><span class="highlight">Melanoma</span>:
+                                    <ul>
+                                        <li>Most lethal oral cancer</li>
+                                        <li>Palate/maxillary gingiva</li>
+                                        <li>ABCDE criteria</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Systemic</h2>
+                            <ul>
+                                <li><span class="highlight">Addison's disease</span>:
+                                    <ul>
+                                        <li>Diffuse pigmentation</li>
+                                        <li>ACTH stimulation</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Peutz-Jeghers</span>:
+                                    <ul>
+                                        <li>Perioral freckling</li>
+                                        <li>Intestinal polyps</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">13</div>
+                </div>
+            </div>
+            
+            <!-- Slide 14: Oral Manifestations of Systemic Disease -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Oral Manifestations of Systemic Disease</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Hematologic</h2>
+                            <ul>
+                                <li><span class="highlight">Anemia</span>:
+                                    <ul>
+                                        <li>Pallor</li>
+                                        <li>Angular cheilitis</li>
+                                        <li>Atrophic glossitis</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Leukemia</span>:
+                                    <ul>
+                                        <li>Gingival hyperplasia</li>
+                                        <li>Petechiae</li>
+                                        <li>Spontaneous bleeding</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Endocrine</h2>
+                            <ul>
+                                <li><span class="highlight">Diabetes</span>:
+                                    <ul>
+                                        <li>Periodontitis</li>
+                                        <li>Candidiasis</li>
+                                        <li>Xerostomia</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Crohn%27s_oral_manifestation.jpg/800px-Crohn%27s_oral_manifestation.jpg" alt="Crohn's Oral Manifestation" class="pathology-image">
+                            <h2>Gastrointestinal</h2>
+                            <ul>
+                                <li><span class="highlight">Crohn's disease</span>:
+                                    <ul>
+                                        <li>Cobblestone mucosa</li>
+                                        <li>Linear ulcers</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">GERD</span>:
+                                    <ul>
+                                        <li>Dental erosion</li>
+                                        <li>Burning sensation</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Immunodeficiency</h2>
+                            <ul>
+                                <li><span class="highlight">HIV</span>:
+                                    <ul>
+                                        <li>Hairy leukoplakia</li>
+                                        <li>Kaposi's sarcoma</li>
+                                        <li>Necrotizing periodontitis</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">14</div>
+                </div>
+            </div>
+            
+            <!-- Slide 15: Summary -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Oral Pathology Icon" class="pathology-icon">
+                    <h1>Key Takeaways</h1>
+                    <ul style="text-align: left;">
+                        <li>Thorough history and exam are essential</li>
+                        <li>Biopsy persistent lesions (>2 weeks)</li>
+                        <li>Recognize high-risk features of malignancy</li>
+                        <li>Understand oral-systemic disease connections</li>
+                        <li>Reactive lesions often resolve with irritant removal</li>
+                        <li>Early cancer detection improves prognosis</li>
+                        <li>Multidisciplinary approach often needed</li>
+                    </ul>
+                    <h2 style="margin-top: 30px;">Questions and Discussion</h2>
+                    <div class="slide-number">15</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="prev-btn">←</button>
+        <button class="control-btn" id="next-btn">→</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelector('.slides');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const totalSlides = 15;
+        let currentSlide = 0;
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 4}%)`;
+            progressBar.style.width = `${(currentSlide + 1) / totalSlides * 100}%`;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+</html>
