@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prosthodontic Fundamentals</title>
+    <style>
+        :root {
+            --primary: #2a9d8f;
+            --secondary: #264653;
+            --accent: #e9c46a;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --fixed: #83c5be;
+            --removable: #ffddd2;
+            --implants: #ffb4a2;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .slides {
+            display: flex;
+            width: 2500%;
+            height: 100%;
+            transition: transform 0.5s ease-in-out;
+        }
+        
+        .slide {
+            width: 4%;
+            height: 100%;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+        
+        .slide-content {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 90%;
+            max-width: 900px;
+            height: 80%;
+            overflow-y: auto;
+            position: relative;
+        }
+        
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: var(--primary);
+            font-weight: bold;
+        }
+        
+        h1 {
+            color: var(--primary);
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            margin: 20px 0;
+            font-size: 1.8rem;
+        }
+        
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            text-align: left;
+            margin-left: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .highlight {
+            background-color: rgba(42, 157, 143, 0.1);
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+        
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 20px;
+            z-index: 100;
+        }
+        
+        .control-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .control-btn:hover {
+            background-color: var(--accent);
+            transform: scale(1.1);
+        }
+        
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background-color: var(--accent);
+            transition: width 0.3s;
+            z-index: 100;
+        }
+        
+        .prosth-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .two-column {
+            display: flex;
+            gap: 30px;
+            text-align: left;
+        }
+        
+        .column {
+            flex: 1;
+        }
+        
+        .prosth-image {
+            max-width: 250px;
+            margin: 20px auto;
+            display: block;
+            border-radius: 8px;
+        }
+        
+        .fixed-bg {
+            background-color: var(--fixed);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .removable-bg {
+            background-color: var(--removable);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .implants-bg {
+            background-color: var(--implants);
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .card {
+            background: white;
+            border-left: 5px solid var(--accent);
+            padding: 15px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+                width: 95%;
+                height: 85%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            h2 {
+                font-size: 1.4rem;
+            }
+            
+            p, li {
+                font-size: 1rem;
+            }
+            
+            .two-column {
+                flex-direction: column;
+            }
+            
+            .prosth-image {
+                max-width: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    
+    <div class="presentation-container">
+        <div class="slides">
+            <!-- Slide 1: Title Slide -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Prosthodontics Icon" class="prosth-icon">
+                    <h1>Prosthodontic Fundamentals</h1>
+                    <p>Principles and Procedures of Dental Prostheses</p>
+                    <div class="slide-number">1</div>
+                </div>
+            </div>
+            
+            <!-- Slide 2: Course Objectives -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Course Objectives</h1>
+                    <p>By the end of this module, you will understand:</p>
+                    <ul>
+                        <li>Classification of prosthodontic treatments</li>
+                        <li>Complete denture fundamentals</li>
+                        <li>Removable partial denture design</li>
+                        <li>Fixed prosthodontic principles</li>
+                        <li>Dental implant systems</li>
+                        <li>Occlusal concepts</li>
+                        <li>Impression techniques</li>
+                        <li>Prosthodontic materials</li>
+                    </ul>
+                    <div class="slide-number">2</div>
+                </div>
+            </div>
+            
+            <!-- Slide 3: Prosthodontic Classification -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Prosthodontic Classification</h1>
+                    <div class="two-column">
+                        <div class="column fixed-bg">
+                            <h2>Fixed Prosthodontics</h2>
+                            <ul>
+                                <li><span class="highlight">Crowns</span>:
+                                    <ul>
+                                        <li>Full coverage</li>
+                                        <li>Onlays/overlays</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Fixed Dental Prostheses</span>:
+                                    <ul>
+                                        <li>Conventional FDP</li>
+                                        <li>Cantilever FDP</li>
+                                        <li>Maryland bridge</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Materials</span>:
+                                    <ul>
+                                        <li>Metal-ceramic</li>
+                                        <li>All-ceramic</li>
+                                        <li>Zirconia</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column removable-bg">
+                            <h2>Removable Prosthodontics</h2>
+                            <ul>
+                                <li><span class="highlight">Complete Dentures</span>:
+                                    <ul>
+                                        <li>Conventional</li>
+                                        <li>Immediate</li>
+                                        <li>Overdentures</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Partial Dentures</span>:
+                                    <ul>
+                                        <li>Cast metal framework</li>
+                                        <li>Acrylic resin</li>
+                                        <li>Flexible</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Materials</span>:
+                                    <ul>
+                                        <li>Heat-cured acrylic</li>
+                                        <li>Cobalt-chromium</li>
+                                        <li>Nylon polymers</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">3</div>
+                </div>
+            </div>
+            
+            <!-- Slide 4: Complete Dentures -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Complete Denture Fundamentals</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Anatomical Landmarks</h2>
+                            <ul>
+                                <li><span class="highlight">Maxillary</span>:
+                                    <ul>
+                                        <li>Incisive papilla</li>
+                                        <li>Rugae</li>
+                                        <li>Vibrating line</li>
+                                        <li>Hamular notch</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Mandibular</span>:
+                                    <ul>
+                                        <li>Retromolar pad</li>
+                                        <li>Buccal shelf</li>
+                                        <li>Mylohyoid ridge</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Border Molding</h2>
+                            <ul>
+                                <li>Define peripheral seal</li>
+                                <li>Green stick compound</li>
+                                <li>Muscle trimming</li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Complete_denture.jpg/800px-Complete_denture.jpg" alt="Complete Denture" class="prosth-image">
+                            <h2>Denture Teeth Selection</h2>
+                            <ul>
+                                <li><span class="highlight">Anterior</span>:
+                                    <ul>
+                                        <li>Size (interpupillary width)</li>
+                                        <li>Shape (face form)</li>
+                                        <li>Color (skin tone, age)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Posterior</span>:
+                                    <ul>
+                                        <li>Anatomic vs non-anatomic</li>
+                                        <li>0° vs 20° vs 33° teeth</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">4</div>
+                </div>
+            </div>
+            
+            <!-- Slide 5: Denture Fabrication -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Complete Denture Fabrication</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Clinical Steps</h2>
+                            <ol>
+                                <li>Primary impression (alginate)</li>
+                                <li>Custom tray fabrication</li>
+                                <li>Border molding</li>
+                                <li>Final impression (zinc oxide eugenol)</li>
+                                <li>Jaw relation records</li>
+                                <li>Teeth try-in</li>
+                                <li>Denture insertion</li>
+                                <li>Post-insertion adjustments</li>
+                            </ol>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Denture_fabrication.jpg/800px-Denture_fabrication.jpg" alt="Denture Fabrication" class="prosth-image">
+                            <h2>Laboratory Steps</h2>
+                            <ol>
+                                <li>Cast pouring</li>
+                                <li>Baseplate fabrication</li>
+                                <li>Wax rim contouring</li>
+                                <li>Teeth arrangement</li>
+                                <li>Flasking</li>
+                                <li>Dewaxing</li>
+                                <li>Packing</li>
+                                <li>Curing</li>
+                                <li>Finishing/polishing</li>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="slide-number">5</div>
+                </div>
+            </div>
+            
+            <!-- Slide 6: RPD Design -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Removable Partial Denture Design</h1>
+                    <div class="two-column">
+                        <div class="column removable-bg">
+                            <h2>Components</h2>
+                            <ul>
+                                <li><span class="highlight">Major connector</span>:
+                                    <ul>
+                                        <li>Palatal strap/bar</li>
+                                        <li>Lingual bar</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Minor connector</span></li>
+                                <li><span class="highlight">Rests</span>:
+                                    <ul>
+                                        <li>Occlusal</li>
+                                        <li>Cingulum</li>
+                                        <li>Incisal</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Clasps</span>:
+                                    <ul>
+                                        <li>Circumferential</li>
+                                        <li>Bar (RPI, RPA)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column removable-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/RPD_design.jpg/800px-RPD_design.jpg" alt="RPD Design" class="prosth-image">
+                            <h2>Design Principles</h2>
+                            <ul>
+                                <li><span class="highlight">Kennedy Classification</span>:
+                                    <ul>
+                                        <li>Class I: Bilateral edentulous</li>
+                                        <li>Class II: Unilateral edentulous</li>
+                                        <li>Class III: Unilateral bounded</li>
+                                        <li>Class IV: Anterior bounded</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Surveying</span>:
+                                    <ul>
+                                        <li>Determine path of insertion</li>
+                                        <li>Identify undercuts</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">6</div>
+                </div>
+            </div>
+            
+            <!-- Slide 7: Fixed Prosthodontics -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Fixed Prosthodontics</h1>
+                    <div class="two-column">
+                        <div class="column fixed-bg">
+                            <h2>Tooth Preparation</h2>
+                            <ul>
+                                <li><span class="highlight">Principles</span>:
+                                    <ul>
+                                        <li>Preservation of tooth structure</li>
+                                        <li>Retention and resistance</li>
+                                        <li>Marginal integrity</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Margins</span>:
+                                    <ul>
+                                        <li>Chamfer</li>
+                                        <li>Shoulder</li>
+                                        <li>Knife-edge</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Taper</span>:
+                                    <ul>
+                                        <li>6° total convergence</li>
+                                        <li>Parallel walls</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column fixed-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Crown_preparation.jpg/800px-Crown_preparation.jpg" alt="Crown Prep" class="prosth-image">
+                            <h2>Provisional Restoration</h2>
+                            <ul>
+                                <li><span class="highlight">Functions</span>:
+                                    <ul>
+                                        <li>Protect prepared tooth</li>
+                                        <li>Maintain occlusion</li>
+                                        <li>Preserve gingival health</li>
+                                        <li>Esthetics</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Materials</span>:
+                                    <ul>
+                                        <li>Acrylic resin</li>
+                                        <li>Bis-acryl</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">7</div>
+                </div>
+            </div>
+            
+            <!-- Slide 8: Impression Techniques -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Impression Techniques</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Complete Denture</h2>
+                            <ul>
+                                <li><span class="highlight">Preliminary</span>:
+                                    <ul>
+                                        <li>Alginate in stock tray</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Final</span>:
+                                    <ul>
+                                        <li>ZOE paste in custom tray</li>
+                                        <li>Border molded first</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Fixed Prosthodontics</h2>
+                            <ul>
+                                <li><span class="highlight">Dual-phase technique</span>:
+                                    <ul>
+                                        <li>Heavy-body + light-body</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Materials</span>:
+                                    <ul>
+                                        <li>Polyvinyl siloxane</li>
+                                        <li>Polyether</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dental_impression.jpg/800px-Dental_impression.jpg" alt="Dental Impression" class="prosth-image">
+                            <h2>Digital Impressions</h2>
+                            <ul>
+                                <li><span class="highlight">Advantages</span>:
+                                    <ul>
+                                        <li>No material distortion</li>
+                                        <li>Immediate evaluation</li>
+                                        <li>Patient comfort</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Systems</span>:
+                                    <ul>
+                                        <li>CEREC Omnicam</li>
+                                        <li>3M True Definition</li>
+                                        <li>iTero</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">8</div>
+                </div>
+            </div>
+            
+            <!-- Slide 9: Dental Implants -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Dental Implant Systems</h1>
+                    <div class="two-column">
+                        <div class="column implants-bg">
+                            <h2>Implant Components</h2>
+                            <ul>
+                                <li><span class="highlight">Fixture</span>:
+                                    <ul>
+                                        <li>Osseointegrated</li>
+                                        <li>Ti or ZrO₂</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Abutment</span>:
+                                    <ul>
+                                        <li>Stock/custom</li>
+                                        <li>Ti, gold, ZrO₂</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Prosthesis</span>:
+                                    <ul>
+                                        <li>Crown</li>
+                                        <li>Bridge</li>
+                                        <li>Overdenture</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                            <h2>Surface Treatments</h2>
+                            <ul>
+                                <li>Machined</li>
+                                <li>Acid-etched</li>
+                                <li>HA-coated</li>
+                                <li>SLActive</li>
+                            </ul>
+                        </div>
+                        <div class="column implants-bg">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dental_implant_components.jpg/800px-Dental_implant_components.jpg" alt="Implant Components" class="prosth-image">
+                            <h2>Treatment Planning</h2>
+                            <ul>
+                                <li><span class="highlight">Bone assessment</span>:
+                                    <ul>
+                                        <li>CBCT analysis</li>
+                                        <li>Bone density (Lekholm & Zarb)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Prosthetic options</span>:
+                                    <ul>
+                                        <li>Single tooth</li>
+                                        <li>Implant bridge</li>
+                                        <li>All-on-4/All-on-6</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Loading protocols</span>:
+                                    <ul>
+                                        <li>Immediate (48h)</li>
+                                        <li>Early (2-6w)</li>
+                                        <li>Conventional (3-6m)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">9</div>
+                </div>
+            </div>
+            
+            <!-- Slide 10: Occlusal Concepts -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Occlusal Concepts</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Complete Denture Occlusion</h2>
+                            <ul>
+                                <li><span class="highlight">Balanced occlusion</span>:
+                                    <ul>
+                                        <li>Bilateral contacts</li>
+                                        <li>Protrusive/working balance</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Neutrocentric concept</span>:
+                                    <ul>
+                                        <li>Flat plane</li>
+                                        <li>Neutral position</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Lingualized occlusion</span>:
+                                    <ul>
+                                        <li>Max lingual cusps contact</li>
+                                        <li>Reduced lateral forces</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Occlusal_schemes.jpg/800px-Occlusal_schemes.jpg" alt="Occlusal Schemes" class="prosth-image">
+                            <h2>Fixed Prosthodontics Occlusion</h2>
+                            <ul>
+                                <li><span class="highlight">Mutually protected</span>:
+                                    <ul>
+                                        <li>Canine guidance</li>
+                                        <li>Posterior disclusion</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Group function</span>:
+                                    <ul>
+                                        <li>Multiple contacts</li>
+                                        <li>For compromised canines</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Centric relation</span>:
+                                    <ul>
+                                        <li>Reproducible position</li>
+                                        <li>Basis for reconstruction</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">10</div>
+                </div>
+            </div>
+            
+            <!-- Slide 11: Prosthodontic Materials -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Prosthodontic Materials</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Polymers</h2>
+                            <ul>
+                                <li><span class="highlight">PMMA</span>:
+                                    <ul>
+                                        <li>Denture bases</li>
+                                        <li>Heat-cured/autopolymerizing</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Elastomers</span>:
+                                    <ul>
+                                        <li>Soft liners</li>
+                                        <li>Silicone/polyacrylate</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Composites</span>:
+                                    <ul>
+                                        <li>Provisional restorations</li>
+                                        <li>Repairs</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Dental_materials_comparison.jpg/800px-Dental_materials_comparison.jpg" alt="Dental Materials" class="prosth-image">
+                            <h2>Metals & Ceramics</h2>
+                            <ul>
+                                <li><span class="highlight">Alloys</span>:
+                                    <ul>
+                                        <li>Cobalt-chromium (RPDs)</li>
+                                        <li>Gold alloys (crowns)</li>
+                                        <li>Titanium (implants)</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Ceramics</span>:
+                                    <ul>
+                                        <li>Feldspathic (veneers)</li>
+                                        <li>Lithium disilicate (crowns)</li>
+                                        <li>Zirconia (bridges)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">11</div>
+                </div>
+            </div>
+            
+            <!-- Slide 12: Troubleshooting -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Troubleshooting Prostheses</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Complete Dentures</h2>
+                            <ul>
+                                <li><span class="highlight">Sore spots</span>:
+                                    <ul>
+                                        <li>Selective pressure areas</li>
+                                        <li>Relieve with bur</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Loose fit</span>:
+                                    <ul>
+                                        <li>Reline/rebase</li>
+                                        <li>Denture adhesives</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Fractures</span>:
+                                    <ul>
+                                        <li>Midline fractures</li>
+                                        <li>Repair with acrylic</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Denture_problems.jpg/800px-Denture_problems.jpg" alt="Denture Problems" class="prosth-image">
+                            <h2>Fixed Prostheses</h2>
+                            <ul>
+                                <li><span class="highlight">Debonding</span>:
+                                    <ul>
+                                        <li>Improper preparation</li>
+                                        <li>Cementation failure</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Fractured porcelain</span>:
+                                    <ul>
+                                        <li>Repair with composite</li>
+                                        <li>Replace restoration</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Recurrent caries</span>:
+                                    <ul>
+                                        <li>Marginal leakage</li>
+                                        <li>New restoration needed</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">12</div>
+                </div>
+            </div>
+            
+            <!-- Slide 13: Digital Prosthodontics -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Digital Prosthodontics</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>CAD/CAM Systems</h2>
+                            <ul>
+                                <li><span class="highlight">Workflow</span>:
+                                    <ul>
+                                        <li>Scan → Design → Mill</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Materials</span>:
+                                    <ul>
+                                        <li>Zirconia</li>
+                                        <li>PMMA</li>
+                                        <li>Wax</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Advantages</span>:
+                                    <ul>
+                                        <li>Precision</li>
+                                        <li>Efficiency</li>
+                                        <li>Reproducibility</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/CAD_CAM_dentistry.jpg/800px-CAD_CAM_dentistry.jpg" alt="CAD/CAM" class="prosth-image">
+                            <h2>3D Printing</h2>
+                            <ul>
+                                <li><span class="highlight">Applications</span>:
+                                    <ul>
+                                        <li>Surgical guides</li>
+                                        <li>Models</li>
+                                        <li>Temporary crowns</li>
+                                        <li>RPD frameworks</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Technologies</span>:
+                                    <ul>
+                                        <li>Stereolithography (SLA)</li>
+                                        <li>Digital light processing (DLP)</li>
+                                        <li>Selective laser sintering (SLS)</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">13</div>
+                </div>
+            </div>
+            
+            <!-- Slide 14: Maintenance -->
+            <div class="slide">
+                <div class="slide-content">
+                    <h1>Prosthesis Maintenance</h1>
+                    <div class="two-column">
+                        <div class="column">
+                            <h2>Removable Prostheses</h2>
+                            <ul>
+                                <li><span class="highlight">Daily care</span>:
+                                    <ul>
+                                        <li>Brushing with soft brush</li>
+                                        <li>Denture cleansers</li>
+                                        <li>Overnight soaking</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Professional care</span>:
+                                    <ul>
+                                        <li>Annual examinations</li>
+                                        <li>Relines as needed</li>
+                                        <li>Oral cancer screening</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="column">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Denture_care.jpg/800px-Denture_care.jpg" alt="Denture Care" class="prosth-image">
+                            <h2>Fixed Prostheses</h2>
+                            <ul>
+                                <li><span class="highlight">Home care</span>:
+                                    <ul>
+                                        <li>Floss threaders</li>
+                                        <li>Interproximal brushes</li>
+                                        <li>Non-abrasive toothpaste</li>
+                                    </ul>
+                                </li>
+                                <li><span class="highlight">Professional care</span>:
+                                    <ul>
+                                        <li>Marginal integrity checks</li>
+                                        <li>Occlusal evaluation</li>
+                                        <li>Radiographic monitoring</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="slide-number">14</div>
+                </div>
+            </div>
+            
+            <!-- Slide 15: Summary -->
+            <div class="slide">
+                <div class="slide-content">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2964/2964517.png" alt="Prosthodontics Icon" class="prosth-icon">
+                    <h1>Key Takeaways</h1>
+                    <ul style="text-align: left;">
+                        <li>Proper diagnosis and treatment planning are essential</li>
+                        <li>Biomechanical principles guide prosthesis design</li>
+                        <li>Material selection impacts longevity</li>
+                        <li>Occlusal harmony prevents complications</li>
+                        <li>Digital workflows are transforming prosthodontics</li>
+                        <li>Maintenance ensures long-term success</li>
+                        <li>Patient education improves compliance</li>
+                    </ul>
+                    <h2 style="margin-top: 30px;">Questions and Discussion</h2>
+                    <div class="slide-number">15</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="controls">
+        <button class="control-btn" id="prev-btn">←</button>
+        <button class="control-btn" id="next-btn">→</button>
+    </div>
+    
+    <script>
+        const slides = document.querySelector('.slides');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const progressBar = document.querySelector('.progress-bar');
+        const totalSlides = 15;
+        let currentSlide = 0;
+        
+        function updateSlide() {
+            slides.style.transform = `translateX(-${currentSlide * 4}%)`;
+            progressBar.style.width = `${(currentSlide + 1) / totalSlides * 100}%`;
+        }
+        
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+        
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+        
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+        
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) nextSlide();
+            if (touchEndX > touchStartX + 50) prevSlide();
+        }
+        
+        // Initialize
+        updateSlide();
+    </script>
+</body>
+  </html>
