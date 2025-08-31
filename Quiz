@@ -244,6 +244,216 @@ const App = () => {
       options: ["Osteoblasts", "Osteoclasts", "Osteocytes", "Fibroblasts"],
       correct: 2,
       topic: "Oral Histology",
+      explanation: "Osteocytes are mature bone cells that are trapped within the mineralized matrix of bone. They originate from osteoblasts that become enclosed in lacunae during bone formation. Osteocytes maintain bone tissue and communicat    {
+      question: "The curve of Spee is:",
+      options: ["A vertical curve", "A transverse curve", "An anteroposterior curve", "A diagonal curve"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The curve of Spee is an anteroposterior curve established by the occlusal alignment of the teeth, as projected upon the frontal plane. It is the anatomical curve established by the occlusal alignment of the teeth, following the mandibular occlusal plane. Understanding this curve is essential in orthodontics and prosthodontics for establishing proper occlusion."
+    },
+    {
+      question: "Which tooth has a mesial marginal ridge that is more cervically located than the distal marginal ridge?",
+      options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular first premolar has a mesial marginal ridge that is located more cervically than the distal marginal ridge. This is a distinctive feature of this tooth and contributes to its characteristic occlusal anatomy. The distal marginal ridge is positioned more incisally, creating an asymmetrical appearance on the occlusal surface."
+    },
+    {
+      question: "The primary function of the maxillary lateral incisor is:",
+      options: ["Cutting", "Tearing", "Grinding", "Crushing"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The primary function of the maxillary lateral incisor, like all incisors, is cutting food. Incisors have a thin, chisel-like edge designed for shearing and cutting food during mastication. The maxillary lateral incisor works in conjunction with other anterior teeth to incise food into smaller pieces at the beginning of the digestive process."
+    },
+    {
+      question: "Which tooth has the greatest mesiodistal width of any tooth in the permanent dentition?",
+      options: ["Maxillary first molar", "Mandibular first molar", "Maxillary second molar", "Mandibular second molar"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular first molar has the greatest mesiodistal width of any tooth in the permanent dentition, averaging about 10-11mm. This large width provides a broad occlusal table for efficient grinding of food. The wide mesiodistal dimension is one of the reasons why mandibular first molars are often the first permanent teeth to develop caries."
+    },
+    {
+      question: "The cusp of Carabelli is found on which tooth?",
+      options: ["Maxillary first premolar", "Maxillary first molar", "Mandibular first molar", "Maxillary second molar"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The cusp of Carabelli is a developmental feature found on the mesiopalatal cusp of the maxillary first molar. It appears as a small tubercle or cusp on the palatal surface near the mesiopalatal cusp. This feature is important in forensic dentistry and anthropology as it varies in expression among different populations."
+    },
+    {
+      question: "Which tooth has a facial cusp that is longer than the lingual cusp?",
+      options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary first premolar has a buccal (facial) cusp that is longer than its palatal (lingual) cusp. This difference in cusp height is more pronounced than in other premolars and contributes to the tooth's grinding function. The longer buccal cusp contacts the mandibular teeth during occlusion."
+    },
+    {
+      question: "The mandibular central incisor is:",
+      options: ["Symmetrical", "Asymmetrical", "Triangular", "Trapezoidal"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular central incisor is the most symmetrical tooth in the human dentition. From the incisal view, it appears nearly bilaterally symmetrical with similar mesial and distal contours. This symmetry is important for proper alignment in the dental arch and contributes to an aesthetically pleasing smile."
+    },
+    {
+      question: "Which tooth has a developmental groove that crosses the mesial marginal ridge?",
+      options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular first premolar has a developmental groove that crosses the mesial marginal ridge, known as the mesial marginal ridge groove. This anatomical feature creates a potential site for caries development and is important to identify during clinical examination and radiographic interpretation."
+    },
+    {
+      question: "The maxillary canine erupts at approximately what age?",
+      options: ["8-9 years", "11-12 years", "13-15 years", "6-7 years"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary canine typically erupts at approximately 11-12 years of age. This eruption timing is important in orthodontic treatment planning, as impacted canines are relatively common. The late eruption of canines often requires monitoring during mixed dentition."
+    },
+    {
+      question: "Which tooth has a root that is flattened mesiodistally?",
+      options: ["Maxillary central incisor", "Mandibular central incisor", "Maxillary lateral incisor", "Mandibular lateral incisor"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular central incisor has a root that is flattened mesiodistally, giving it a narrow, ribbon-like appearance from the facial view. This root morphology is adapted to the narrow alveolar process in the anterior mandible. The flattened root shape affects instrumentation during endodontic treatment."
+    },
+    {
+      question: "The mandibular first molar typically has how many cusps?",
+      options: ["3", "4", "5", "6"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular first molar typically has five cusps: two buccal (mesiobuccal, distobuccal), two lingual (mesiolingual, distolingual), and a distal cusp (sometimes called the distal cusp). The five-cusp pattern is characteristic of the 'Y' groove pattern on the occlusal surface, which is important for proper restoration design."
+    },
+    {
+      question: "Which tooth has the most pronounced lingual ridge?",
+      options: ["Maxillary canine", "Mandibular canine", "Maxillary central incisor", "Mandibular central incisor"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary canine has the most pronounced lingual ridge, known as the cingulum ridge or lingual ridge, which extends from the cingulum to the cusp tip. This prominent ridge contributes to the tooth's strength and provides guidance during mandibular movements. The ridge is less pronounced in mandibular canines."
+    },
+    {
+      question: "The primary function of the maxillary first molar is:",
+      options: ["Cutting", "Tearing", "Grinding", "Crushing"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The primary function of the maxillary first molar is grinding food. Molars have broad occlusal surfaces with multiple cusps and grooves designed for grinding and crushing food during mastication. The maxillary first molar, being the first permanent molar to erupt, plays a crucial role in establishing the occlusal vertical dimension."
+    },
+    {
+      question: "Which tooth has a root that is nearly twice as long as its crown?",
+      options: ["Maxillary central incisor", "Mandibular central incisor", "Maxillary canine", "Mandibular canine"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary canine has a root that is nearly twice as long as its crown, making it the tooth with the greatest crown-to-root ratio. This long root provides excellent support and makes the canine resistant to extrusive forces. The long root is advantageous in prosthodontic treatment as a potential abutment tooth."
+    },
+    {
+      question: "The mandibular second premolar most commonly has:",
+      options: ["One cusp", "Two cusps", "Three cusps", "Four cusps"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular second premolar most commonly has three cusps - one buccal and two lingual cusps. This three-cusp pattern creates a 'Y' shaped groove pattern on the occlusal surface. The three-cusp variety is more common than the two-cusp type and provides better grinding efficiency."
+    },
+    {
+      question: "Which tooth has the most variable crown morphology?",
+      options: ["Maxillary lateral incisor", "Mandibular lateral incisor", "Maxillary canine", "Mandibular canine"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary lateral incisor has the most variable crown morphology of all teeth. Variations include peg-shaped laterals, congenitally missing laterals, and talon cusps. This variability is important in restorative dentistry and orthodontics, often requiring special consideration in treatment planning."
+    },
+    {
+      question: "The curve of Wilson is:",
+      options: ["A vertical curve", "A transverse curve", "An anteroposterior curve", "A diagonal curve"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The curve of Wilson is a transverse curve that exists in the arrangement of the occlusal surfaces of the teeth when viewed from the front. It represents the curvature of the occlusal plane from buccal to lingual across the dental arch. This curve is important for balanced occlusion and proper mandibular movements."
+    },
+
+    // Oral Histology (20 questions)
+    {
+      question: "Ameloblasts are responsible for the formation of:",
+      options: ["Dentin", "Enamel", "Cementum", "Pulp"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Ameloblasts are specialized cells derived from the inner enamel epithelium that are responsible for enamel formation (amelogenesis). These cells secrete the organic matrix of enamel and regulate its mineralization. Once enamel formation is complete, ameloblasts degenerate and do not regenerate, which is why enamel cannot repair itself."
+    },
+    {
+      question: "Odontoblasts are derived from:",
+      options: ["Ectoderm", "Neural crest cells", "Mesoderm", "Endoderm"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Odontoblasts are derived from neural crest cells, which migrate from the neural folds during embryonic development. These cells differentiate from the cells of the dental papilla and are responsible for dentin formation. Neural crest cells give rise to most of the craniofacial structures, including the odontoblasts, cementoblasts, and cells of the periodontal ligament."
+    },
+    {
+      question: "Reparative dentin is formed by:",
+      options: ["Primary odontoblasts", "Secondary odontoblasts", "Tertiary odontoblasts", "Pulpal fibroblasts"],
+      correct: 2,
+      topic: "Oral Histology",
+      explanation: "Reparative dentin is formed by tertiary odontoblasts, which are newly differentiated cells from pulpal progenitor cells in response to injury. When the dental pulp is exposed or irritated, undifferentiated mesenchymal cells in the pulp differentiate into new odontoblast-like cells that produce reparative dentin to protect the pulp from further damage."
+    },
+    {
+      question: "The Tomes' granular layer is located in:",
+      options: ["Enamel", "Dentin", "Cementum", "Alveolar bone"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "The Tomes' granular layer is located in the dentin, specifically in the root portion near the cementodentinal junction. It appears as a granular layer in ground sections of teeth and represents an area of decreased mineralization in the dentinal tubules. This layer is named after William Henry Flower, who was mistakenly attributed to Tomes."
+    },
+    {
+      question: "Which cells are responsible for bone resorption?",
+      options: ["Osteoblasts", "Osteoclasts", "Osteocytes", "Fibroblasts"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Osteoclasts are large, multinucleated cells responsible for bone resorption. They are derived from monocyte-macrophage lineage and secrete acids and enzymes that dissolve the mineral and organic components of bone. In dentistry, osteoclasts play a crucial role in orthodontic tooth movement, where they resorb bone on the pressure side of the tooth."
+    },
+    {
+      question: "The periodontal ligament is primarily composed of:",
+      options: ["Collagen fibers", "Elastic fibers", "Reticular fibers", "Muscle fibers"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "The periodontal ligament is primarily composed of collagen fibers (mainly Type I collagen), which make up about 75-80% of its dry weight. These fibers are organized into principal fiber groups that attach the cementum of the tooth to the alveolar bone, providing support and shock absorption during mastication. The collagen fibers are continuously remodeled in response to functional forces."
+    },
+    {
+      question: "Which type of cementum covers the cervical area of the tooth?",
+      options: ["Acellular cementum", "Cellular cementum", "Intermediate cementum", "Secondary cementum"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "Acellular cementum covers the cervical area of the tooth and the coronal half of the root. It is formed before tooth eruption and does not contain cementocytes. This type of cementum serves primarily for the attachment of Sharpey's fibers from the periodontal ligament. Cellular cementum is found more apically and contains cementocytes in lacunae."
+    },
+    {
+      question: "The pulp horn is most prominent in:",
+      options: ["Primary teeth", "Permanent teeth", "Deciduous teeth", "Natal teeth"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "The pulp horn is most prominent in primary teeth due to the relatively larger pulp chamber compared to crown size. This anatomical feature makes primary teeth more susceptible to pulp exposure during caries removal or restorative procedures. The prominent pulp horns require careful caries excavation to avoid accidental pulp exposure."
+    },
+    {
+      question: "Which cells produce the organic matrix of bone?",
+      options: ["Osteoclasts", "Osteoblasts", "Osteocytes", "Chondrocytes"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Osteoblasts are bone-forming cells that produce the organic matrix of bone, called osteoid, which is primarily composed of Type I collagen. After secreting the matrix, osteoblasts may become trapped in the mineralized matrix and differentiate into osteocytes, or they may remain on the bone surface as lining cells. Osteoblasts also regulate the mineralization process."
+    },
+    {
+      question: "The lamina dura is:",
+      options: ["A layer of cementum", "A layer of periodontal ligament", "A layer of alveolar bone", "A layer of enamel"],
+      correct: 2,
+      topic: "Oral Histology",
+      explanation: "The lamina dura is a layer of alveolar bone that lines the tooth socket (alveolus). It appears as a dense white line on dental radiographs and represents the cortical plate of the alveolar bone. The integrity of the lamina dura is an important diagnostic indicator in dental radiography, as its loss may indicate periodontal disease or periapical pathology."
+    },
+    {
+      question: "Which type of dentin is formed before tooth eruption?",
+      options: ["Primary dentin", "Secondary dentin", "Tertiary dentin", "Reparative dentin"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "Primary dentin is formed before tooth eruption during root formation. It constitutes the majority of the dentin and is deposited rapidly by odontoblasts. Primary dentin formation ceases once root formation is complete. Secondary dentin is formed after eruption at a slower rate throughout life, while tertiary dentin is formed in response to stimuli like caries or trauma."
+    },
+    {
+      question: "The reduced enamel epithelium is formed by the fusion of:",
+      options: ["Inner and outer enamel epithelium", "Stellate reticulum and stratum intermedium", "Ameloblasts and odontoblasts", "Cementoblasts and fibroblasts"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "The reduced enamel epithelium is formed by the fusion of the inner and outer enamel epithelium after enamel formation is complete. This structure covers the crown of the developing tooth and plays a role in guiding eruption through the oral epithelium. The reduced enamel epithelium eventually breaks down, allowing the tooth to erupt into the oral cavity."
+    },
+    {
+      question: "Which cells are trapped within the mineralized matrix of bone?",
+      options: ["Osteoblasts", "Osteoclasts", "Osteocytes", "Fibroblasts"],
+      correct: 2,
+      topic: "Oral Histology",
       explanation: "Osteocytes are mature bone cells that are trapped within the mineralized matrix of bone. They originate from osteoblasts that become enclosed in lacunae during bone formation. Osteocytes maintain bone tissue and communicate with each other and with surface cells through canaliculi, playing a crucial role in bone remodeling and mechanotransduction."
     },
     {
