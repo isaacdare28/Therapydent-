@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Flashcards Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --secondary: #4f46e5;
+            --accent: #ec4899;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+        }
+        
+        * {
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            min-height: 100vh;
+            color: var(--dark);
+        }
+        
+        .card-container {
+            perspective: 1200px;
+        }
+        
+        .flashcard {
+            position: relative;
+            width: 100%;
+            height: 480px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+            cursor: pointer;
+        }
+        
+        .flashcard.flipped {
+            transform: rotateY(180deg);
+        }
+        
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem;
+            justify-content: center;
+        }
+        
+        .card-front {
+            background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .card-back {
+            background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+            transform: rotateY(180deg);
+            text-align: left;
+            overflow-y: auto;
+        }
+        
+        .progress-ring {
+            transform: rotate(-90deg);
+            transition: stroke-dashoffset 0.5s;
+            transform-origin: 50% 50%;
+        }
+        
+        .progress-ring-circle {
+            stroke-width: 8;
+            stroke: var(--primary);
+            fill: transparent;
+            stroke-dasharray: 800, 800;
+        }
+        
+        .stagger-fade-in {
+            animation: staggerFadeIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes staggerFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 25px rgba(37, 99, 235, 0.2);
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .difficulty-badge {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .difficulty-1 { background-color: var(--success); }
+        .difficulty-2 { background-color: var(--warning); }
+        .difficulty-3 { background-color: var(--danger); }
+        
+        .nav-button {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .nav-button:disabled {
+            background: linear-gradient(to right, #cbd5e1, #94a3b8);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .flip-button {
+            background: linear-gradient(to right, var(--primary-light), var(--primary));
+            color: white;
+            border: none;
+            border-radius: 2rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .flip-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .course-button {
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .course-button.active {
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-button:hover:not(.active) {
+            border-color: var(--primary-light);
+            transform: translateY(-3px);
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .stats-number {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+        
+        .stats-label {
+            font-size: 0.875rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+        
+        .mode-toggle {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 1.5rem;
+            padding: 0.25rem;
+        }
+        
+        .mode-option {
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+        }
+        
+        .mode-option.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-counter {
+            font-variant-numeric: tabular-nums;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        @media (max-width: 768px) {
+            .flashcard {
+                height: 400px;
+            }
+            
+            .card-face {
+                padding: 1.5rem;
+            }
+            
+            .nav-button {
+                width: 50px;
+                height: 50px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .flashcard {
+                height: 380px;
+            }
+            
+            .card-face {
+                padding: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const App = () => {
+            const [currentCard, setCurrentCard] = React.useState(0);
+            const [isFlipped, setIsFlipped] = React.useState(false);
+            const [selectedCourse, setSelectedCourse] = React.useState('Tooth Morphology');
+            const [studyMode, setStudyMode] = React.useState('sequential');
+            const [difficulty, setDifficulty] = React.useState({});
+            const [studyStats, setStudyStats] = React.useState({
+                totalCards: 0,
+                studiedToday: 0,
+                mastered: 0
+            });
+
+            // Comprehensive flashcard data for 10 dental specialties with 20 cards each
+            const flashcardsData = {
+                "Tooth Morphology": [
+                    {
+                        front: "Which tooth has the longest root in the human dentition?",
+                        back: "The maxillary canine has the longest root of all teeth, averaging about 17mm. This long root provides excellent support and makes the canine a key tooth in dental prosthetics and orthodontics due to its resistance to lateral forces.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "What is the curve of Spee and its clinical significance?",
+                        back: "The curve of Spee is an anteroposterior curve established by the occlusal alignment of the teeth, following the mandibular occlusal plane. It's essential for proper occlusion, mandibular movements, and must be considered in restorative and orthodontic treatment planning.",
+                        difficulty: 3
+                    },
+                    {
+                        front: "Describe the occlusal anatomy of the mandibular first molar.",
+                        back: "The mandibular first molar typically has five cusps (two buccal, two lingual, and a distal cusp) with a 'Y' groove pattern. It has the greatest mesiodistal width of any tooth, providing a broad occlusal table for grinding, and is the first permanent tooth to erupt.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "What is the cusp of Carabelli and its significance?",
+                        back: "The cusp of Carabelli is a developmental feature on the mesiopalatal cusp of the maxillary first molar. It appears as a small tubercle and is important in forensic dentistry, anthropology, and can serve as a caries-prone site requiring preventive attention.",
+                        difficulty: 3
+                    },
+                    {
+                        front: "How does the mandibular central incisor differ from other incisors?",
+                        back: "The mandibular central incisor is the most symmetrical tooth in the dentition with a root that is flattened mesiodistally, giving it a narrow, ribbon-like appearance from the facial view. This root morphology affects instrumentation during endodontic treatment.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "What are the differences between primary and permanent teeth?",
+                        back: "Primary teeth are smaller, whiter, have thinner enamel and dentin, larger pulp chambers, and more prominent cervical constriction. They have roots that are more flared to accommodate developing permanent teeth. Permanent teeth are larger, less white, and have longer roots.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "Describe the features of the maxillary first premolar.",
+                        back: "The maxillary first premolar typically has two cusps (buccal and lingual) of nearly equal size, a mesial developmental depression, and two roots (buccal and lingual) in most cases. It has a characteristic mesial marginal groove that extends onto the mesial surface.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "What is the function of mamelons?",
+                        back: "Mamelons are the three rounded protuberances on the incisal edge of newly erupted incisor teeth. They represent the three developmental lobes of the tooth. Mamelons typically wear away through normal function but may persist in cases of open bite malocclusion.",
+                        difficulty: 1
+                    },
+                    {
+                        front: "Explain the significance of the height of contour.",
+                        back: "The height of contour is the greatest circumference of a tooth. On the crown, it protects the gingiva by deflecting food during mastication and provides a natural embrasure for the gingival papilla. It's also important for proper contour of dental restorations.",
+                        difficulty: 3
+                    },
+                    {
+                        front: "What are the characteristics of the mandibular canine?",
+                        back: "The mandibular canine is narrower mesiodistally than the maxillary canine, with a less developed cingulum and marginal ridges. The root is shorter and more flattened mesiodistally. The distal cusp ridge is longer than the mesial, and the crown often appears straighter than the maxillary canine.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "Describe the differences between maxillary and mandibular molars.",
+                        back: "Maxillary molars typically have three roots (two buccal, one palatal) and a rhomboidal occlusal outline. Mandibular molars usually have two roots (mesial and distal) and a rectangular occlusal outline. Maxillary molars have more supplemental anatomy like the cusp of Carabelli.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "What is the clinical significance of root form?",
+                        back: "Root form determines a tooth's stability, resistance to forces, and susceptibility to periodontal disease. Teeth with conical roots are more prone to rotation, while flattened roots provide better resistance to torquing forces. Root form also affects extraction techniques and implant planning.",
+                        difficulty: 3
+                    },
+                    {
+                        front: "Explain the concept of proximal contact areas.",
+                        back: "Proximal contact areas are where adjacent teeth touch each other. They prevent food impaction, stabilize the dental arch, and protect the interdental papilla. Proper contact is essential for periodontal health and prevents drifting of teeth. Contacts are located in the incisal/occlusal third of anterior teeth and middle third of posterior teeth.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "What are the functions of dental embrasures?",
+                        back: "Embrasures are V-shaped spaces between teeth that diverge from the contact area. They allow for passage of food away from gingiva, prevent food impaction, provide self-cleaning areas, and allow for proper gingival contour. They are important in restorative dentistry for natural appearance and function.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "Describe the development and calcification timeline of primary teeth.",
+                        back: "Primary teeth begin developing in utero at 6-8 weeks. Calcification begins around 13-16 weeks in utero and continues after birth. Eruption begins at 6-10 months with mandibular central incisors and is complete by 24-30 months. Root completion occurs 12-18 months after eruption.",
+                        difficulty: 3
+                    },
+                    {
+                        front: "What is the significance of the CEJ curvature?",
+                        back: "The cementoenamel junction (CEJ) curvature varies by tooth type and surface. It's greatest on mesial surfaces of anterior teeth. This curvature is important for periodontal attachment and must be reproduced in restorations to maintain periodontal health. The CEJ is also a landmark for determining crown-to-root ratio.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "Compare the features of primary and permanent molars.",
+                        back: "Primary molars are smaller, have thinner enamel and dentin, larger pulp chambers relative to crown size, more pronounced cervical constriction, and flared roots to accommodate developing permanent teeth. They have fewer cusps and less defined anatomy than permanent molars.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "What is the role of tooth morphology in forensic dentistry?",
+                        back: "Tooth morphology helps in personal identification through unique features like cusp patterns, restorations, root morphology, and wear patterns. Racial characteristics can be determined from tooth shape and size. Morphological variations like talon cusps or dens invaginatus can aid in identification.",
+                        difficulty: 3
+                    },
+                    {
+                        front: "Explain the concept of 'long centric' in occlusion.",
+                        back: "Long centric refers to a freedom in centric relation where the mandible can move slightly anteriorly without tooth separation. This allows for smooth transition between centric relation and centric occlusion without deflective contacts. It's important in restorative dentistry to avoid working interferences.",
+                        difficulty: 3
+                    },
+                    {
+                        front: "What are the key identifying features of the maxillary first molar?",
+                        back: "The maxillary first molar is the largest tooth in the maxillary arch. It typically has four major cusps (MB, DB, ML, DL) and often a fifth cusp of Carabelli on the ML surface. It has three roots (MB, DB, and palatal) with the palatal root being the longest. The oblique ridge connects the ML and DB cusps.",
+                        difficulty: 2
+                    }
+                ],
+                "Oral Histology": [
+                    {
+                        front: "What are ameloblasts and what do they produce?",
+                        back: "Ameloblasts are specialized cells derived from the inner enamel epithelium that produce enamel. They secrete the organic matrix of enamel and regulate its mineralization. Once enamel formation is complete, ameloblasts degenerate, which is why enamel cannot repair itself.",
+                        difficulty: 1
+                    },
+                    {
+                        front: "Describe the structure and function of the periodontal ligament.",
+                        back: "The periodontal ligament is primarily composed of Type I collagen fibers (75-80%) that attach the cementum of the tooth to the alveolar bone. It provides support, shock absorption during mastication, contains mechanoreceptors for proprioception, and is continuously remodeled in response to functional forces.",
+                        difficulty: 2
+                    },
+                    {
+                        front: "What is the difference between primary and secondary dentin?",
+                        back: "Primary dentin is formed rapidly before tooth eruption and constitutes the majority of dentin. Secondary dentin is formed more slowly after eruption throughout life, gradually reducing the pulp chamber size with age. Tertiary dentin forms in response to stimuli like caries or trauma.",
+                        difficulty: 2
+                    },
+                
