@@ -1,40 +1,227 @@
-import React, { useState, useEffect } from "react";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dental Quiz Practice Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div id="root"></div>
 
-const App = () => {
-  const [currentQuestion, setCurrentQuestion] = useState(0);
-  const [selectedAnswer, setSelectedAnswer] = useState(null);
-  const [showResult, setShowResult] = useState(false);
-  const [quizStarted, setQuizStarted] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(3000); // 50 minutes in seconds
-  const [userAnswers, setUserAnswers] = useState({});
-  const [reviewMode, setReviewMode] = useState(false);
-  const [activeTab, setActiveTab] = useState('quiz'); // quiz, review, summary
+    <script type="text/babel">
+        const App = () => {
+            const [currentQuestion, setCurrentQuestion] = React.useState(0);
+            const [selectedAnswer, setSelectedAnswer] = React.useState(null);
+            const [showResult, setShowResult] = React.useState(false);
+            const [quizStarted, setQuizStarted] = React.useState(false);
+            const [timeLeft, setTimeLeft] = React.useState(3000); // 50 minutes in seconds
+            const [userAnswers, setUserAnswers] = React.useState({});
+            const [activeTab, setActiveTab] = React.useState('quiz'); // quiz, review, summary
 
-  // Mock quiz data with 100 questions across various dentistry topics
-  const quizData = [
-    // Tooth Morphology (20 questions)
-    {
-      question: "Which tooth has the longest root in the human dentition?",
-      options: ["Maxillary central incisor", "Mandibular canine", "Maxillary canine", "Mandibular first molar"],
-      correct: 2,
-      topic: "Tooth Morphology",
-      explanation: "The maxillary canine has the longest root of all teeth in the human dentition. Its root length averages about 17mm, making it the longest single-rooted tooth. This long root provides excellent support and makes the canine a key tooth in dental prosthetics and orthodontics."
-    },
-    {
-      question: "The mesial cusp ridge is longer than the distal cusp ridge in which tooth?",
-      options: ["Maxillary canine", "Mandibular canine", "Maxillary lateral incisor", "Mandibular central incisor"],
-      correct: 1,
-      topic: "Tooth Morphology",
-      explanation: "In the mandibular canine, the mesial cusp ridge is longer than the distal cusp ridge, which is the opposite of the maxillary canine. This is an important distinguishing feature between upper and lower canines. The mandibular canine's longer mesial ridge gives it a more symmetrical appearance from the facial view compared to the maxillary canine."
-    },
-    {
-      question: "Which premolar most frequently has two roots?",
-      options: ["Maxillary first premolar", "Maxillary second premolar", "Mandibular first premolar", "Mandibular second premolar"],
-      correct: 0,
-      topic: "Tooth Morphology",
-      explanation: "The maxillary first premolar most frequently has two roots - a buccal and a palatal root. Approximately 60-70% of maxillary first premolars have two roots, making it the premolar most likely to have this anatomy. This is crucial for endodontic treatment planning and extraction procedures."
-    },
-    {
+            // Mock quiz data with 100 questions across various dentistry topics
+            const quizData = [
+                // Tooth Morphology (20 questions)
+                {
+                    question: "Which tooth has the longest root in the human dentition?",
+                    options: ["Maxillary central incisor", "Mandibular canine", "Maxillary canine", "Mandibular first molar"],
+                    correct: 2,
+                    topic: "Tooth Morphology",
+                    explanation: "The maxillary canine has the longest root of all teeth in the human dentition. Its root length averages about 17mm, making it the longest single-rooted tooth. This long root provides excellent support and makes the canine a key tooth in dental prosthetics and orthodontics."
+                },
+                {
+                    question: "The mesial cusp ridge is longer than the distal cusp ridge in which tooth?",
+                    options: ["Maxillary canine", "Mandibular canine", "Maxillary lateral incisor", "Mandibular central incisor"],
+                    correct: 1,
+                    topic: "Tooth Morphology",
+                    explanation: "In the mandibular canine, the mesial cusp ridge is longer than the distal cusp ridge, which is the opposite of the maxillary canine. This is an important distinguishing feature between upper and lower canines. The mandibular canine's longer mesial ridge gives it a more symmetrical appearance from the facial view compared to the maxillary canine."
+                },
+                {
+                    question: "Which premolar most frequently has two roots?",
+                    options: ["Maxillary first premolar", "Maxillary second premolar", "Mandibular first premolar", "Mandibular second premolar"],
+                    correct: 0,
+                    topic: "Tooth Morphology",
+                    explanation: "The maxillary first premolar most frequently has two roots - a buccal and a palatal root. Approximately 60-70% of maxillary first premolars have two roots, making it the premolar most likely to have this anatomy. This is crucial for endodontic treatment planning and extraction procedures."
+                },
+                {
+                    question: "The curve of Spee is:",
+                    options: ["A vertical curve", "A transverse curve", "An anteroposterior curve", "A diagonal curve"],
+                    correct: 2,
+                    topic: "Tooth Morphology",
+                    explanation: "The curve of Spee is an anteroposterior curve established by the occlusal alignment of the teeth, as projected upon the frontal plane. It is the anatomical curve established by the occlusal alignment of the teeth, following the mandibular occlusal plane. Understanding this curve is essential in orthodontics and prosthodontics for establishing proper occlusion."
+                },
+                {
+                    question: "Which tooth has a mesial marginal ridge that is more cervically located than the distal marginal ridge?",
+                    options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+                    correct: 1,
+                    topic: "Tooth Morphology",
+                    explanation: "The mandibular first premolar has a mesial marginal ridge that is located more cervically than the distal marginal ridge. This is a distinctive feature of this tooth and contributes to its characteristic occlusal anatomy. The distal marginal ridge is positioned more incisally, creating an asymmetrical appearance on the occlusal surface."
+                },
+                {
+                    question: "The primary function of the maxillary lateral incisor is:",
+                    options: ["Cutting", "Tearing", "Grinding", "Crushing"],
+                    correct: 0,
+                    topic: "Tooth Morphology",
+                    explanation: "The primary function of the maxillary lateral incisor, like all incisors, is cutting food. Incisors have a thin, chisel-like edge designed for shearing and cutting food during mastication. The maxillary lateral incisor works in conjunction with other anterior teeth to incise food into smaller pieces at the beginning of the digestive process."
+                },
+                {
+                    question: "Which tooth has the greatest mesiodistal width of any tooth in the permanent dentition?",
+                    options: ["Maxillary first molar", "Mandibular first molar", "Maxillary second molar", "Mandibular second molar"],
+                    correct: 1,
+                    topic: "Tooth Morphology",
+                    explanation: "The mandibular first molar has the greatest mesiodistal width of any tooth in the permanent dentition, averaging about 10-11mm. This large width provides a broad occlusal table for efficient grinding of food. The wide mesiodistal dimension is one of the reasons why mandibular first molars are often the first permanent teeth to develop caries."
+                },
+                {
+                    question: "The cusp of Carabelli is found on which tooth?",
+                    options: ["Maxillary first premolar", "Maxillary first molar", "Mandibular first molar", "Maxillary second molar"],
+                    correct: 1,
+                    topic: "Tooth Morphology",
+                    explanation: "The cusp of Carabelli is a developmental feature found on the mesiopalatal cusp of the maxillary first molar. It appears as a small tubercle or cusp on the palatal surface near the mesiopalatal cusp. This feature is important in forensic dentistry and anthropology as it varies in expression among different populations."
+                },
+                {
+                    question: "Which tooth has a facial cusp that is longer than the lingual cusp?",
+                    options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+                    correct: 0,
+                    topic: "Tooth Morphology",
+                    explanation: "The maxillary first premolar has a buccal (facial) cusp that is longer than its palatal (lingual) cusp. This difference in cusp height is more pronounced than in other premolars and contributes to the tooth's grinding function. The longer buccal cusp contacts the mandibular teeth during occlusion."
+                },
+                {
+                    question: "The mandibular central incisor is:",
+                    options: ["Symmetrical", "Asymmetrical", "Triangular", "Trapezoidal"],
+                    correct: 0,
+                    topic: "Tooth Morphology",
+                    explanation: "The mandibular central incisor is the most symmetrical tooth in the human dentition. From the incisal view, it appears nearly bilaterally symmetrical with similar mesial and distal contours. This symmetry is important for proper alignment in the dental arch and contributes to an aesthetically pleasing smile."
+                },
+                {
+                    question: "Which tooth has a developmental groove that crosses the mesial marginal ridge?",
+                    options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+                    correct: 1,
+                    topic: "Tooth Morphology",
+                    explanation: "The mandibular first premolar has a developmental groove that crosses the mesial marginal ridge, known as the mesial marginal ridge groove. This anatomical feature creates a potential site for caries development and is important to identify during clinical examination and radiographic interpretation."
+                },
+                {
+                    question: "The maxillary canine erupts at approximately what age?",
+                    options: ["8-9 years", "11-12 years", "13-15 years", "6-7 years"],
+                    correct: 1,
+                    topic: "Tooth Morphology",
+                    explanation: "The maxillary canine typically erupts at approximately 11-12 years of age. This eruption timing is important in orthodontic treatment planning, as impacted canines are relatively common. The late eruption of canines often requires monitoring during mixed dentition."
+                },
+                {
+                    question: "Which tooth has a root that is flattened mesiodistally?",
+                    options: ["Maxillary central incisor", "Mandibular central incisor", "Maxillary lateral incisor", "Mandibular lateral incisor"],
+                    correct: 1,
+                    topic: "Tooth Morphology",
+                    explanation: "The mandibular central incisor has a root that is flattened mesiodistally, giving it a narrow, ribbon-like appearance from the facial view. This root morphology is adapted to the narrow alveolar process in the anterior mandible. The flattened root shape affects instrumentation during endodontic treatment."
+                },
+                {
+                    question: "The mandibular first molar typically has how many cusps?",
+                    options: ["3", "4", "5", "6"],
+                    correct: 2,
+                    topic: "Tooth Morphology",
+                    explanation: "The mandibular first molar typically has five cusps: two buccal (mesiobuccal, distobuccal), two lingual (mesiolingual, distolingual), and a distal cusp (sometimes called the distal cusp). The five-cusp pattern is characteristic of the 'Y' groove pattern on the occlusal surface, which is important for proper restoration design."
+                },
+                {
+                    question: "Which tooth has the most pronounced lingual ridge?",
+                    options: ["Maxillary canine", "Mandibular canine", "Maxillary central incisor", "Mandibular central incisor"],
+                    correct: 0,
+                    topic: "Tooth Morphology",
+                    explanation: "The maxillary canine has the most pronounced lingual ridge, known as the cingulum ridge or lingual ridge, which extends from the cingulum to the cusp tip. This prominent ridge contributes to the tooth's strength and provides guidance during mandibular movements. The ridge is less pronounced in mandibular canines."
+                },
+                {
+                    question: "The primary function of the maxillary first molar is:",
+                    options: ["Cutting", "Tearing", "Grinding", "Crushing"],
+                    correct: 2,
+                    topic: "Tooth Morphology",
+                    explanation: "The primary function of the maxillary first molar is grinding food. Molars have broad occlusal surfaces with multiple cusps and grooves designed for grinding and crushing food during mastication. The maxillary first molar, being the first permanent molar to erupt, plays a crucial role in establishing the occlusal vertical dimension."
+                },
+                {
+                    question: "Which tooth has a root that is nearly twice as long as its crown?",
+                    options: ["Maxillary central incisor", "Mandibular central incisor", "Maxillary canine", "Mandibular canine"],
+                    correct: 2,
+                    topic: "Tooth Morphology",
+                    explanation: "The maxillary canine has a root that is nearly twice as long as its crown, making it the tooth with the greatest crown-to-root ratio. This long root provides excellent support and makes the canine resistant to extrusive forces. The long root is advantageous in prosthodontic treatment as a potential abutment tooth."
+                },
+                {
+                    question: "The mandibular second premolar most commonly has:",
+                    options: ["One cusp", "Two cusps", "Three cusps", "Four cusps"],
+                    correct: 2,
+                    topic: "Tooth Morphology",
+                    explanation: "The mandibular second premolar most commonly has three cusps - one buccal and two lingual cusps. This three-cusp pattern creates a 'Y' shaped groove pattern on the occlusal surface. The three-cusp variety is more common than the two-cusp type and provides better grinding efficiency."
+                },
+                {
+                    question: "Which tooth has the most variable crown morphology?",
+                    options: ["Maxillary lateral incisor", "Mandibular lateral incisor", "Maxillary canine", "Mandibular canine"],
+                    correct: 0,
+                    topic: "Tooth Morphology",
+                    explanation: "The maxillary lateral incisor has the most variable crown morphology of all teeth. Variations include peg-shaped laterals, congenitally missing laterals, and talon cusps. This variability is important in restorative dentistry and orthodontics, often requiring special consideration in treatment planning."
+                },
+                {
+                    question: "The curve of Wilson is:",
+                    options: ["A vertical curve", "A transverse curve", "An anteroposterior curve", "A diagonal curve"],
+                    correct: 1,
+                    topic: "Tooth Morphology",
+                    explanation: "The curve of Wilson is a transverse curve that exists in the arrangement of the occlusal surfaces of the teeth when viewed from the front. It represents the curvature of the occlusal plane from buccal to lingual across the dental arch. This curve is important for balanced occlusion and proper mandibular movements."
+                },
+
+                // Oral Histology (20 questions)
+                {
+                    question: "Ameloblasts are responsible for the formation of:",
+                    options: ["Dentin", "Enamel", "Cementum", "Pulp"],
+                    correct: 1,
+                    topic: "Oral Histology",
+                    explanation: "Ameloblasts are specialized cells derived from the inner enamel epithelium that are responsible for enamel formation (amelogenesis). These cells secrete the organic matrix of enamel and regulate its mineralization. Once enamel formation is complete, ameloblasts degenerate and do not regenerate, which is why enamel cannot repair itself."
+                },
+                {
+                    question: "Odontoblasts are derived from:",
+                    options: ["Ectoderm", "Neural crest cells", "Mesoderm", "Endoderm"],
+                    correct: 1,
+                    topic: "Oral Histology",
+                    explanation: "Odontoblasts are derived from neural crest cells, which migrate from the neural folds during embryonic development. These cells differentiate from the cells of the dental papilla and are responsible for dentin formation. Neural crest cells give rise to most of the craniofacial structures, including the odontoblasts, cementoblasts, and cells of the periodontal ligament."
+                },
+                {
+                    question: "Reparative dentin is formed by:",
+                    options: ["Primary odontoblasts", "Secondary odontoblasts", "Tertiary odontoblasts", "Pulpal fibroblasts"],
+                    correct: 2,
+                    topic: "Oral Histology",
+                    explanation: "Reparative dentin is formed by tertiary odontoblasts, which are newly differentiated cells from pulpal progenitor cells in response to injury. When the dental pulp is exposed or irritated, undifferentiated mesenchymal cells in the pulp differentiate into new odontoblast-like cells that produce reparative dentin to protect the pulp from further damage."
+                },
+                {
+                    question: "The Tomes' granular layer is located in:",
+                    options: ["Enamel", "Dentin", "Cementum", "Alveolar bone"],
+                    correct: 1,
+                    topic: "Oral Histology",
+                    explanation: "The Tomes' granular layer is located in the dentin, specifically in the root portion near the cementodentinal junction. It appears as a granular layer in ground sections of teeth and represents an area of decreased mineralization in the dentinal tubules. This layer is named after William Henry Flower, who was mistakenly attributed to Tomes."
+                },
+                {
+                    question: "Which cells are responsible for bone resorption?",
+                    options: ["Osteoblasts", "Osteoclasts", "Osteocytes", "Fibroblasts"],
+                    correct: 1,
+                    topic: "Oral Histology",
+                    explanation: "Osteoclasts are large, multinucleated cells responsible for bone resorption. They are derived from monocyte-macrophage lineage and secrete acids and enzymes that dissolve the mineral and organic components of bone. In dentistry, osteoclasts play a crucial role in orthodontic tooth movement, where they resorb bone on the pressure side of the tooth."
+                },
+                {
+                    question: "The periodontal ligament is primarily composed of:",
+                    options: ["Collagen fibers", "Elastic fibers", "Reticular fibers", "Muscle fibers"],
+                    correct: 0,
+                    topic: "Oral Histology",
+                    explanation: "The periodontal ligament is primarily composed of collagen fibers (mainly Type I collagen), which make up about 75-80% of its dry weight. These fibers are organized into principal fiber groups that attach the cementum of the tooth to the alveolar bone, providing support and shock absorption during mastication. The collagen fibers are continuously remodeled in response to functional forces."
+                },
+                {
+                    question: "Which type of cementum covers the cervical area of the tooth?",
+                    options: ["Acellular cementum", "Cellular cementum", "Intermediate cementum", "Secondary cementum"],
+                    correct: 0,
+                    topic: "Oral Histology",
+                    explanation: "Acellular cementum covers the cervical area of the tooth and the coronal half of the root. It is formed before tooth eruption and does not contain cementocytes. This type of cementum serves primarily for the attachment of Sharpey's fibers from the periodontal ligament. Cellular cementum is found more apically and contains cementocytes in lacunae."
+                },
+                {
+                    question: "The pulp horn is most prominent in:",
+                    options: ["Primary teeth", "Permanent teeth", "Deciduous teeth", "Natal teeth"],
+                    correct: 0,
+                    topic: "Oral Histology",
+                    explanation: "The    {
       question: "The curve of Spee is:",
       options: ["A vertical curve", "A transverse curve", "An anteroposterior curve", "A diagonal curve"],
       correct: 2,
