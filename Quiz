@@ -1,0 +1,1254 @@
+import React, { useState, useEffect } from "react";
+
+const App = () => {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState(null);
+  const [showResult, setShowResult] = useState(false);
+  const [quizStarted, setQuizStarted] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(3000); // 50 minutes in seconds
+  const [userAnswers, setUserAnswers] = useState({});
+  const [reviewMode, setReviewMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('quiz'); // quiz, review, summary
+
+  // Mock quiz data with 100 questions across various dentistry topics
+  const quizData = [
+    // Tooth Morphology (20 questions)
+    {
+      question: "Which tooth has the longest root in the human dentition?",
+      options: ["Maxillary central incisor", "Mandibular canine", "Maxillary canine", "Mandibular first molar"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary canine has the longest root of all teeth in the human dentition. Its root length averages about 17mm, making it the longest single-rooted tooth. This long root provides excellent support and makes the canine a key tooth in dental prosthetics and orthodontics."
+    },
+    {
+      question: "The mesial cusp ridge is longer than the distal cusp ridge in which tooth?",
+      options: ["Maxillary canine", "Mandibular canine", "Maxillary lateral incisor", "Mandibular central incisor"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "In the mandibular canine, the mesial cusp ridge is longer than the distal cusp ridge, which is the opposite of the maxillary canine. This is an important distinguishing feature between upper and lower canines. The mandibular canine's longer mesial ridge gives it a more symmetrical appearance from the facial view compared to the maxillary canine."
+    },
+    {
+      question: "Which premolar most frequently has two roots?",
+      options: ["Maxillary first premolar", "Maxillary second premolar", "Mandibular first premolar", "Mandibular second premolar"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary first premolar most frequently has two roots - a buccal and a palatal root. Approximately 60-70% of maxillary first premolars have two roots, making it the premolar most likely to have this anatomy. This is crucial for endodontic treatment planning and extraction procedures."
+    },
+    {
+      question: "The curve of Spee is:",
+      options: ["A vertical curve", "A transverse curve", "An anteroposterior curve", "A diagonal curve"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The curve of Spee is an anteroposterior curve established by the occlusal alignment of the teeth, as projected upon the frontal plane. It is the anatomical curve established by the occlusal alignment of the teeth, following the mandibular occlusal plane. Understanding this curve is essential in orthodontics and prosthodontics for establishing proper occlusion."
+    },
+    {
+      question: "Which tooth has a mesial marginal ridge that is more cervically located than the distal marginal ridge?",
+      options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular first premolar has a mesial marginal ridge that is located more cervically than the distal marginal ridge. This is a distinctive feature of this tooth and contributes to its characteristic occlusal anatomy. The distal marginal ridge is positioned more incisally, creating an asymmetrical appearance on the occlusal surface."
+    },
+    {
+      question: "The primary function of the maxillary lateral incisor is:",
+      options: ["Cutting", "Tearing", "Grinding", "Crushing"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The primary function of the maxillary lateral incisor, like all incisors, is cutting food. Incisors have a thin, chisel-like edge designed for shearing and cutting food during mastication. The maxillary lateral incisor works in conjunction with other anterior teeth to incise food into smaller pieces at the beginning of the digestive process."
+    },
+    {
+      question: "Which tooth has the greatest mesiodistal width of any tooth in the permanent dentition?",
+      options: ["Maxillary first molar", "Mandibular first molar", "Maxillary second molar", "Mandibular second molar"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular first molar has the greatest mesiodistal width of any tooth in the permanent dentition, averaging about 10-11mm. This large width provides a broad occlusal table for efficient grinding of food. The wide mesiodistal dimension is one of the reasons why mandibular first molars are often the first permanent teeth to develop caries."
+    },
+    {
+      question: "The cusp of Carabelli is found on which tooth?",
+      options: ["Maxillary first premolar", "Maxillary first molar", "Mandibular first molar", "Maxillary second molar"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The cusp of Carabelli is a developmental feature found on the mesiopalatal cusp of the maxillary first molar. It appears as a small tubercle or cusp on the palatal surface near the mesiopalatal cusp. This feature is important in forensic dentistry and anthropology as it varies in expression among different populations."
+    },
+    {
+      question: "Which tooth has a facial cusp that is longer than the lingual cusp?",
+      options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary first premolar has a buccal (facial) cusp that is longer than its palatal (lingual) cusp. This difference in cusp height is more pronounced than in other premolars and contributes to the tooth's grinding function. The longer buccal cusp contacts the mandibular teeth during occlusion."
+    },
+    {
+      question: "The mandibular central incisor is:",
+      options: ["Symmetrical", "Asymmetrical", "Triangular", "Trapezoidal"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular central incisor is the most symmetrical tooth in the human dentition. From the incisal view, it appears nearly bilaterally symmetrical with similar mesial and distal contours. This symmetry is important for proper alignment in the dental arch and contributes to an aesthetically pleasing smile."
+    },
+    {
+      question: "Which tooth has a developmental groove that crosses the mesial marginal ridge?",
+      options: ["Maxillary first premolar", "Mandibular first premolar", "Maxillary second premolar", "Mandibular second premolar"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular first premolar has a developmental groove that crosses the mesial marginal ridge, known as the mesial marginal ridge groove. This anatomical feature creates a potential site for caries development and is important to identify during clinical examination and radiographic interpretation."
+    },
+    {
+      question: "The maxillary canine erupts at approximately what age?",
+      options: ["8-9 years", "11-12 years", "13-15 years", "6-7 years"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary canine typically erupts at approximately 11-12 years of age. This eruption timing is important in orthodontic treatment planning, as impacted canines are relatively common. The late eruption of canines often requires monitoring during mixed dentition."
+    },
+    {
+      question: "Which tooth has a root that is flattened mesiodistally?",
+      options: ["Maxillary central incisor", "Mandibular central incisor", "Maxillary lateral incisor", "Mandibular lateral incisor"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular central incisor has a root that is flattened mesiodistally, giving it a narrow, ribbon-like appearance from the facial view. This root morphology is adapted to the narrow alveolar process in the anterior mandible. The flattened root shape affects instrumentation during endodontic treatment."
+    },
+    {
+      question: "The mandibular first molar typically has how many cusps?",
+      options: ["3", "4", "5", "6"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular first molar typically has five cusps: two buccal (mesiobuccal, distobuccal), two lingual (mesiolingual, distolingual), and a distal cusp (sometimes called the distal cusp). The five-cusp pattern is characteristic of the 'Y' groove pattern on the occlusal surface, which is important for proper restoration design."
+    },
+    {
+      question: "Which tooth has the most pronounced lingual ridge?",
+      options: ["Maxillary canine", "Mandibular canine", "Maxillary central incisor", "Mandibular central incisor"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary canine has the most pronounced lingual ridge, known as the cingulum ridge or lingual ridge, which extends from the cingulum to the cusp tip. This prominent ridge contributes to the tooth's strength and provides guidance during mandibular movements. The ridge is less pronounced in mandibular canines."
+    },
+    {
+      question: "The primary function of the maxillary first molar is:",
+      options: ["Cutting", "Tearing", "Grinding", "Crushing"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The primary function of the maxillary first molar is grinding food. Molars have broad occlusal surfaces with multiple cusps and grooves designed for grinding and crushing food during mastication. The maxillary first molar, being the first permanent molar to erupt, plays a crucial role in establishing the occlusal vertical dimension."
+    },
+    {
+      question: "Which tooth has a root that is nearly twice as long as its crown?",
+      options: ["Maxillary central incisor", "Mandibular central incisor", "Maxillary canine", "Mandibular canine"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary canine has a root that is nearly twice as long as its crown, making it the tooth with the greatest crown-to-root ratio. This long root provides excellent support and makes the canine resistant to extrusive forces. The long root is advantageous in prosthodontic treatment as a potential abutment tooth."
+    },
+    {
+      question: "The mandibular second premolar most commonly has:",
+      options: ["One cusp", "Two cusps", "Three cusps", "Four cusps"],
+      correct: 2,
+      topic: "Tooth Morphology",
+      explanation: "The mandibular second premolar most commonly has three cusps - one buccal and two lingual cusps. This three-cusp pattern creates a 'Y' shaped groove pattern on the occlusal surface. The three-cusp variety is more common than the two-cusp type and provides better grinding efficiency."
+    },
+    {
+      question: "Which tooth has the most variable crown morphology?",
+      options: ["Maxillary lateral incisor", "Mandibular lateral incisor", "Maxillary canine", "Mandibular canine"],
+      correct: 0,
+      topic: "Tooth Morphology",
+      explanation: "The maxillary lateral incisor has the most variable crown morphology of all teeth. Variations include peg-shaped laterals, congenitally missing laterals, and talon cusps. This variability is important in restorative dentistry and orthodontics, often requiring special consideration in treatment planning."
+    },
+    {
+      question: "The curve of Wilson is:",
+      options: ["A vertical curve", "A transverse curve", "An anteroposterior curve", "A diagonal curve"],
+      correct: 1,
+      topic: "Tooth Morphology",
+      explanation: "The curve of Wilson is a transverse curve that exists in the arrangement of the occlusal surfaces of the teeth when viewed from the front. It represents the curvature of the occlusal plane from buccal to lingual across the dental arch. This curve is important for balanced occlusion and proper mandibular movements."
+    },
+
+    // Oral Histology (20 questions)
+    {
+      question: "Ameloblasts are responsible for the formation of:",
+      options: ["Dentin", "Enamel", "Cementum", "Pulp"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Ameloblasts are specialized cells derived from the inner enamel epithelium that are responsible for enamel formation (amelogenesis). These cells secrete the organic matrix of enamel and regulate its mineralization. Once enamel formation is complete, ameloblasts degenerate and do not regenerate, which is why enamel cannot repair itself."
+    },
+    {
+      question: "Odontoblasts are derived from:",
+      options: ["Ectoderm", "Neural crest cells", "Mesoderm", "Endoderm"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Odontoblasts are derived from neural crest cells, which migrate from the neural folds during embryonic development. These cells differentiate from the cells of the dental papilla and are responsible for dentin formation. Neural crest cells give rise to most of the craniofacial structures, including the odontoblasts, cementoblasts, and cells of the periodontal ligament."
+    },
+    {
+      question: "Reparative dentin is formed by:",
+      options: ["Primary odontoblasts", "Secondary odontoblasts", "Tertiary odontoblasts", "Pulpal fibroblasts"],
+      correct: 2,
+      topic: "Oral Histology",
+      explanation: "Reparative dentin is formed by tertiary odontoblasts, which are newly differentiated cells from pulpal progenitor cells in response to injury. When the dental pulp is exposed or irritated, undifferentiated mesenchymal cells in the pulp differentiate into new odontoblast-like cells that produce reparative dentin to protect the pulp from further damage."
+    },
+    {
+      question: "The Tomes' granular layer is located in:",
+      options: ["Enamel", "Dentin", "Cementum", "Alveolar bone"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "The Tomes' granular layer is located in the dentin, specifically in the root portion near the cementodentinal junction. It appears as a granular layer in ground sections of teeth and represents an area of decreased mineralization in the dentinal tubules. This layer is named after William Henry Flower, who was mistakenly attributed to Tomes."
+    },
+    {
+      question: "Which cells are responsible for bone resorption?",
+      options: ["Osteoblasts", "Osteoclasts", "Osteocytes", "Fibroblasts"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Osteoclasts are large, multinucleated cells responsible for bone resorption. They are derived from monocyte-macrophage lineage and secrete acids and enzymes that dissolve the mineral and organic components of bone. In dentistry, osteoclasts play a crucial role in orthodontic tooth movement, where they resorb bone on the pressure side of the tooth."
+    },
+    {
+      question: "The periodontal ligament is primarily composed of:",
+      options: ["Collagen fibers", "Elastic fibers", "Reticular fibers", "Muscle fibers"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "The periodontal ligament is primarily composed of collagen fibers (mainly Type I collagen), which make up about 75-80% of its dry weight. These fibers are organized into principal fiber groups that attach the cementum of the tooth to the alveolar bone, providing support and shock absorption during mastication. The collagen fibers are continuously remodeled in response to functional forces."
+    },
+    {
+      question: "Which type of cementum covers the cervical area of the tooth?",
+      options: ["Acellular cementum", "Cellular cementum", "Intermediate cementum", "Secondary cementum"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "Acellular cementum covers the cervical area of the tooth and the coronal half of the root. It is formed before tooth eruption and does not contain cementocytes. This type of cementum serves primarily for the attachment of Sharpey's fibers from the periodontal ligament. Cellular cementum is found more apically and contains cementocytes in lacunae."
+    },
+    {
+      question: "The pulp horn is most prominent in:",
+      options: ["Primary teeth", "Permanent teeth", "Deciduous teeth", "Natal teeth"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "The pulp horn is most prominent in primary teeth due to the relatively larger pulp chamber compared to crown size. This anatomical feature makes primary teeth more susceptible to pulp exposure during caries removal or restorative procedures. The prominent pulp horns require careful caries excavation to avoid accidental pulp exposure."
+    },
+    {
+      question: "Which cells produce the organic matrix of bone?",
+      options: ["Osteoclasts", "Osteoblasts", "Osteocytes", "Chondrocytes"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Osteoblasts are bone-forming cells that produce the organic matrix of bone, called osteoid, which is primarily composed of Type I collagen. After secreting the matrix, osteoblasts may become trapped in the mineralized matrix and differentiate into osteocytes, or they may remain on the bone surface as lining cells. Osteoblasts also regulate the mineralization process."
+    },
+    {
+      question: "The lamina dura is:",
+      options: ["A layer of cementum", "A layer of periodontal ligament", "A layer of alveolar bone", "A layer of enamel"],
+      correct: 2,
+      topic: "Oral Histology",
+      explanation: "The lamina dura is a layer of alveolar bone that lines the tooth socket (alveolus). It appears as a dense white line on dental radiographs and represents the cortical plate of the alveolar bone. The integrity of the lamina dura is an important diagnostic indicator in dental radiography, as its loss may indicate periodontal disease or periapical pathology."
+    },
+    {
+      question: "Which type of dentin is formed before tooth eruption?",
+      options: ["Primary dentin", "Secondary dentin", "Tertiary dentin", "Reparative dentin"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "Primary dentin is formed before tooth eruption during root formation. It constitutes the majority of the dentin and is deposited rapidly by odontoblasts. Primary dentin formation ceases once root formation is complete. Secondary dentin is formed after eruption at a slower rate throughout life, while tertiary dentin is formed in response to stimuli like caries or trauma."
+    },
+    {
+      question: "The reduced enamel epithelium is formed by the fusion of:",
+      options: ["Inner and outer enamel epithelium", "Stellate reticulum and stratum intermedium", "Ameloblasts and odontoblasts", "Cementoblasts and fibroblasts"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "The reduced enamel epithelium is formed by the fusion of the inner and outer enamel epithelium after enamel formation is complete. This structure covers the crown of the developing tooth and plays a role in guiding eruption through the oral epithelium. The reduced enamel epithelium eventually breaks down, allowing the tooth to erupt into the oral cavity."
+    },
+    {
+      question: "Which cells are trapped within the mineralized matrix of bone?",
+      options: ["Osteoblasts", "Osteoclasts", "Osteocytes", "Fibroblasts"],
+      correct: 2,
+      topic: "Oral Histology",
+      explanation: "Osteocytes are mature bone cells that are trapped within the mineralized matrix of bone. They originate from osteoblasts that become enclosed in lacunae during bone formation. Osteocytes maintain bone tissue and communicate with each other and with surface cells through canaliculi, playing a crucial role in bone remodeling and mechanotransduction."
+    },
+    {
+      question: "The predentin is the unmineralized portion of:",
+      options: ["Enamel", "Dentin", "Cementum", "Bone"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Predentin is the unmineralized portion of dentin located adjacent to the pulp. It is secreted by odontoblasts and typically measures 10-40 micrometers in thickness. Predentin gradually mineralizes to form mature dentin. The presence of predentin is evidence of active dentin formation and can be observed histologically as a pale staining zone next to the pulp."
+    },
+    {
+      question: "Which type of collagen is most abundant in the periodontal ligament?",
+      options: ["Type I", "Type II", "Type III", "Type IV"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "Type I collagen is the most abundant collagen in the periodontal ligament, accounting for approximately 80% of its collagen content. This strong, fibrous protein provides the tensile strength needed to withstand masticatory forces. Type III collagen is also present in smaller amounts and is associated with the formation of new fibers during periodontal repair and remodeling."
+    },
+    {
+      question: "The dental papilla gives rise to:",
+      options: ["Enamel", "Dentin and pulp", "Cementum", "Periodontal ligament"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "The dental papilla gives rise to dentin and pulp. During tooth development, the ectomesenchymal cells of the dental papilla differentiate into odontoblasts, which form dentin, while the remaining cells form the dental pulp tissue. The enamel organ, derived from oral epithelium, gives rise to enamel, while the dental follicle gives rise to cementum, periodontal ligament, and alveolar bone."
+    },
+    {
+      question: "Which structure is responsible for the nutrition of enamel?",
+      options: ["Blood vessels in enamel", "Diffusion from saliva", "Pulpal blood vessels", "Periodontal ligament vessels"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "Since enamel is acellular and has no blood supply, its nutrition depends on diffusion from saliva for the outer layers and from the underlying dentin for the inner layers. The dentin receives its nutrition from the pulp via dentinal tubules, so indirectly, the pulp provides nutrients that can diffuse through dentin to the inner enamel. This diffusion pathway is important for understanding enamel remineralization."
+    },
+    {
+      question: "The incremental lines of Retzius are found in:",
+      options: ["Dentin", "Enamel", "Cementum", "Bone"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "The incremental lines of Retzius are growth lines found in enamel that represent periodic variations in enamel formation. They appear as dark lines in ground sections and are thought to result from rhythmic variations in the activity of ameloblasts. The lines end at the enamel surface as perikymata, which are shallow grooves. These lines can trap pigments and contribute to the development of caries."
+    },
+    {
+      question: "Which cells are responsible for the formation of cellular cementum?",
+      options: ["Cementoblasts", "Odontoblasts", "Osteoblasts", "Fibroblasts"],
+      correct: 0,
+      topic: "Oral Histology",
+      explanation: "Cementoblasts are specialized cells that form cellular cementum. These cells are derived from the dental follicle and are responsible for depositing cementum matrix on the root surface. When cementoblasts become entrapped in their own matrix, they differentiate into cementocytes, which reside in lacunae within the cellular cementum. Cellular cementum is primarily found in the apical third of the root and furcation areas."
+    },
+    {
+      question: "The pulp is derived from:",
+      options: ["Ectoderm", "Neural crest cells", "Mesoderm", "Endoderm"],
+      correct: 1,
+      topic: "Oral Histology",
+      explanation: "The dental pulp is derived from neural crest cells, which are ectomesenchymal cells that migrate from the neural folds during embryonic development. These cells populate the dental papilla and differentiate into various cell types including odontoblasts, fibroblasts, defense cells, and undifferentiated mesenchymal cells. The neural crest origin explains the pulp's ability to form reparative dentin in response to injury."
+    },
+
+    // Anatomy (20 questions)
+    {
+      question: "The infraorbital foramen transmits which nerve?",
+      options: ["Mental nerve", "Infraorbital nerve", "Anterior superior alveolar nerve", "Middle superior alveolar nerve"],
+      correct: 1,
+      topic: "Anatomy",
+      explanation: "The infraorbital foramen transmits the infraorbital nerve, artery, and vein. The infraorbital nerve is a branch of the maxillary division of the trigeminal nerve (V2) and provides sensory innervation to the skin of the lower eyelid, lateral nose, and upper lip. It is an important landmark for regional anesthesia in dental procedures involving the maxillary anterior teeth."
+    },
+    {
+      question: "The pterygomandibular raphe is the attachment site for:",
+      options: ["Buccinator and superior pharyngeal constrictor", "Buccinator and inferior pharyngeal constrictor", "Masseter and buccinator", "Temporalis and masseter"],
+      correct: 0,
+      topic: "Anatomy",
+      explanation: "The pterygomandibular raphe is a tendinous band that extends from the hamulus of the medial pterygoid plate to the mandible. It serves as the posterior attachment for the buccinator muscle and the anterior attachment for the superior pharyngeal constrictor muscle. This anatomical landmark is important for the administration of the inferior alveolar nerve block, as the needle is directed medial to this raphe."
+    },
+    {
+      question: "The facial artery is a branch of the:",
+      options: ["Internal carotid artery", "External carotid artery", "Subclavian artery", "Vertebral artery"],
+      correct: 1,
+      topic: "Anatomy",
+      explanation: "The facial artery is a branch of the external carotid artery, arising from its anterior surface within the carotid triangle. It courses through the submandibular region and supplies blood to the face, oral cavity, and associated structures. The facial artery is tortuous to accommodate facial movements and is a major source of bleeding in facial trauma."
+    },
+    {
+      question: "The chorda tympani nerve carries:",
+      options: ["Sensory fibers only", "Motor fibers only", "Parasympathetic and taste fibers", "Sympathetic fibers only"],
+      correct: 2,
+      topic: "Anatomy",
+      explanation: "The chorda tympani nerve carries parasympathetic fibers to the submandibular and sublingual glands and taste fibers from the anterior two-thirds of the tongue. It branches from the facial nerve (CN VII) in the facial canal, crosses the middle ear, and joins the lingual nerve in the infratemporal fossa. The parasympathetic fibers stimulate salivary secretion, while the taste fibers transmit gustatory information."
+    },
+    {
+      question: "The genioglossus muscle is innervated by the:",
+      options: ["Trigeminal nerve", "Facial nerve", "Glossopharyngeal nerve", "Hypoglossal nerve"],
+      correct: 3,
+      topic: "Anatomy",
+      explanation: "The genioglossus muscle is innervated by the hypoglossal nerve (cranial nerve XII). This extrinsic tongue muscle originates from the mental spine of the mandible and fans out to insert into the tongue. Its primary actions are to protrude the tongue and depress the center of the tongue. All intrinsic and extrinsic tongue muscles (except palatoglossus) are innervated by the hypoglossal nerve."
+    },
+    {
+      question: "The submandibular gland is located in which triangle of the neck?",
+      options: ["Submental triangle", "Carotid triangle", "Submandibular triangle", "Muscular triangle"],
+      correct: 2,
+      topic: "Anatomy",
+      explanation: "The submandibular gland is located in the submandibular triangle, which is bounded by the inferior border of the mandible superiorly and the anterior and posterior bellies of the digastric muscle inferiorly. The gland is divided into superficial and deep portions by the mylohyoid muscle. The submandibular triangle contains important structures including the submandibular gland, lymph nodes, and facial artery."
+    },
+    {
+      question: "The mental foramen typically transmits the:",
+      options: ["Mental nerve and vessels", "Inferior alveolar nerve", "Lingual nerve", "Mylohyoid nerve"],
+      correct: 0,
+      topic: "Anatomy",
+      explanation: "The mental foramen transmits the mental nerve, artery, and vein. The mental nerve is a terminal branch of the inferior alveolar nerve and provides sensory innervation to the skin of the chin and lower lip, as well as the labial gingiva of the mandibular anterior teeth. The position of the mental foramen varies but is typically located between the apices of the mandibular premolars."
+    },
+    {
+      question: "The parotid duct opens into the:",
+      options: ["Floor of the mouth", "Sublingual caruncle", "Vestibule opposite the maxillary second molar", "Vestibule opposite the mandibular second molar"],
+      correct: 2,
+      topic: "Anatomy",
+      explanation: "The parotid duct (Stensen's duct) opens into the oral vestibule opposite the crown of the maxillary second molar. The duct is formed by the union of intraglandular ducts and crosses the masseter muscle, pierces the buccinator muscle, and opens into the oral cavity. A small papilla marks the opening of the duct, which can be observed during clinical examination."
+    },
+    {
+      question: "The mylohyoid nerve is a branch of the:",
+      options: ["Lingual nerve", "Inferior alveolar nerve", "Facial nerve", "Hypoglossal nerve"],
+      correct: 1,
+      topic: "Anatomy",
+      explanation: "The mylohyoid nerve is a branch of the inferior alveolar nerve, which itself is a branch of the mandibular division of the trigeminal nerve (V3). The mylohyoid nerve supplies motor innervation to the mylohyoid muscle and the anterior belly of the digastric muscle. It typically branches from the inferior alveolar nerve just before the latter enters the mandibular foramen."
+    },
+    {
+      question: "The sublingual gland is located in the:",
+      options: ["Submandibular triangle", "Submental triangle", "Digastric triangle", "Sublingual space"],
+      correct: 3,
+      topic: "Anatomy",
+      explanation: "The sublingual gland is located in the sublingual space (or sublingual fossa) on the floor of the mouth, superior to the mylohyoid muscle and inferior to the mucosa of the oral cavity. It is the smallest of the major salivary glands and has multiple small ducts (ducts of Rivinus) that open along the sublingual fold, with the larger duct of Bartholin joining the submandibular duct."
+    },
+    {
+      question: "The trigeminal nerve has how many major divisions?",
+      options: ["2", "3", "4", "5"],
+      correct: 1,
+      topic: "Anatomy",
+      explanation: "The trigeminal nerve (cranial nerve V) has three major divisions: ophthalmic (V1), maxillary (V2), and mandibular (V3). The ophthalmic division is purely sensory and supplies the upper face. The maxillary division is purely sensory and supplies the mid-face. The mandibular division is mixed (sensory and motor) and supplies the lower face and muscles of mastication."
+    },
+    {
+      question: "The posterior superior alveolar artery is a branch of the:",
+      options: ["Maxillary artery", "Facial artery", "Superficial temporal artery", "Lingual artery"],
+      correct: 0,
+      topic: "Anatomy",
+      explanation: "The posterior superior alveolar artery is a branch of the maxillary artery, which is itself a terminal branch of the external carotid artery. This artery supplies the maxillary molars and premolars, the adjacent gingiva, and the maxillary sinus. It enters the posterior superior alveolar foramina on the infratemporal surface of the maxilla to reach the teeth."
+    },
+    {
+      question: "The mandibular foramen is located on the:",
+      options: ["Anterior surface of the ramus", "Posterior surface of the ramus", "Medial surface of the ramus", "Lateral surface of the ramus"],
+      correct: 2,
+      topic: "Anatomy",
+      explanation: "The mandibular foramen is located on the medial surface of the ramus of the mandible. It serves as the entrance to the mandibular canal, which transmits the inferior alveolar nerve, artery, and vein. The foramen is typically located above the level of the mandibular lingula, which serves as a landmark for the inferior alveolar nerve block anesthesia."
+    },
+    {
+      question: "The genioglossus muscle originates from the:",
+      options: ["Mental spine of the mandible", "Mylohyoid line", "Styloid process", "Pterygoid hamulus"],
+      correct: 0,
+      topic: "Anatomy",
+      explanation: "The genioglossus muscle originates from the superior mental spines (genial tubercles) on the internal surface of the mandible near the symphysis menti. The muscle fibers pass posteriorly and superiorly to insert into the tongue and hyoid bone. This fan-shaped muscle is the largest of the extrinsic tongue muscles and plays a key role in tongue protrusion and depression."
+    },
+    {
+      question: "The facial nerve exits the skull through the:",
+      options: ["Foramen ovale", "Foramen spinosum", "Stylomastoid foramen", "Jugular foramen"],
+      correct: 2,
+      topic: "Anatomy",
+      explanation: "The facial nerve (cranial nerve VII) exits the skull through the stylomastoid foramen, which is located between the styloid and mastoid processes of the temporal bone. After exiting, the nerve gives off the posterior auricular nerve and then enters the parotid gland, where it divides into its five terminal branches that innervate the muscles of facial expression."
+    },
+    {
+      question: "The submandibular duct is also known as:",
+      options: ["Stensen's duct", "Wharton's duct", "Bartholin's duct", "Rivinus' duct"],
+      correct: 1,
+      topic: "Anatomy",
+      explanation: "The submandibular duct is also known as Wharton's duct, named after Thomas Wharton who described it in the 17th century. The duct is about 5 cm long and extends from the deep portion of the submandibular gland, coursing forward on the hyoglossus muscle, then superiorly and medially to open at the sublingual caruncle beside the lingual frenulum. The duct can be palpated during clinical examination."
+    },
+    {
+      question: "The pterygoid plexus of veins is located near the:",
+      options: ["Temporomandibular joint", "Pterygoid muscles", "Submandibular gland", "Parotid gland"],
+      correct: 1,
+      topic: "Anatomy",
+      explanation: "The pterygoid plexus of veins is located around the lateral pterygoid muscle in the infratemporal fossa. This extensive venous network communicates with the cavernous sinus and serves as an important route for the spread of infection from the face to the cranial cavity. It also provides venous drainage for the maxillary artery distribution area and receives emissary veins from the cavernous sinus."
+    },
+    {
+      question: "The lingual nerve carries sensation from the:",
+      options: ["Anterior 2/3 of the tongue", "Posterior 1/3 of the tongue", "Entire tongue", "Only the tip of the tongue"],
+      correct: 0,
+      topic: "Anatomy",
+      explanation: "The lingual nerve carries general sensory innervation from the anterior two-thirds of the tongue, including touch, pain, and temperature. It is a branch of the mandibular division of the trigeminal nerve (V3). Taste sensation from the anterior two-thirds of the tongue is carried by the chorda tympani (a branch of the facial nerve) which joins the lingual nerve. The posterior one-third of the tongue is innervated by the glossopharyngeal nerve (CN IX)."
+    },
+    {
+      question: "The masseter muscle inserts on the:",
+      options: ["Coronoid process", "Angle and ramus of the mandible", "Condylar process", "Symphysis menti"],
+      correct: 1,
+      topic: "Anatomy",
+      explanation: "The masseter muscle inserts on the lateral surface of the ramus and angle of the mandible. It has three parts: superficial, intermediate, and deep. The superficial part originates from the zygomatic process of the maxilla and zygomatic arch, while the deep part originates from the entire length of the inferior border of the zygomatic arch. The masseter is one of the primary muscles of mastication and is easily palpable during clenching."
+    },
+    {
+      question: "The inferior alveolar nerve is a branch of the:",
+      options: ["Ophthalmic division", "Maxillary division", "Mandibular division", "Facial nerve"],
+      correct: 2,
+      topic: "Anatomy",
+      explanation: "The inferior alveolar nerve is a branch of the mandibular division (V3) of the trigeminal nerve. It enters the mandibular foramen and runs through the mandibular canal, providing sensory innervation to the mandibular teeth. It exits the mental foramen as the mental nerve, which supplies the lower lip and chin. The nerve also gives off the mylohyoid nerve before entering the mandible."
+    },
+
+    // Pedodontics (20 questions)
+    {
+      question: "The first primary tooth to erupt is usually the:",
+      options: ["Maxillary central incisor", "Mandibular central incisor", "Maxillary lateral incisor", "Mandibular lateral incisor"],
+      correct: 1,
+      topic: "Pedodontics",
+      explanation: "The mandibular central incisor is usually the first primary tooth to erupt, typically appearing at around 6-10 months of age. This early eruption pattern is consistent across most children and serves as a reference point for monitoring dental development. The early eruption of mandibular incisors makes them particularly vulnerable to early childhood caries."
+    },
+    {
+      question: "The average age for complete eruption of primary dentition is:",
+      options: ["18 months", "24 months", "30 months", "36 months"],
+      correct: 2,
+      topic: "Pedodontics",
+      explanation: "The average age for complete eruption of primary dentition is 30 months (2.5 years). By this age, all 20 primary teeth should have erupted. The eruption sequence typically follows the pattern: incisors, first molars, canines, and second molars. Monitoring eruption timing is important for identifying developmental anomalies and planning preventive care."
+    },
+    {
+      question: "Space maintenance is indicated when a primary tooth is lost:",
+      options: ["Before age 6", "After age 6", "Before the eruption of permanent successors", "After the eruption of permanent successors"],
+      correct: 2,
+      topic: "Pedodontics",
+      explanation: "Space maintenance is indicated when a primary tooth is lost before the eruption of its permanent successor. Premature loss of primary teeth can lead to space loss due to mesial drift of posterior teeth and overeruption of opposing teeth. Space maintainers prevent these undesirable movements and preserve the arch length needed for proper eruption of permanent teeth."
+    },
+    {
+      question: "The pulp treatment of choice for a primary tooth with deep caries and no signs of pulp involvement is:",
+      options: ["Pulpotomy", "Pulpectomy", "Direct pulp capping", "Indirect pulp capping"],
+      correct: 3,
+      topic: "Pedodontics",
+      explanation: "Indirect pulp capping is the treatment of choice for a primary tooth with deep caries close to the pulp but without signs of pulp involvement. This procedure involves leaving a thin layer of infected dentin over the pulp and placing a protective dressing (such as calcium hydroxide or MTA) to promote reparative dentin formation. The remaining carious dentin is believed to be sterilized by the dressing and the tooth's immune response."
+    },
+    {
+      question: "Formocresol pulpotomy is contraindicated in:",
+      options: ["Primary molars", "Permanent molars", "Primary incisors", "All primary teeth"],
+      correct: 1,
+      topic: "Pedodontics",
+      explanation: "Formocresol pulpotomy is contraindicated in permanent molars because it involves the use of a fixative agent that could potentially damage the developing permanent tooth germ. Formocresol is used in primary teeth because they will eventually exfoliate, but it should not be used in permanent teeth where long-term health of the pulp and surrounding tissues is essential. Alternative pulpotomy agents like MTA are preferred for permanent teeth."
+    },
+    {
+      question: "The most common cause of premature loss of primary teeth is:",
+      options: ["Trauma", "Congenital absence", "Caries and infection", "Orthodontic extraction"],
+      correct: 2,
+      topic: "Pedodontics",
+      explanation: "Caries and infection are the most common causes of premature loss of primary teeth. Untreated dental caries can progress to pulp necrosis and periapical infection, leading to early exfoliation of the tooth. This highlights the importance of preventive care, early detection, and prompt treatment of dental caries in children to maintain the integrity of the primary dentition until normal exfoliation."
+    },
+    {
+      question: "A stainless steel crown is indicated for a primary molar when:",
+      options: ["There is minimal caries", "There is extensive caries involving multiple surfaces", "There is a small Class I restoration", "There is a fractured cusp"],
+      correct: 1,
+      topic: "Pedodontics",
+      explanation: "A stainless steel crown is indicated for a primary molar when there is extensive caries involving multiple surfaces. These crowns provide full coverage protection for teeth with compromised structural integrity. They are durable, relatively inexpensive, and have a high success rate in primary teeth. SSCs are particularly useful in children with high caries risk or in teeth with extensive restoration needs."
+    },
+    {
+      question: "The sequence of eruption for primary teeth is typically:",
+      options: ["Incisors, molars, canines", "Molars, incisors, canines", "Incisors, canines, molars", "Molars, canines, incisors"],
+      correct: 0,
+      topic: "Pedodontics",
+      explanation: "The typical sequence of eruption for primary teeth is incisors, followed by molars, and then canines. The mandibular central incisors are usually first, followed by the maxillary central incisors, lateral incisors, first molars, canines, and second molars. This sequence reflects the functional needs of the developing child, with incisors for cutting and molars for grinding emerging early in the feeding process."
+    },
+    {
+      question: "The ideal age for the first dental visit is:",
+      options: ["6 months after eruption of first tooth or by age 1", "Age 3", "Age 5", "Age 7"],
+      correct: 0,
+      topic: "Pedodontics",
+      explanation: "The ideal age for the first dental visit is 6 months after the eruption of the first tooth or by age 1, according to the American Academy of Pediatric Dentistry. This early visit allows for preventive education, caries risk assessment, and establishment of a dental home. Early intervention can prevent dental problems and establish positive attitudes toward dental care that last a lifetime."
+    },
+    {
+      question: "The pulp treatment of choice for a primary tooth with chronic pulpitis is:",
+      options: ["Pulpotomy", "Pulpectomy", "Extraction", "Direct pulp capping"],
+      correct: 1,
+      topic: "Pedodontics",
+      explanation: "Pulpectomy is the treatment of choice for a primary tooth with chronic pulpitis. This procedure involves complete removal of both the coronal and radicular pulp tissue, followed by cleaning, shaping, and filling of the root canals with a resorbable material like zinc oxide-eugenol or iodoform paste. Pulpectomy preserves the tooth until normal exfoliation while eliminating infection and pain."
+    },
+    {
+      question: "Proximal caries in primary teeth is best detected by:",
+      options: ["Visual examination", "Tactile examination", "Bitewing radiographs", "Panoramic radiographs"],
+      correct: 2,
+      topic: "Pedodontics",
+      explanation: "Bitewing radiographs are the best method for detecting proximal caries in primary teeth. These radiographs show the crowns of both maxillary and mandibular teeth on the same image, allowing visualization of interproximal surfaces that cannot be seen clinically. Early detection of proximal caries is crucial for minimally invasive treatment and prevention of pulp involvement."
+    },
+    {
+      question: "The primary dentition consists of how many teeth?",
+      options: ["16", "20", "24", "28"],
+      correct: 1,
+      topic: "Pedodontics",
+      explanation: "The primary dentition consists of 20 teeth: 8 incisors, 4 canines, and 8 molars (no premolars). The distribution is 10 teeth in each arch (5 per quadrant). This number is important for dental professionals to know when assessing a child's dental development and eruption pattern. The primary dentition serves as a placeholder for the permanent dentition, which has 32 teeth."
+    },
+    {
+      question: "The most common site for dental trauma in primary teeth is:",
+      options: ["Maxillary incisors", "Mandibular incisors", "Maxillary molars", "Mandibular molars"],
+      correct: 0,
+      topic: "Pedodontics",
+      explanation: "The maxillary incisors are the most common site for dental trauma in primary teeth due to their prominent position in the arch, especially in toddlers who are learning to walk. The combination of motor incoordination and protruding maxillary incisors makes them vulnerable to falls and other accidents. Trauma to primary teeth requires careful assessment as it may affect the developing permanent successors."
+    },
+    {
+      question: "The space maintainer of choice for a unilateral loss of a primary first molar is:",
+      options: ["Band and loop", "Lingual arch", "Nance appliance", "Distal shoe"],
+      correct: 0,
+      topic: "Pedodontics",
+      explanation: "The band and loop space maintainer is the appliance of choice for unilateral loss of a primary first molar. It consists of a band on the first permanent molar and a wire loop that contacts the distal surface of the primary canine. This unilateral appliance preserves space for the premolar without affecting the opposing arch or requiring cooperation from the patient, making it ideal for young children."
+    },
+    {
+      question: "The pulp treatment of choice for a primary tooth with acute pulpitis is:",
+      options: ["Pulpotomy", "Pulpectomy", "Extraction", "Observation"],
+      correct: 1,
+      topic: "Pedodontics",
+      explanation: "Pulpectomy is the treatment of choice for a primary tooth with acute pulpitis. Acute pulpitis indicates irreversible inflammation of the entire pulp tissue, requiring complete removal of the pulp. A pulpotomy would be insufficient in this case as it only removes the coronal pulp. Pulpectomy eliminates the source of pain and infection while preserving the tooth until normal exfoliation."
+    },
+    {
+      question: "The primary tooth that most closely resembles the permanent premolar in morphology is:",
+      options: ["Primary first molar", "Primary second molar", "Primary canine", "Primary incisor"],
+      correct: 0,
+      topic: "Pedodontics",
+      explanation: "The primary first molar most closely resembles the permanent premolar in morphology. It has a smaller mesiodistal dimension than the primary second molar and has a distinct cervical ridge on the buccal surface, similar to premolars. This morphological similarity is important for restorative dentistry, as the primary first molar often serves as a model for the permanent premolar that will replace it."
+    },
+    {
+      question: "The most common cause of pulpal necrosis in primary teeth is:",
+      options: ["Caries", "Trauma", "Developmental defects", "Iatrogenic injury"],
+      correct: 0,
+      topic: "Pedodontics",
+      explanation: "Caries is the most common cause of pulpal necrosis in primary teeth. Untreated dental caries allows bacteria to invade the pulp tissue through dentinal tubules, leading to irreversible pulpitis and eventual necrosis. The thin dentinal walls of primary teeth allow caries to progress rapidly to the pulp, emphasizing the need for early detection and preventive care in pediatric patients."
+    },
+    {
+      question: "The ideal material for restoring Class I cavities in primary molars is:",
+      options: ["Amalgam", "Composite resin", "Glass ionomer cement", "Zinc oxide eugenol"],
+      correct: 2,
+      topic: "Pedodontics",
+      explanation: "Glass ionomer cement is often considered the ideal material for restoring Class I cavities in primary molars, especially in high caries-risk children. It releases fluoride, has good adhesion to tooth structure, and is more forgiving in moisture-contaminated environments. While amalgam has better wear resistance, glass ionomer's cariostatic properties and ease of use make it a preferred choice for many pediatric dentists."
+    },
+    {
+      question: "The sequence of exfoliation of primary teeth is typically:",
+      options: ["Incisors, canines, molars", "Molars, canines, incisors", "Incisors, molars, canines", "Canines, incisors, molars"],
+      correct: 0,
+      topic: "Pedodontics",
+      explanation: "The typical sequence of exfoliation of primary teeth is incisors, followed by canines, and then molars. This follows the general pattern of eruption, with the first teeth to erupt being the first to exfoliate. The mandibular incisors are usually the first to exfoliate around age 6, followed by the maxillary incisors, canines, and finally the molars, which are replaced by premolars."
+    },
+    {
+      question: "The most common type of supernumerary tooth in children is:",
+      options: ["Mesiodens", "Paramolar", "Distomolar", "Tuberculated odontome"],
+      correct: 0,
+      topic: "Pedodontics",
+      explanation: "The mesiodens is the most common type of supernumerary tooth in children, occurring in the maxillary midline between the central incisors. It is usually conical in shape and may prevent the eruption of permanent incisors or cause diastema. Early diagnosis through radiographic examination is important, as mesiodens may require surgical removal to allow normal eruption of adjacent teeth."
+    },
+
+    // Dental Materials (20 questions)
+    {
+      question: "The main component of dental amalgam is:",
+      options: ["Silver", "Tin", "Copper", "Mercury"],
+      correct: 3,
+      topic: "Dental Materials",
+      explanation: "Mercury is the main component of dental amalgam by weight, typically comprising 50% of the final restoration. The mercury reacts with the alloy powder (containing silver, tin, and copper) in a process called amalgamation to form the final restoration. Despite concerns about mercury content, dental amalgam has been used safely for over 150 years and remains a durable, cost-effective restorative material."
+    },
+    {
+      question: "The setting reaction of glass ionomer cement involves:",
+      options: ["Acid-base reaction", "Polymerization", "Chelation", "Crystallization"],
+      correct: 0,
+      topic: "Dental Materials",
+      explanation: "The setting reaction of glass ionomer cement involves an acid-base reaction between an aluminosilicate glass powder and a polyacrylic acid liquid. The acid attacks the glass, releasing metal ions (calcium, aluminum) which then cross-link with the carboxyl groups of the polyacid, forming a rigid gel matrix. This reaction also allows for fluoride release, making glass ionomer cariostatic."
+    },
+    {
+      question: "The material with the highest coefficient of thermal expansion is:",
+      options: ["Amalgam", "Composite resin", "Gold", "Porcelain"],
+      correct: 1,
+      topic: "Dental Materials",
+      explanation: "Composite resin has the highest coefficient of thermal expansion among common dental restorative materials, typically 25-40 × 10⁻⁶/°C, compared to 20-28 for amalgam, 14 for gold, and 9-13 for porcelain. This high thermal expansion can lead to marginal gaps and microleakage if the restoration is not properly placed, emphasizing the importance of incremental layering and curing techniques."
+    },
+    {
+      question: "The main advantage of composite resin over amalgam is:",
+      options: ["Better strength", "Better wear resistance", "Esthetics", "Lower cost"],
+      correct: 2,
+      topic: "Dental Materials",
+      explanation: "The main advantage of composite resin over amalgam is esthetics, as composite can be matched to the color of natural tooth structure, making it virtually invisible. This tooth-colored property has made composite the material of choice for anterior restorations and increasingly for posterior restorations as well. Modern composites have improved physical properties, though amalgam still generally has better wear resistance."
+    },
+    {
+      question: "The setting time of zinc oxide eugenol is accelerated by:",
+      options: ["Adding olive oil", "Adding acetic acid", "Adding zinc acetate", "Adding water"],
+      correct: 2,
+      topic: "Dental Materials",
+      explanation: "The setting time of zinc oxide eugenol is accelerated by adding zinc acetate, which acts as a catalyst in the chelation reaction between zinc oxide and eugenol. Zinc acetate increases the rate of formation of zinc eugenolate, the reaction product that forms the set cement. This allows clinicians to control the working and setting times according to clinical needs."
+    },
+    {
+      question: "The material used for temporary crowns that can be easily adjusted is:",
+      options: ["Stainless steel", "Acrylic resin", "Gold", "Porcelain"],
+      correct: 1,
+      topic: "Dental Materials",
+      explanation: "Acrylic resin is commonly used for temporary crowns because it can be easily adjusted, repaired, and polished chairside. Materials like bis-acrylic composites set quickly and can be trimmed with burs to perfect the occlusion and contours. This adjustability is crucial for temporary restorations, which often require multiple adjustments to achieve proper fit, occlusion, and gingival health."
+    },
+    {
+      question: "The main disadvantage of glass ionomer cement is:",
+      options: ["Poor esthetics", "Low strength", "High solubility", "Poor adhesion"],
+      correct: 1,
+      topic: "Dental Materials",
+      explanation: "The main disadvantage of conventional glass ionomer cement is its relatively low strength compared to other restorative materials. The compressive strength of glass ionomer is typically 100-180 MPa, compared to 300-400 MPa for composite resin and 300-500 MPa for amalgam. This limits its use in high-stress bearing areas, though reinforced glass ionomers and resin-modified glass ionomers have improved mechanical properties."
+    },
+    {
+      question: "The material that releases fluoride continuously is:",
+      options: ["Amalgam", "Composite resin", "Glass ionomer cement", "Zinc phosphate cement"],
+      correct: 2,
+      topic: "Dental Materials",
+      explanation: "Glass ionomer cement releases fluoride continuously through an ion exchange mechanism with the oral environment. The fluoride is released from the glass particles and can be recharged by exposure to fluoride sources like toothpaste or mouthwash. This continuous fluoride release provides a cariostatic effect, making glass ionomer particularly beneficial for patients at high risk of caries."
+    },
+    {
+      question: "The setting reaction of dental plaster is:",
+      options: ["Exothermic", "Endothermic", "Neutral", "Variable"],
+      correct: 0,
+      topic: "Dental Materials",
+      explanation: "The setting reaction of dental plaster is exothermic, meaning it releases heat as the hemihydrate powder converts to dihydrate (gypsum) crystals. This exothermic reaction can be felt when mixing large quantities of plaster. The heat release is due to the crystallization process, where calcium sulfate hemihydrate reacts with water to form calcium sulfate dihydrate, the setting mass."
+    },
+    {
+      question: "The material with the highest compressive strength is:",
+      options: ["Amalgam", "Composite resin", "Glass ionomer cement", "Zinc phosphate cement"],
+      correct: 0,
+      topic: "Dental Materials",
+      explanation: "Amalgam has the highest compressive strength among these materials, typically ranging from 300 to 500 MPa. This high compressive strength makes amalgam particularly suitable for posterior restorations that must withstand heavy occlusal forces. Composite resin follows with 300-400 MPa, zinc phosphate cement with 70-100 MPa, and glass ionomer with 100-180 MPa."
+    },
+    {
+      question: "The main component of composite resin is:",
+      options: ["Silica", "Quartz", "Bis-GMA", "PMMA"],
+      correct: 2,
+      topic: "Dental Materials",
+      explanation: "Bis-GMA (bisphenol A-glycidyl methacrylate) is the main resin matrix component of most dental composites. It provides the basic polymer structure to which filler particles are added. Bis-GMA has high molecular weight and viscosity, which is reduced by adding diluent monomers like TEGDMA. The resin matrix polymerizes during curing to form the solid restoration."
+    },
+    {
+      question: "The material used for die stone has:",
+      options: ["Higher expansion than dental stone", "Lower expansion than dental stone", "Same expansion as dental stone", "No expansion"],
+      correct: 0,
+      topic: "Dental Materials",
+      explanation: "Die stone has higher expansion than dental stone due to the addition of potassium sulfate and silica gel, which control the setting expansion to approximately 0.1-0.2%. This controlled expansion compensates for the contraction of casting metals, ensuring accurate fit of cast restorations. Dental stone has lower expansion (about 0.08-0.1%) and is used for study models where dimensional accuracy is important but metal casting compensation is not needed."
+    },
+    {
+      question: "The setting time of alginate is shortened by:",
+      options: ["Using cold water", "Using warm water", "Increasing powder/water ratio", "Decreasing mixing time"],
+      correct: 1,
+      topic: "Dental Materials",
+      explanation: "The setting time of alginate is shortened by using warm water, as the reaction between sodium alginate and calcium sulfate is temperature-dependent. Higher temperatures accelerate the formation of calcium alginate gel. Conversely, cold water slows the setting reaction. The ideal water temperature for mixing alginate is 20-22°C (68-72°F) to achieve optimal working and setting times."
+    },
+    {
+      question: "The material that exhibits polymerization shrinkage is:",
+      options: ["Amalgam", "Composite resin", "Glass ionomer cement", "Zinc oxide eugenol"],
+      correct: 1,
+      topic: "Dental Materials",
+      explanation: "Composite resin exhibits polymerization shrinkage as the monomers convert to polymer chains during curing. This shrinkage, typically 2-5%, can create marginal gaps and lead to microleakage, postoperative sensitivity, and secondary caries. Techniques like incremental layering, use of flowable composites as liners, and proper curing protocols help minimize the clinical effects of polymerization shrinkage."
+    },
+    {
+      question: "The main advantage of resin-modified glass ionomer over conventional glass ionomer is:",
+      options: ["Higher strength", "Better esthetics", "Dual-cure capability", "Lower cost"],
+      correct: 2,
+      topic: "Dental Materials",
+      explanation: "The main advantage of resin-modified glass ionomer over conventional glass ionomer is its dual-cure capability, meaning it can set by both acid-base reaction and light-activated polymerization. This provides immediate strength after light curing, allowing earlier placement of occlusal loads, while still maintaining the fluoride-releasing properties of conventional glass ionomer. The resin component also improves physical properties and esthetics."
+    },
+    {
+      question: "The material used for bite registration that has the highest accuracy is:",
+      options: ["Zinc oxide eugenol", "Polysulfide", "Addition silicone", "Condensation silicone"],
+      correct: 2,
+      topic: "Dental Materials",
+      explanation: "Addition silicone (polyvinyl siloxane) has the highest accuracy for bite registration due to its excellent dimensional stability, high elastic recovery, and low permanent deformation. It maintains accuracy over time and is not affected by air or moisture. These properties make it ideal for recording centric relation and other precise occlusal relationships for prosthodontic treatment."
+    },
+    {
+      question: "The setting reaction of self-cure acrylic resin involves:",
+      options: ["Acid-base reaction", "Free radical polymerization", "Chelation", "Crystallization"],
+      correct: 1,
+      topic: "Dental Materials",
+      explanation: "The setting reaction of self-cure acrylic resin involves free radical polymerization, where benzoyl peroxide (initiator) reacts with a tertiary amine (accelerator) to produce free radicals that initiate the polymerization of methyl methacrylate monomer into poly(methyl methacrylate). This chain reaction forms the solid acrylic resin used for denture bases, orthodontic appliances, and temporary restorations."
+    },
+    {
+      question: "The material with the lowest solubility in oral fluids is:",
+      options: ["Amalgam", "Composite resin", "Glass ionomer cement", "Zinc oxide eugenol"],
+      correct: 0,
+      topic: "Dental Materials",
+      explanation: "Amalgam has the lowest solubility in oral fluids among these materials, with modern high-copper amalgams showing minimal corrosion and ion release. While all materials have some solubility, amalgam's metallic matrix is highly resistant to dissolution in the oral environment. This low solubility contributes to amalgam's longevity, with many restorations lasting 10-15 years or more."
+    },
+    {
+      question: "The main disadvantage of zinc phosphate cement is:",
+      options: ["High solubility", "Lack of adhesion", "Pulpal irritation", "Poor esthetics"],
+      correct: 2,
+      topic: "Dental Materials",
+      explanation: "The main disadvantage of zinc phosphate cement is pulpal irritation due to its initial low pH (about 2-3) during the setting reaction. This acidity can cause transient pulp inflammation, especially in deep preparations with thin dentin. To minimize this effect, a protective base like calcium hydroxide is often placed over thin dentin before cementation with zinc phosphate."
+    },
+    {
+      question: "The material used for custom trays is:",
+      options: ["Acrylic resin", "Stainless steel", "Copper", "Titanium"],
+      correct: 0,
+      topic: "Dental Materials",
+      explanation: "Acrylic resin is the material used for custom trays in impression making. Self-cure or light-cure acrylic resins are used to fabricate trays that precisely fit the patient's dental arch, providing even thickness of impression material and accurate impressions. Custom trays are superior to stock trays as they reduce distortion and provide better control over the impression procedure."
+    }
+  ];
+
+  const topics = ["Tooth Morphology", "Oral Histology", "Anatomy", "Pedodontics", "Dental Materials"];
+
+  useEffect(() => {
+    let timer;
+    if (quizStarted && timeLeft > 0 && !showResult) {
+      timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
+    } else if (timeLeft === 0 && quizStarted && !showResult) {
+      handleSubmit();
+    }
+    return () => clearTimeout(timer);
+  }, [timeLeft, quizStarted, showResult]);
+
+  const handleAnswerSelect = (answerIndex) => {
+    setSelectedAnswer(answerIndex);
+  };
+
+  const handleNext = () => {
+    if (selectedAnswer !== null) {
+      setUserAnswers(prev => ({
+        ...prev,
+        [currentQuestion]: selectedAnswer
+      }));
+    }
+    
+    if (currentQuestion < quizData.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setSelectedAnswer(userAnswers[currentQuestion + 1] || null);
+    } else {
+      handleSubmit();
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentQuestion > 0) {
+      setCurrentQuestion(currentQuestion - 1);
+      setSelectedAnswer(userAnswers[currentQuestion - 1] || null);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (selectedAnswer !== null) {
+      setUserAnswers(prev => ({
+        ...prev,
+        [currentQuestion]: selectedAnswer
+      }));
+    }
+    setShowResult(true);
+    setActiveTab('summary');
+  };
+
+  const handleReview = () => {
+    setActiveTab('review');
+  };
+
+  const handleQuizRestart = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setQuizStarted(false);
+    setTimeLeft(3000);
+    setUserAnswers({});
+    setActiveTab('quiz');
+  };
+
+  const calculateScore = () => {
+    let score = 0;
+    Object.keys(userAnswers).forEach(key => {
+      const questionIndex = parseInt(key);
+      if (userAnswers[questionIndex] === quizData[questionIndex].correct) {
+        score++;
+      }
+    });
+    return score;
+  };
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const currentTopic = quizData[currentQuestion]?.topic || "";
+  const score = calculateScore();
+  const totalQuestions = quizData.length;
+  const percentage = Math.round((score / totalQuestions) * 100);
+
+  let feedback = "";
+  if (percentage >= 90) feedback = "Excellent! You're a dental expert!";
+  else if (percentage >= 80) feedback = "Great job! Strong dental knowledge.";
+  else if (percentage >= 70) feedback = "Good work! Solid understanding.";
+  else if (percentage >= 60) feedback = "Fair performance. Room for improvement.";
+  else feedback = "Needs improvement. Review the topics thoroughly.";
+
+  // Group questions by topic for review
+  const questionsByTopic = {};
+  quizData.forEach((question, index) => {
+    if (!questionsByTopic[question.topic]) {
+      questionsByTopic[question.topic] = [];
+    }
+    questionsByTopic[question.topic].push({
+      ...question,
+      index,
+      userAnswer: userAnswers[index],
+      isCorrect: userAnswers[index] !== undefined ? userAnswers[index] === question.correct : null
+    });
+  });
+
+  const getAccuracyByTopic = (topic) => {
+    const topicQuestions = questionsByTopic[topic];
+    const correctCount = topicQuestions.filter(q => q.isCorrect === true).length;
+    return Math.round((correctCount / topicQuestions.length) * 100);
+  };
+
+  if (!quizStarted && !showResult) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+        <div className="bg-white rounded-2xl shadow-2xl p-8 max-w-2xl w-full">
+          <div className="text-center">
+            <h1 className="text-4xl font-bold text-gray-800 mb-4">Dental Quiz Practice Test</h1>
+            <p className="text-lg text-gray-600 mb-8">Test your knowledge across various dentistry topics</p>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              {topics.map((topic, index) => (
+                <div key={index} className="bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg border border-blue-100">
+                  <h3 className="font-semibold text-blue-800 mb-2">{topic}</h3>
+                  <p className="text-sm text-gray-600">20 questions each</p>
+                </div>
+              ))}
+            </div>
+            
+            <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mb-8">
+              <h3 className="font-semibold text-yellow-800 mb-2">Test Information</h3>
+              <ul className="text-sm text-yellow-700 text-left">
+                <li>• 100 questions total</li>
+                <li>• 50 minutes time limit</li>
+                <li>• Multiple choice format</li>
+                <li>• Comprehensive explanations for learning</li>
+                <li>• Detailed performance review</li>
+              </ul>
+            </div>
+            
+            <button
+              onClick={() => setQuizStarted(true)}
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-3 rounded-lg text-lg font-semibold hover:from-blue-700 hover:to-indigo-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+            >
+              Start Quiz
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (showResult && activeTab === 'summary') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-green-50 to-emerald-100">
+        {/* Header */}
+        <div className="bg-white shadow-lg">
+          <div className="max-w-6xl mx-auto px-4 py-4">
+            <div className="flex justify-between items-center">
+              <h1 className="text-xl font-bold text-gray-800">Quiz Results</h1>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => setActiveTab('review')}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  Review Answers
+                </button>
+                <button
+                  onClick={handleQuizRestart}
+                  className="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition-colors"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-6xl mx-auto p-6">
+          {/* Main Results */}
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+            <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
+              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">{score}</h2>
+              <p className="text-gray-600">Correct Answers</p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
+              <div className="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-10 h-10 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">{percentage}%</h2>
+              <p className="text-gray-600">Score</p>
+            </div>
+
+            <div className="bg-white rounded-2xl shadow-xl p-6 text-center">
+              <div className="w-20 h-20 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg className="w-10 h-10 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-gray-800 mb-2">{formatTime(3000 - timeLeft)}</h2>
+              <p className="text-gray-600">Time Used</p>
+            </div>
+          </div>
+
+          {/* Feedback */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 mb-6">
+            <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Performance Feedback</h2>
+            <p className="text-xl text-center text-gray-700 mb-6">{feedback}</p>
+            
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+              <h3 className="font-semibold text-blue-800 mb-2">Next Steps for Improvement</h3>
+              <ul className="text-blue-700 space-y-1">
+                <li>• Review the detailed explanations in the answer review</li>
+                <li>• Focus on topics with lower accuracy scores</li>
+                <li>• Practice similar questions to reinforce learning</li>
+                <li>• Consider creating flashcards for challenging concepts</li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Topic Performance */}
+          <div className="bg-white rounded-2xl shadow-xl p-8">
+            <h2 className="text-2xl font-bold text-gray-800 mb-6">Performance by Topic</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {topics.map((topic) => (
+                <div key={topic} className="bg-gray-50 rounded-lg p-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="font-semibold text-gray-800">{topic}</h3>
+                    <span className="font-bold text-blue-600">{getAccuracyByTopic(topic)}%</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-2">
+                    <div 
+                      className={`h-2 rounded-full ${
+                        getAccuracyByTopic(topic) >= 80 ? 'bg-green-500' :
+                        getAccuracyByTopic(topic) >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                      }`}
+                      style={{ width: `${getAccuracyByTopic(topic)}%` }}
+                    ></div>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {questionsByTopic[topic].filter(q => q.isCorrect === true).length} of {questionsByTopic[topic].length} correct
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (showResult && activeTab === 'review') {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-pink-100">
+        {/* Header */}
+        <div className="bg-white shadow-lg">
+          <div className="max-w-6xl mx-auto px-4 py-4">
+            <div className="flex justify-between items-center">
+              <h1 className="text-xl font-bold text-gray-800">Answer Review</h1>
+              <div className="flex space-x-2">
+                <button
+                  onClick={() => setActiveTab('summary')}
+                  className="bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-gray-700 transition-colors"
+                >
+                  Summary
+                </button>
+                <button
+                  onClick={handleQuizRestart}
+                  className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-blue-700 transition-colors"
+                >
+                  Try Again
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="max-w-6xl mx-auto p-6">
+          {/* Review Tabs */}
+          <div className="bg-white rounded-t-2xl shadow-xl mb-6">
+            <div className="border-b border-gray-200">
+              <nav className="flex space-x-8 px-6">
+                {topics.map((topic) => (
+                  <button
+                    key={topic}
+                    className={`py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap ${
+                      currentTopic === topic
+                        ? 'border-purple-500 text-purple-600'
+                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                    }`}
+                    onClick={() => {
+                      const firstQuestionIndex = quizData.findIndex(q => q.topic === topic);
+                      if (firstQuestionIndex !== -1) {
+                        setCurrentQuestion(firstQuestionIndex);
+                      }
+                    }}
+                  >
+                    {topic} ({questionsByTopic[topic].filter(q => q.isCorrect === true).length}/{questionsByTopic[topic].length})
+                  </button>
+                ))}
+              </nav>
+            </div>
+          </div>
+
+          {/* Question Review */}
+          <div className="space-y-6">
+            {questionsByTopic[currentTopic].map((item) => (
+              <div key={item.index} className={`bg-white rounded-2xl shadow-xl p-6 ${
+                item.isCorrect === false ? 'border-4 border-red-200' : 'border-2 border-gray-100'
+              }`}>
+                <div className="flex justify-between items-start mb-4">
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    Question {item.index + 1}: {item.question}
+                  </h3>
+                  <span className={`px-3 py-1 rounded-full text-sm font-medium ${
+                    item.isCorrect === true ? 'bg-green-100 text-green-800' :
+                    item.isCorrect === false ? 'bg-red-100 text-red-800' : 'bg-gray-100 text-gray-800'
+                  }`}>
+                    {item.isCorrect === true ? 'Correct' : item.isCorrect === false ? 'Incorrect' : 'Not Answered'}
+                  </span>
+                </div>
+
+                <div className="space-y-2 mb-4">
+                  {item.options.map((option, idx) => (
+                    <div
+                      key={idx}
+                      className={`p-3 rounded-lg border-2 ${
+                        idx === item.correct
+                          ? 'border-green-500 bg-green-50'
+                          : item.userAnswer === idx && idx !== item.correct
+                          ? 'border-red-500 bg-red-50'
+                          : 'border-gray-200 bg-gray-50'
+                      }`}
+                    >
+                      <div className="flex items-center">
+                        <div className={`w-5 h-5 rounded-full border-2 mr-3 flex items-center justify-center ${
+                          idx === item.correct
+                            ? 'border-green-500 bg-green-500'
+                            : item.userAnswer === idx && idx !== item.correct
+                            ? 'border-red-500 bg-red-500'
+                            : 'border-gray-400'
+                        }`}>
+                          {idx === item.correct ? (
+                            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                            </svg>
+                          ) : item.userAnswer === idx && idx !== item.correct ? (
+                            <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          ) : null}
+                        </div>
+                        <span className={idx === item.correct ? 'font-semibold text-green-800' : 
+                                      item.userAnswer === idx && idx !== item.correct ? 'font-semibold text-red-800' : ''}>
+                          {option}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-800 mb-2">Explanation</h4>
+                  <p className="text-blue-700 leading-relaxed">{item.explanation}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Main Quiz Interface
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+      {/* Header */}
+      <div className="bg-white shadow-lg">
+        <div className="max-w-6xl mx-auto px-4 py-4">
+          <div className="flex justify-between items-center">
+            <div>
+              <h1 className="text-xl font-bold text-gray-800">Dental Quiz Practice Test</h1>
+              <p className="text-sm text-gray-600">Question {currentQuestion + 1} of {quizData.length}</p>
+            </div>
+            <div className="flex items-center space-x-6">
+              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-semibold">
+                {currentTopic}
+              </span>
+              <div className="bg-red-100 text-red-800 px-3 py-1 rounded-full font-mono text-lg font-bold">
+                {formatTime(timeLeft)}
+              </div>
+            </div>
+          </div>
+          
+          {/* Progress bar */}
+          <div className="mt-4">
+            <div className="w-full bg-gray-200 rounded-full h-2">
+              <div 
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 h-2 rounded-full transition-all duration-300"
+                style={{ width: `${((currentQuestion + 1) / quizData.length) * 100}%` }}
+              ></div>
+            </div>
+            <div className="flex justify-between text-xs text-gray-500 mt-1">
+              <span>Progress</span>
+              <span>{currentQuestion + 1}/{quizData.length}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main content */}
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="bg-white rounded-2xl shadow-xl p-8">
+          {/* Question */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold text-gray-800 mb-6 leading-relaxed">
+              {quizData[currentQuestion].question}
+            </h2>
+            
+            {/* Options */}
+            <div className="space-y-3">
+              {quizData[currentQuestion].options.map((option, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleAnswerSelect(index)}
+                  className={`w-full text-left p-4 rounded-xl border-2 transition-all duration-200 ${
+                    selectedAnswer === index
+                      ? "border-blue-500 bg-blue-50 text-blue-800"
+                      : "border-gray-200 hover:border-gray-300 hover:bg-gray-50"
+                  }`}
+                >
+                  <div className="flex items-center">
+                    <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mr-3 ${
+                      selectedAnswer === index ? "border-blue-500 bg-blue-500" : "border-gray-300"
+                    }`}>
+                      {selectedAnswer === index && (
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      )}
+                    </div>
+                    <span className="font-medium">{option}</span>
+                  </div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Navigation */}
+          <div className="flex justify-between items-center pt-6 border-t border-gray-100">
+            <button
+              onClick={handlePrevious}
+              disabled={currentQuestion === 0}
+              className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
+                currentQuestion === 0
+                  ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                  : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+              }`}
+            >
+              Previous
+            </button>
+            
+            <div className="flex space-x-3">
+              <button
+                onClick={handleSubmit}
+                className="px-6 py-2 bg-red-500 text-white rounded-lg font-semibold hover:bg-red-600 transition-all duration-200 shadow-md hover:shadow-lg"
+              >
+                Submit
+              </button>
+              
+              <button
+                onClick={handleNext}
+                disabled={selectedAnswer === null}
+                className={`px-6 py-2 rounded-lg font-semibold transition-all duration-200 ${
+                  selectedAnswer === null
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg"
+                }`}
+              >
+                {currentQuestion === quizData.length - 1 ? "Finish" : "Next"}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Topic progress */}
+        <div className="mt-6 bg-white rounded-xl shadow-lg p-4">
+          <h3 className="font-semibold text-gray-800 mb-3">Topic Progress</h3>
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-2">
+            {topics.map((topic) => {
+              const topicQuestions = questionsByTopic[topic];
+              const answered = topicQuestions.filter(q => q.userAnswer !== undefined).length;
+              const correct = topicQuestions.filter(q => q.isCorrect === true).length;
+              const progress = (answered / topicQuestions.length) * 100;
+              const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+              
+              return (
+                <div key={topic} className="bg-gray-50 rounded-lg p-3">
+                  <div className="flex justify-between text-sm mb-1">
+                    <span className="font-medium text-gray-700">{topic}</span>
+                    <span className="text-gray-500">{correct}/{topicQuestions.length}</span>
+                  </div>
+                  <div className="w-full bg-gray-200 rounded-full h-1.5 mb-1">
+                    <div 
+                      className="bg-blue-500 h-1.5 rounded-full"
+                      style={{ width: `${progress}%` }}
+                    ></div>
+                  </div>
+                  <div className="text-xs text-gray-500">
+                    {accuracy}% accurate
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default App;
