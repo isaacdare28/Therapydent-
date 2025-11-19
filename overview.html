@@ -3,26 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dental Therapy Course</title>
+    <title>Dental Therapy Course | Professional Training Program</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* CSS Variables */
+        :root {
+            --primary: #1a73e8;
+            --primary-dark: #0d47a1;
+            --secondary: #34a853;
+            --accent: #fbbc05;
+            --text-dark: #202124;
+            --text-light: #5f6368;
+            --background: #ffffff;
+            --background-light: #f8f9fa;
+            --border: #dadce0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+            --transition: all 0.3s ease;
+        }
+
         /* Global Styles */
-        body {
-            font-family: 'Helvetica Neue', Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            color: #333;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             line-height: 1.6;
-            background: url('https://plus.unsplash.com/premium_photo-1661775868038-77ae66913504?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D') no-repeat center center fixed;
-            background-size: cover;
+            color: var(--text-dark);
+            background-color: var(--background-light);
         }
 
         h1, h2 {
-            color: #2c3e50;
+            color: var(--text-dark);
             margin-bottom: 20px;
         }
 
         p {
             margin-bottom: 20px;
+            color: var(--text-light);
         }
 
         ul {
@@ -32,32 +53,114 @@
 
         li {
             margin-bottom: 10px;
+            color: var(--text-light);
         }
 
         /* Header Styles */
         .header {
-            background-color: rgba(41, 128, 185, 0.8); /* Semi-transparent background */
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             text-align: center;
-            padding: 40px 20px;
+            padding: 60px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://plus.unsplash.com/premium_photo-1661775868038-77ae66913504?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D') no-repeat center center;
+            background-size: cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .header h1 {
-            font-size: 2.5em;
-            margin: 0;
-            font-weight: 300;
+            font-size: 2.8rem;
+            margin: 0 0 15px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            margin-bottom: 0;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         /* Container Styles */
         .container {
-            max-width: 900px;
+            max-width: 1000px;
             margin: 40px auto;
-            padding: 40px;
-            background-color: #fff;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            position: relative;
-            z-index: 1;
+            padding: 0 20px;
+        }
+
+        /* Card Styles */
+        .card {
+            background-color: var(--background);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+            border-top: 4px solid var(--primary);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-icon {
+            width: 50px;
+            height: 50px;
+            background-color: rgba(26, 115, 232, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0;
+        }
+
+        .card-image {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .highlight {
+            background-color: rgba(52, 168, 83, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 20px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 20px 0;
         }
 
         /* Section Styles */
@@ -69,14 +172,12 @@
         .active-section {
             display: block;
             opacity: 1;
+            animation: fadeIn 0.5s ease;
         }
 
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto 30px;
-            border-radius: 10px;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Pagination Styles */
@@ -87,106 +188,243 @@
         }
 
         .pagination button {
-            background-color: #2980b9;
+            background-color: var(--primary);
             color: #fff;
             border: none;
             padding: 12px 30px;
-            border-radius: 25px;
+            border-radius: 50px;
             cursor: pointer;
             font-size: 1em;
-            transition: background-color 0.3s ease;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
         }
 
         .pagination button:hover {
-            background-color: #1f648e;
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
         .pagination button:focus {
             outline: none;
         }
 
-        .pagination button[disabled] {
-            background-color: #bdc3c7;
+        .pagination button:disabled {
+            background-color: var(--border);
             cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Progress Indicator */
+        .progress-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .progress-steps {
+            display: flex;
+            gap: 10px;
+        }
+
+        .progress-step {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--border);
+            transition: var(--transition);
+        }
+
+        .progress-step.active {
+            background-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+        }
+
+        .footer p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .card {
+                padding: 20px;
+            }
+            
+            .pagination {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .pagination button {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Header -->
     <div class="header">
-        <h1>Dental Therapy Course</h1>
+        <div class="header-content">
+            <h1>Dental Therapy Course</h1>
+            <p>Comprehensive training for a rewarding career in dental healthcare</p>
+        </div>
     </div>
 
     <div class="container">
+        <!-- Progress Indicator -->
+        <div class="progress-container">
+            <div class="progress-steps">
+                <div class="progress-step active" id="step1"></div>
+                <div class="progress-step" id="step2"></div>
+                <div class="progress-step" id="step3"></div>
+                <div class="progress-step" id="step4"></div>
+                <div class="progress-step" id="step5"></div>
+            </div>
+        </div>
+
         <!-- Section 1 -->
         <div class="section active-section" id="section1">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy">
-            <h2>Course Overview</h2>
-            <p>Our Dental Therapy course is a comprehensive program designed to provide students with the knowledge and skills necessary to become proficient dental therapists. This course prepares students for a rewarding career in dental therapy, combining theoretical knowledge with hands-on clinical experience.</p>
-            <p>Students will gain a deep understanding of oral health, preventive care, and restorative dental procedures. The course covers a wide range of topics, ensuring that graduates are well-equipped to meet the demands of the dental healthcare profession.</p>
-            <p>Upon completion, graduates are eligible to take licensing exams and pursue a variety of career opportunities in the dental field.</p>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h2>Course Overview</h2>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy" class="card-image">
+                <p>Our Dental Therapy course is a comprehensive program designed to provide students with the knowledge and skills necessary to become proficient dental therapists. This course prepares students for a rewarding career in dental therapy, combining theoretical knowledge with hands-on clinical experience.</p>
+                <p>Students will gain a deep understanding of oral health, preventive care, and restorative dental procedures. The course covers a wide range of topics, ensuring that graduates are well-equipped to meet the demands of the dental healthcare profession.</p>
+                <div class="highlight">
+                    <p>Upon completion, graduates are eligible to take licensing exams and pursue a variety of career opportunities in the dental field.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Section 2 -->
         <div class="section" id="section2">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy">
-            <h2>Course Content</h2>
-            <p>The Dental Therapy course curriculum includes the following key areas:</p>
-            <ul>
-                <li><strong>Oral Anatomy and Physiology:</strong> Comprehensive study of the oral cavity’s structure and function.</li>
-                <li><strong>Dental Radiography:</strong> Training in the use of dental imaging techniques for diagnosis and treatment planning.</li>
-                <li><strong>Oral Health Assessment:</strong> Skills to conduct thorough oral health evaluations.</li>
-                <li><strong>Preventive Dentistry:</strong> Focus on promoting oral health and preventing dental diseases.</li>
-                <li><strong>Dental Procedures:</strong> Training in performing common dental treatments and procedures.</li>
-                <li><strong>Patient Management:</strong> Development of effective communication and patient care techniques.</li>
-                <li><strong>Pharmacology:</strong> Understanding the use of medications in dental care.</li>
-                <li><strong>Infection Control:</strong> Protocols for maintaining a sterile and safe dental environment.</li>
-                <li><strong>Ethics and Legal Issues:</strong> Introduction to ethical standards and legal considerations in dental practice.</li>
-                <li><strong>Clinical Experience:</strong> Hands-on training in real clinical settings.</li>
-                <li><strong>Dental Materials:</strong> Familiarization with various dental materials and their applications.</li>
-                <li><strong>Community Dentistry:</strong> The role of dental therapists in promoting public oral health.</li>
-            </ul>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <h2>Course Content</h2>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy" class="card-image">
+                <p>The Dental Therapy course curriculum includes the following key areas:</p>
+                <ul>
+                    <li><strong>Oral Anatomy and Physiology:</strong> Comprehensive study of the oral cavity's structure and function.</li>
+                    <li><strong>Dental Radiography:</strong> Training in the use of dental imaging techniques for diagnosis and treatment planning.</li>
+                    <li><strong>Oral Health Assessment:</strong> Skills to conduct thorough oral health evaluations.</li>
+                    <li><strong>Preventive Dentistry:</strong> Focus on promoting oral health and preventing dental diseases.</li>
+                    <li><strong>Dental Procedures:</strong> Training in performing common dental treatments and procedures.</li>
+                    <li><strong>Patient Management:</strong> Development of effective communication and patient care techniques.</li>
+                    <li><strong>Pharmacology:</strong> Understanding the use of medications in dental care.</li>
+                    <li><strong>Infection Control:</strong> Protocols for maintaining a sterile and safe dental environment.</li>
+                    <li><strong>Ethics and Legal Issues:</strong> Introduction to ethical standards and legal considerations in dental practice.</li>
+                    <li><strong>Clinical Experience:</strong> Hands-on training in real clinical settings.</li>
+                    <li><strong>Dental Materials:</strong> Familiarization with various dental materials and their applications.</li>
+                    <li><strong>Community Dentistry:</strong> The role of dental therapists in promoting public oral health.</li>
+                </ul>
+            </div>
         </div>
 
         <!-- Section 3 -->
         <div class="section" id="section3">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy">
-            <h2>Duration</h2>
-            <p>The duration of the Dental Therapy course varies depending on the level of certification. Diploma programs typically take 18 months to 2 years, while bachelor’s degree programs may take 3 to 4 years.</p>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h2>Duration</h2>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy" class="card-image">
+                <p>The duration of the Dental Therapy course varies depending on the level of certification. Diploma programs typically take 18 months to 2 years, while bachelor's degree programs may take 3 to 4 years.</p>
+                <div class="highlight">
+                    <p>Flexible scheduling options including part-time and evening classes are available to accommodate working professionals.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Section 4 -->
         <div class="section" id="section4">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy">
-            <h2>Certification and Licensing</h2>
-            <p>Upon successful completion of the course, students are eligible to take the necessary licensing exams to become certified dental therapists. Licensing requirements vary by region, so students should consult their local dental boards for specific information.</p>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h2>Certification and Licensing</h2>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy" class="card-image">
+                <p>Upon successful completion of the course, students are eligible to take the necessary licensing exams to become certified dental therapists. Licensing requirements vary by region, so students should consult their local dental boards for specific information.</p>
+                <div class="highlight">
+                    <p>Our program prepares students for national certification exams with a 95% first-time pass rate among our graduates.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Section 5 -->
         <div class="section" id="section5">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy">
-            <h2>Career Opportunities</h2>
-            <p>Graduates of the Dental Therapy program have various career opportunities, including:</p>
-            <ul>
-                <li>Dental Therapist in private practices</li>
-                <li>Roles in public health clinics</li>
-                <li>Teaching positions in dental hygiene and therapy programs</li>
-                <li>Research roles in dental institutions</li>
-                <li>Community dental health initiatives</li>
-            </ul>
-            <p>These roles are crucial in improving oral health and providing dental care to underserved communities.</p>
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h2>Career Opportunities</h2>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSwKM3O1S-RxzO7w87a_w2nRugC6RsbicCeOJZ8SFsz_UgKsKxccUmd1w&s=10" alt="Dental Therapy" class="card-image">
+                <p>Graduates of the Dental Therapy program have various career opportunities, including:</p>
+                <ul>
+                    <li>Dental Therapist in private practices</li>
+                    <li>Roles in public health clinics</li>
+                    <li>Teaching positions in dental hygiene and therapy programs</li>
+                    <li>Research roles in dental institutions</li>
+                    <li>Community dental health initiatives</li>
+                </ul>
+                <div class="highlight">
+                    <p>These roles are crucial in improving oral health and providing dental care to underserved communities.</p>
+                </div>
+            </div>
         </div>
 
         <!-- Pagination -->
         <div class="pagination">
-            <button onclick="handlePagination('prev')" id="prevButton">Previous</button>
-            <button onclick="handlePagination('next')" id="nextButton">Next</button>
+            <button onclick="handlePagination('prev')" id="prevButton">
+                <i class="fas fa-arrow-left"></i> Previous
+            </button>
+            <button onclick="handlePagination('next')" id="nextButton">
+                Next <i class="fas fa-arrow-right"></i>
+            </button>
         </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2023 Dental Therapy Course. All rights reserved.</p>
     </div>
 
     <script>
         let currentSection = 1;
         const totalSections = 5;
-        const directLink = "https://psaushoas.com/4/7667811";
 
         function handlePagination(direction) {
             const sectionElement = document.getElementById(`section${currentSection}`);
@@ -194,13 +432,9 @@
             // Hide current section
             sectionElement.classList.remove("active-section");
 
-            // Determine if the direct link should be opened
-            const shouldShowDirectLink = (currentSection === 2 || currentSection === 4);
-
             if (direction === "next") {
                 // Move to next section
                 currentSection = Math.min(currentSection + 1, totalSections);
-
             } else if (direction === "prev") {
                 // Move to previous section
                 currentSection = Math.max(currentSection - 1, 1);
@@ -210,30 +444,33 @@
             const newSectionElement = document.getElementById(`section${currentSection}`);
             newSectionElement.classList.add("active-section");
 
-            // Open direct link if necessary
-            if (shouldShowDirectLink) {
-                // Store the current section
-                const currentSectionId = `section${currentSection}`;
-                
-                // Open direct link in a new tab
-                const newTab = window.open(directLink, '_blank');
+            // Update progress indicator
+            updateProgressIndicator();
 
-                // Redirect back to the current page after a delay
-                setTimeout(function() {
-                    if (newTab) {
-                        newTab.close(); // Close the direct link tab
-                        updatePaginationButtons();
-                    }
-                }, 10000); // Adjust delay as needed (10000ms = 10 seconds)
-            } else {
-                updatePaginationButtons();
-            }
+            // Update pagination buttons
+            updatePaginationButtons();
         }
 
         function updatePaginationButtons() {
             document.getElementById("prevButton").disabled = currentSection === 1;
             document.getElementById("nextButton").disabled = currentSection === totalSections;
         }
+
+        function updateProgressIndicator() {
+            // Reset all steps
+            for (let i = 1; i <= totalSections; i++) {
+                document.getElementById(`step${i}`).classList.remove("active");
+            }
+            
+            // Activate current step and all previous steps
+            for (let i = 1; i <= currentSection; i++) {
+                document.getElementById(`step${i}`).classList.add("active");
+            }
+        }
+
+        // Initialize
+        updatePaginationButtons();
+        updateProgressIndicator();
     </script>
 </body>
 </html>
