@@ -3,248 +3,853 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dental Therapy Students App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <title>TherapyDent - Professional Dental Education</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
     <style>
-        /* General Styles */
-        body {
-            font-family: 'Poppins', sans-serif;
+        :root {
+            --primary: #02475e;
+            --secondary: #ff8c42;
+            --accent: #3bb4c1;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+        
+        * {
             margin: 0;
             padding: 0;
-            color: #2c3e50;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            transition: background-image 1s ease-in-out;
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            line-height: 1.6;
-            transition: background-image 1s ease-in-out;
         }
-
-        header {
-            background: rgba(44, 62, 80, 0.8); /* Semi-transparent header */
-            padding: 2rem 1rem;
+        
+        /* Authentication Page Styles */
+        #authPage {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-image: url('https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGVudGFsJTIwY2xpbmljfGVufDB8fDB8fHww');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .auth-container {
+            background-color: white;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        .auth-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem;
             text-align: center;
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
-
-        .title-container {
+        
+        .auth-header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
             display: flex;
             align-items: center;
             justify-content: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            color: var(--secondary);
+        }
+        
+        .auth-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            background-color: var(--light-gray);
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            background-color: white;
+            font-weight: 500;
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .auth-form {
+            padding: 2rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--light-gray);
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        .auth-btn {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 0.5rem;
+            position: relative;
+            min-height: 48px;
+        }
+        
+        .auth-btn:hover {
+            background-color: #013344;
+        }
+        
+        .auth-btn:disabled {
+            background-color: var(--gray);
+            cursor: not-allowed;
+        }
+        
+        .auth-footer {
+            text-align: center;
+            padding: 1rem;
+            border-top: 1px solid var(--light-gray);
+            font-size: 0.9rem;
+            color: var(--gray);
+        }
+        
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+            background-color: #f8d7da;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .success-message {
+            color: #155724;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+            display: none;
+            background-color: #d4edda;
+            padding: 0.5rem;
+            border-radius: 4px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Main App Styles */
+        #mainApp {
+            display: none;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(2, 71, 94, 0.85);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
             gap: 15px;
         }
-
-        .title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin: 0;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-
-        .title:hover {
-            letter-spacing: 2px;
-            color: #ecf0f1;
-        }
-
-        .notification-icon {
-            cursor: pointer;
-            padding: 0.5rem;
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background-color: #e74c3c;
-            transition: transform 0.3s ease;
+            background-color: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
         }
-
-        .notification-icon img {
-            width: 30px;
-            height: 30px;
+        
+        .notification-icon {
+            position: relative;
+            cursor: pointer;
         }
-
-        .notification-icon:hover {
-            transform: scale(1.1);
+        
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: var(--secondary);
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .subtitle {
-            font-size: 1.1rem;
-            margin-top: 0.5rem;
-            color: #ecf0f1;
-            font-style: italic;
+        
+        .logout-btn {
+            background: var(--secondary);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-
+        
+        .logout-btn:hover {
+            background-color: #e67e22;
+        }
+        
+        /* Main Menu Styles */
         .menu-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 40px 10%;
-            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 40px 0;
+            padding: 0 10%;
+            gap: 30px;
         }
-
+        
         .menu-item {
-            background: rgba(255, 255, 255, 0.95); /* Semi-transparent white */
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 12px;
-            padding: 20px;
+            background: rgba(255, 255, 255, 0.85);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px 20px;
+            width: 220px;
             text-align: center;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out;
             position: relative;
             overflow: hidden;
+            z-index: 0;
         }
-
+        
         .menu-item:hover {
             transform: translateY(-10px);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0px 6px 25px rgba(0, 0, 0, 0.15);
+            z-index: 1;
         }
-
+        
         .menu-item img {
             width: 50px;
             height: 50px;
             margin-bottom: 15px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease-in-out;
         }
-
+        
         .menu-item:hover img {
             transform: rotate(10deg);
         }
-
+        
         .menu-item h2 {
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             margin-bottom: 10px;
             font-weight: 600;
-            color: #2980b9;
         }
-
+        
         .menu-item a {
             text-decoration: none;
-            color: #2c3e50;
+            color: #02475e;
             font-weight: 600;
         }
-
+        
         .submenu {
             display: none;
             margin-top: 10px;
             padding-top: 10px;
             border-top: 1px solid #f0f0f0;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out;
         }
-
+        
         .menu-item:hover .submenu {
             display: block;
         }
-
+        
         .submenu a {
             display: block;
             padding: 5px 0;
-            color: #27ae60;
+            color: #02475e;
             text-decoration: none;
-            transition: all 0.2s ease;
+            transition: all 0.2s ease-in-out;
         }
-
+        
         .submenu a:hover {
             padding-left: 10px;
-            color: #e74c3c;
+            color: #ff8c42;
+        }
+        
+        /* Dashboard Section */
+        .dashboard {
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 40px;
+            margin: 20px auto;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 900px;
+        }
+        
+        .welcome-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #02475e;
+        }
+        
+        .welcome-section p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            color: #666;
+        }
+        
+        .featured-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .featured-link {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .featured-link:hover {
+            transform: translateY(-5px);
+        }
+        
+        .featured-link a {
+            text-decoration: none;
+            color: var(--primary);
+            font-weight: 600;
+            display: block;
+        }
+        
+        .bottom-menu {
+            background-color: #02475e;
+            padding: 20px 0;
+            text-align: center;
+            color: #fff;
+        }
+        
+        .bottom-menu a {
+            color: #ff8c42;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .bottom-menu a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Demo mode banner */
+        .demo-banner {
+            background-color: var(--secondary);
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 0.9rem;
         }
 
+        /* Loading overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+        
+        /* Responsive Styles */
         @media (max-width: 768px) {
-            .title {
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            .menu-container {
+                padding: 0 5%;
+            }
+            .menu-item {
+                width: 45%;
+            }
+            .welcome-section {
+                width: 95%;
+                padding: 20px;
+            }
+            .welcome-section h2 {
                 font-size: 2rem;
             }
-
-            .menu-container {
-                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-                margin: 20px 5%;
-            }
-
-            .menu-item h2 {
-                font-size: 1.2rem;
-            }
-
-            .subtitle {
-                font-size: 1rem;
-            }
         }
-
+        
         @media (max-width: 480px) {
-            .title {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            .menu-item {
+                width: 100%;
+            }
+            .welcome-section h2 {
                 font-size: 1.8rem;
-            }
-
-            .menu-container {
-                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            }
-
-            .menu-item h2 {
-                font-size: 1rem;
-            }
-
-            .subtitle {
-                font-size: 0.9rem;
-            }
-
-            .notification-icon img {
-                width: 25px;
-                height: 25px;
             }
         }
     </style>
 </head>
 <body>
-    <header>
-        <div class="title-container">
-            <h1 class="title">Dental Therapy</h1>
-            <a href="javascript:void(0)" class="notification-icon" onclick="handleNotifications()">
-                <img src="https://img.icons8.com/ios-filled/50/ffffff/appointment-reminders.png" alt="Notifications Icon">
-            </a>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay" style="display: none;">
+        <div>
+            <div class="loading" style="margin: 0 auto 10px;"></div>
+            <p>Checking authentication...</p>
         </div>
-        <h2 class="subtitle">Empowering Future Dental Professionals</h2>
-    </header>
+    </div>
 
-    <div class="menu-container">
-        <div class="menu-item">
-            <a href="overview.html">
-                <img src="https://img.icons8.com/ios/50/2980b9/overview-pages-3.png" alt="Course Overview Icon">
-                <h2>Course Overview</h2>
-            </a>
-        </div>
-        <div class="menu-item">
-            <img src="https://img.icons8.com/ios/50/2980b9/book.png" alt="Learning Modules Icon">
-            <h2>Learning Modules</h2>
-            <div class="submenu">
-                <a href="Lecturenote.html">Lecture Notes</a>
-                <a href="flashcard.html">Flashcards</a>
+    <!-- Demo Mode Banner -->
+    <div class="demo-banner" id="demoBanner" style="display: none;">
+        <strong>Demo Mode:</strong> Using simulated authentication. Create account with any email/password.
+    </div>
+
+    <!-- Authentication Page -->
+    <div id="authPage">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h1><i class="fas fa-tooth logo-icon"></i> TherapyDent</h1>
+                <p>Professional Dental Education Platform</p>
             </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://img.icons8.com/ios/50/2980b9/quiz.png" alt="Practice Questions Icon">
-            <h2>Practice Questions</h2>
-            <div class="submenu">
-                <a href="quiz.html">Quizzes</a>
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="loginTab">Login</div>
+                <div class="auth-tab" id="signupTab">Sign Up</div>
+            </div>
+            <div class="auth-form">
+                <!-- Success Message -->
+                <div class="success-message" id="successMessage"></div>
                 
-            </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://img.icons8.com/ios/50/2980b9/video.png" alt="Videos Icon">
-            <h2>Videos</h2>
-            <div class="submenu">
-                <a href="videos.html">Lecture Videos</a>
-                <a href="https://periopixel.com/en/videos/">Simulation Videos</a>
-            </div>
-        </div>
-        <div class="menu-item">
-            <img src="https://img.icons8.com/ios/50/2980b9/library.png" alt="Resources Icon">
-            <h2>Resources</h2>
-            <div class="submenu">
-                <a href="https://alison.com/courses?query=dental%20courses&utm_source=alison_user&utm_medium=affiliates&utm_campaign=17125669">Online Courses"</a> 
+                <!-- Login Form -->
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <input type="email" id="loginEmail" placeholder="Enter your email" required>
+                        <div class="error-message" id="loginEmailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        <div class="error-message" id="loginPasswordError"></div>
+                    </div>
+                    <button type="submit" class="auth-btn" id="loginBtn">
+                        <span class="btn-text">Login</span>
+                    </button>
+                </form>
                 
+                <!-- Signup Form -->
+                <form id="signupForm" style="display: none;">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <input type="text" id="signupName" placeholder="Enter your full name" required>
+                        <div class="error-message" id="signupNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <input type="email" id="signupEmail" placeholder="Enter your email" required>
+                        <div class="error-message" id="signupEmailError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" placeholder="Create a password (min. 6 characters)" required>
+                        <div class="error-message" id="signupPasswordError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                        <div class="error-message" id="confirmPasswordError"></div>
+                    </div>
+                    <button type="submit" class="auth-btn" id="signupBtn">
+                        <span class="btn-text">Create Account</span>
+                    </button>
+                </form>
+            </div>
+            <div class="auth-footer">
+                <p>By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></p>
             </div>
         </div>
     </div>
 
+    <!-- Main Application -->
+    <div id="mainApp">
+        <header>
+            <div class="container">
+                <div class="header-content">
+                    <div class="logo">
+                        <i class="fas fa-tooth logo-icon"></i>
+                        <h1>TherapyDent</h1>
+                    </div>
+                    <div class="user-actions">
+                        <div class="notification-icon">
+                            <i class="fas fa-bell fa-lg"></i>
+                            <span class="notification-badge">3</span>
+                        </div>
+                        <div class="user-profile">
+                            <div class="avatar" id="userAvatar">U</div>
+                            <span id="userName">User</span>
+                            <button class="logout-btn" id="logoutBtn">Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="menu-container">
+            <div class="menu-item">
+                <a href="overview.html" target="_blank">
+                    <img src="https://img.icons8.com/ios/50/02475e/overview-pages-3.png" alt="Course Overview">
+                    <h2>Course Overview</h2>
+                </a>
+            </div>
+            <div class="menu-item">
+                <img src="https://img.icons8.com/ios/50/02475e/book.png" alt="Learning Modules">
+                <h2>Learning Modules</h2>
+                <div class="submenu">
+                    <a href="lectures.html" target="_blank">Lecture Slides</a>
+                    <a href="flashcards.html" target="_blank">Flashcards</a>
+                    <a href="videos.html" target="_blank">Videos</a>
+                    <a href="quizzes.html" target="_blank">Quizzes</a>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://img.icons8.com/ios/50/02475e/administrative-tools.png" alt="Clinical Tools">
+                <h2>Clinical Tools</h2>
+                <div class="submenu">
+                    <a href="procedures.html" target="_blank">Treatment Procedures</a>
+                    <a href="cases.html" target="_blank">Case Studies</a>
+                    <a href="simulation.html" target="_blank">3D Simulation</a>
+                    <a href="instrumentation.html" target="_blank">Instrumentation</a>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://img.icons8.com/ios/50/02475e/conference-call.png" alt="Community">
+                <h2>Community</h2>
+                <div class="submenu">
+                    <a href="forum.html" target="_blank">Forum</a>
+                    <a href="chats.html" target="_blank">Chats</a>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://img.icons8.com/ios/50/02475e/school.png" alt="CPD">
+                <h2>CPD</h2>
+                <div class="submenu">
+                    <a href="courses.html" target="_blank">Courses</a>
+                    <a href="webinar.html" target="_blank">Webinar</a>
+                </div>
+            </div>
+            <div class="menu-item">
+                <img src="https://img.icons8.com/ios/50/02475e/calendar.png" alt="More">
+                <h2>Resources</h2>
+                <div class="submenu">
+                    <a href="events.html" target="_blank">Events</a>
+                    <a href="library.html" target="_blank">E-Library</a>
+                    <a href="journals.html" target="_blank">Journals</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard">
+            <div class="welcome-section">
+                <h2>Welcome to TherapyDent</h2>
+                <p>Explore comprehensive resources and interactive tools designed specifically for dental therapy students and professionals. Stay up to date with clinical practices, sharpen your knowledge, and connect with the community.</p>
+                
+                <div class="featured-links">
+                    <div class="featured-link">
+                        <a href="overview.html" target="_blank">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>View Your Progress</h3>
+                            <p>Track your learning journey and achievements</p>
+                        </a>
+                    </div>
+                    <div class="featured-link">
+                        <a href="lectures.html" target="_blank">
+                            <i class="fas fa-file-powerpoint"></i>
+                            <h3>Latest Lectures</h3>
+                            <p>Access new course materials and updates</p>
+                        </a>
+                    </div>
+                    <div class="featured-link">
+                        <a href="forum.html" target="_blank">
+                            <i class="fas fa-users"></i>
+                            <h3>Community Forum</h3>
+                            <p>Connect with peers and instructors</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="bottom-menu">
+            <a href="policy.html" target="_blank">Policy</a>
+            <a href="contact.html" target="_blank">Contact</a>
+            <a href="about.html" target="_blank">About</a>
+        </footer>
+    </div>
+
     <script>
-        // Array of background image URLs
+        // Firebase Configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBCoyhQr-egyZ4K94WID92Ph1y1iO6s7y8",
+            authDomain: "therapydent-281f0.firebaseapp.com",
+            projectId: "therapydent-281f0",
+            storageBucket: "therapydent-281f0.firebasestorage.app",
+            messagingSenderId: "517853383053",
+            appId: "1:517853383053:web:1aba96f6c6252b11a5d5c4",
+            measurementId: "G-7G22B48H62"
+        };
+
+        // Initialize Firebase
+        let firebaseApp;
+        let firebaseAuth;
+        let firebaseInitialized = false;
+        let demoMode = false;
+        let authChecked = false;
+
+        // DOM Elements
+        const authPage = document.getElementById('authPage');
+        const mainApp = document.getElementById('mainApp');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const demoBanner = document.getElementById('demoBanner');
+        const loginTab = document.getElementById('loginTab');
+        const signupTab = document.getElementById('signupTab');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const successMessage = document.getElementById('successMessage');
+
+        // Show loading overlay
+        function showLoading() {
+            loadingOverlay.style.display = 'flex';
+        }
+
+        // Hide loading overlay
+        function hideLoading() {
+            loadingOverlay.style.display = 'none';
+        }
+
+        // Initialize authentication
+        async function initializeAuth() {
+            showLoading();
+            
+            try {
+                // Check if user was previously logged in (local storage)
+                const savedUser = localStorage.getItem('therapydent_user');
+                if (savedUser) {
+                    const user = JSON.parse(savedUser);
+                    console.log("Found saved user:", user.email);
+                    showMainApp(user);
+                    hideLoading();
+                    return;
+                }
+
+                // Try Firebase initialization
+                firebaseApp = firebase.initializeApp(firebaseConfig);
+                firebaseAuth = firebase.auth();
+                firebaseInitialized = true;
+                
+                // Set persistence to LOCAL to maintain session
+                await firebaseAuth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+                
+                console.log("Firebase initialized successfully");
+                
+                // Check auth state with timeout
+                const authCheckPromise = new Promise((resolve) => {
+                    const unsubscribe = firebaseAuth.onAuthStateChanged((user) => {
+                        unsubscribe();
+                        resolve(user);
+                    });
+                });
+
+                // Set timeout for auth check
+                const timeoutPromise = new Promise((resolve) => {
+                    setTimeout(() => resolve(null), 3000);
+                });
+
+                const user = await Promise.race([authCheckPromise, timeoutPromise]);
+                
+                if (user) {
+                    console.log("User is signed in:", user.email);
+                    // Save user to localStorage for instant loading next time
+                    localStorage.setItem('therapydent_user', JSON.stringify({
+                        uid: user.uid,
+                        email: user.email,
+                        displayName: user.displayName
+                    }));
+                    showMainApp(user);
+                } else {
+                    console.log("No user signed in");
+                    showAuthPage();
+                }
+                
+            } catch (error) {
+                console.error("Authentication initialization error:", error);
+                demoMode = true;
+                demoBanner.style.display = 'block';
+                
+                // Check for demo user
+                const demoUser = localStorage.getItem('demoUser');
+                if (demoUser) {
+                    const user = JSON.parse(demoUser);
+                    showMainApp(user);
+                } else {
+                    showAuthPage();
+                }
+            } finally {
+                authChecked = true;
+                hideLoading();
+            }
+        }
+
+        // Show authentication page
+        function showAuthPage() {
+            authPage.style.display = 'flex';
+            mainApp.style.display = 'none';
+            hideLoading();
+        }
+
+        // Show main application
+        function showMainApp(user) {
+            authPage.style.display = 'none';
+            mainApp.style.display = 'block';
+            demoBanner.style.display = 'none';
+            hideLoading();
+            
+            // Update user profile
+            const displayName = user.displayName || user.email.split('@')[0];
+            userAvatar.textContent = displayName.charAt(0).toUpperCase();
+            userName.textContent = displayName;
+        }
+
+        // Background images array
         const images = [
             'https://images.unsplash.com/photo-1598256989800-fe5f95da9787?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8ZGVudGFsJTIwY2xpbmljfGVufDB8fDB8fHww',
-            'https://images.unsplash.com/photo-1643660527104-55cbd38f0a84?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D',
-            'https://plus.unsplash.com/premium_photo-1661775868038-77ae66913504?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D'
+            'https://images.unsplash.com/photo-1643660527104-55cbd38f0a84?w=700&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzB8fGRlbnRhbCUyMGNsaW5pY3xlbnwwfHwwfHx8MA%3D%3D'
         ];
 
         let currentIndex = 0;
@@ -254,19 +859,288 @@
             currentIndex = (currentIndex + 1) % images.length;
         }
 
-        // Change background every 10 seconds (10000 milliseconds)
-        setInterval(changeBackground, 10000);
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start background rotation
+            setInterval(changeBackground, 10000);
+            changeBackground();
+            
+            // Initialize authentication
+            initializeAuth();
+        });
 
-        // Initial background set
-        changeBackground();
+        // Switch between login and signup tabs
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('active');
+            signupTab.classList.remove('active');
+            loginForm.style.display = 'block';
+            signupForm.style.display = 'none';
+            clearMessages();
+        });
+        
+        signupTab.addEventListener('click', () => {
+            signupTab.classList.add('active');
+            loginTab.classList.remove('active');
+            signupForm.style.display = 'block';
+            loginForm.style.display = 'none';
+            clearMessages();
+        });
 
-        function handleLink(sectionId) {
-            alert(`Navigating to section: ${sectionId}`); // Replace with actual logic
+        // Clear all messages
+        function clearMessages() {
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.style.display = 'none';
+                msg.textContent = '';
+            });
+            successMessage.style.display = 'none';
         }
 
-        function handleNotifications() {
-            alert("Notifications clicked!"); // Replace with actual logic
+        // Form validation
+        function validateEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
         }
+        
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+        
+        // Show loading state
+        function setLoading(button, isLoading) {
+            const btnText = button.querySelector('.btn-text');
+            if (isLoading) {
+                button.disabled = true;
+                btnText.innerHTML = '<div class="loading"></div>Loading...';
+            } else {
+                button.disabled = false;
+                if (button.id === 'loginBtn') {
+                    btnText.textContent = 'Login';
+                } else {
+                    btnText.textContent = 'Create Account';
+                }
+            }
+        }
+        
+        // Show success message
+        function showSuccess(message) {
+            successMessage.textContent = message;
+            successMessage.style.display = 'block';
+            setTimeout(() => {
+                successMessage.style.display = 'none';
+            }, 5000);
+        }
+
+        // Demo mode authentication (fallback)
+        function demoAuth(email, password, isSignup = false, name = '') {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    if (isSignup) {
+                        // Simulate successful signup
+                        const user = {
+                            email: email,
+                            displayName: name,
+                            uid: 'demo-' + Date.now()
+                        };
+                        localStorage.setItem('demoUser', JSON.stringify(user));
+                        localStorage.setItem('therapydent_user', JSON.stringify(user));
+                        resolve({ user });
+                    } else {
+                        // Simulate successful login
+                        const storedUser = localStorage.getItem('demoUser');
+                        if (storedUser && JSON.parse(storedUser).email === email) {
+                            const user = JSON.parse(storedUser);
+                            localStorage.setItem('therapydent_user', JSON.stringify(user));
+                            resolve({ user });
+                        } else {
+                            reject(new Error('No account found. Please sign up first.'));
+                        }
+                    }
+                }, 1000);
+            });
+        }
+
+        // Form submission handlers
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const emailError = document.getElementById('loginEmailError');
+            const passwordError = document.getElementById('loginPasswordError');
+            
+            clearMessages();
+            
+            let isValid = true;
+            
+            if (!validateEmail(email)) {
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!validatePassword(password)) {
+                passwordError.textContent = 'Password must be at least 6 characters';
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                setLoading(loginBtn, true);
+                try {
+                    let userCredential;
+                    
+                    if (firebaseInitialized) {
+                        userCredential = await firebaseAuth.signInWithEmailAndPassword(email, password);
+                        // Save to localStorage for instant loading
+                        localStorage.setItem('therapydent_user', JSON.stringify({
+                            uid: userCredential.user.uid,
+                            email: userCredential.user.email,
+                            displayName: userCredential.user.displayName
+                        }));
+                    } else {
+                        userCredential = await demoAuth(email, password, false);
+                    }
+                    
+                    showMainApp(userCredential.user);
+                    showSuccess('Login successful!');
+                    
+                } catch (error) {
+                    console.error('Login error:', error);
+                    passwordError.textContent = getErrorMessage(error);
+                    passwordError.style.display = 'block';
+                } finally {
+                    setLoading(loginBtn, false);
+                }
+            }
+        });
+        
+        signupForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            const nameError = document.getElementById('signupNameError');
+            const emailError = document.getElementById('signupEmailError');
+            const passwordError = document.getElementById('signupPasswordError');
+            const confirmPasswordError = document.getElementById('confirmPasswordError');
+            
+            clearMessages();
+            
+            let isValid = true;
+            
+            if (name.trim() === '') {
+                nameError.textContent = 'Please enter your full name';
+                nameError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!validateEmail(email)) {
+                emailError.textContent = 'Please enter a valid email address';
+                emailError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (!validatePassword(password)) {
+                passwordError.textContent = 'Password must be at least 6 characters';
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (password !== confirmPassword) {
+                confirmPasswordError.textContent = 'Passwords do not match';
+                confirmPasswordError.style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                setLoading(signupBtn, true);
+                try {
+                    let userCredential;
+                    
+                    if (firebaseInitialized) {
+                        userCredential = await firebaseAuth.createUserWithEmailAndPassword(email, password);
+                        
+                        // Update profile with display name
+                        await userCredential.user.updateProfile({
+                            displayName: name
+                        });
+
+                        // Save to localStorage for instant loading
+                        localStorage.setItem('therapydent_user', JSON.stringify({
+                            uid: userCredential.user.uid,
+                            email: userCredential.user.email,
+                            displayName: name
+                        }));
+                    } else {
+                        userCredential = await demoAuth(email, password, true, name);
+                    }
+                    
+                    showMainApp(userCredential.user);
+                    showSuccess('Account created successfully!');
+                    
+                } catch (error) {
+                    console.error('Signup error:', error);
+                    emailError.textContent = getErrorMessage(error);
+                    emailError.style.display = 'block';
+                } finally {
+                    setLoading(signupBtn, false);
+                }
+            }
+        });
+
+        // Get user-friendly error messages
+        function getErrorMessage(error) {
+            if (!firebaseInitialized) {
+                return error.message || 'Authentication error';
+            }
+            
+            switch (error.code) {
+                case 'auth/email-already-in-use':
+                    return 'This email is already registered. Please try logging in.';
+                case 'auth/invalid-email':
+                    return 'Please enter a valid email address.';
+                case 'auth/weak-password':
+                    return 'Password should be at least 6 characters.';
+                case 'auth/user-not-found':
+                    return 'No account found with this email. Please sign up first.';
+                case 'auth/wrong-password':
+                    return 'Incorrect password. Please try again.';
+                case 'auth/network-request-failed':
+                    return 'Network error. Please check your connection.';
+                case 'auth/configuration-not-found':
+                    return 'Authentication service not available. Using demo mode.';
+                default:
+                    return error.message || 'An error occurred. Please try again.';
+            }
+        }
+
+        // Logout functionality
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                if (firebaseInitialized) {
+                    await firebaseAuth.signOut();
+                }
+                
+                // Clear all user data
+                localStorage.removeItem('therapydent_user');
+                localStorage.removeItem('demoUser');
+                
+                authPage.style.display = 'flex';
+                mainApp.style.display = 'none';
+                if (demoMode) {
+                    demoBanner.style.display = 'block';
+                }
+                
+                // Clear forms
+                loginForm.reset();
+                signupForm.reset();
+                clearMessages();
+                
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        });
     </script>
 </body>
 </html>
